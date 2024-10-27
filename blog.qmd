@@ -1,6 +1,6 @@
 ---
 listing:
-  contents: posts/**/*.qmd
+  contents: posts/
   sort: "date desc"
   type: default
   categories: true
@@ -11,12 +11,3 @@ listing:
 page-layout: full
 title-block-banner: false
 ---
-
-# Blog posts
-
-# [Normalized Transformer](posts/nGPT.html)
-[Paper](https://arxiv.org/abs/2410.01131)
-
-
-# [What Matters for Model Merging at Scale?](posts/model_merging_at_scale.html)
-[Paper](https://arxiv.org/abs/2410.03617)
