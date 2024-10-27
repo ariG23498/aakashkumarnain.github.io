@@ -15,7 +15,8 @@ title-block-banner: false
 # Blog posts
 
 # [Normalized Transformer](posts/nGPT.html)
-Normalized Transformer: Cooked by Nvidia!
+[Paper](https://arxiv.org/abs/2410.01131)
+
 
 # [What Matters for Model Merging at Scale?](posts/model_merging_at_scale.html)
-What Matters for Model Merging at Scale?
+[Paper](https://arxiv.org/abs/2410.03617)
