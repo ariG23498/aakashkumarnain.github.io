@@ -3,6 +3,7 @@ title: "What Matters for Model Merging at Scale?"
 subtitle: ""
 author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
 date: "2024-10-15"
+paper: [arXiv](https://arxiv.org/abs/2410.03617)
 categories: [papers, summary, transformers, research, LLMs, model_merging]
 image: ""
 format:
