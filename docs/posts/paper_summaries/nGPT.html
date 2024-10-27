@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Aakash Kumar Nain (@A_K_Nain)">
+<meta name="dcterms.date" content="2024-10-23">
+
+<title>Aakash Nain - Normalized Transformer</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Aakash Nain</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/AakashKumarNain" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/A_K_Nain" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/aakash-kumar-nain" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
+ <span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html" rel="" target="">
+ <span class="menu-text">Archive</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-resources" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Resources</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-resources">    
+        <li>
+    <a class="dropdown-item" href="https://github.com/AakashKumarNain/annotated_research_papers" rel="" target="">
+ <span class="dropdown-text">Annotated Research Papers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.kaggle.com/aakashnain/code?userId=536977" rel="" target="">
+ <span class="dropdown-text">Kaggle Notebooks</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/AakashKumarNain/TF_JAX_tutorials" rel="" target="">
+ <span class="dropdown-text">TF-JAX Tutorials</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://github.com/AakashKumarNain/diffusion_models" rel="" target="">
+ <span class="dropdown-text">Diffusion Models Tutorials</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#token-embeddings-and-output-logits" id="toc-token-embeddings-and-output-logits" class="nav-link active" data-scroll-target="#token-embeddings-and-output-logits">Token embeddings and output logits</a></li>
+  <li><a href="#layers-and-blocks" id="toc-layers-and-blocks" class="nav-link" data-scroll-target="#layers-and-blocks">Layers and Blocks</a></li>
+  <li><a href="#self-attention-blocks" id="toc-self-attention-blocks" class="nav-link" data-scroll-target="#self-attention-blocks">Self-Attention Blocks</a></li>
+  <li><a href="#mlp" id="toc-mlp" class="nav-link" data-scroll-target="#mlp">MLP</a></li>
+  <li><a href="#summary-of-all-modifications" id="toc-summary-of-all-modifications" class="nav-link" data-scroll-target="#summary-of-all-modifications">Summary of all modifications</a></li>
+  <li><a href="#how-fast-is-ngpt-compared-to-gpt" id="toc-how-fast-is-ngpt-compared-to-gpt" class="nav-link" data-scroll-target="#how-fast-is-ngpt-compared-to-gpt">How fast is nGPT compared to GPT?</a></li>
+  <li><a href="#what-about-the-params-and-hparams" id="toc-what-about-the-params-and-hparams" class="nav-link" data-scroll-target="#what-about-the-params-and-hparams">What about the params and hparams?</a></li>
+  <li><a href="#there-should-be-a-catch-somewhere-right" id="toc-there-should-be-a-catch-somewhere-right" class="nav-link" data-scroll-target="#there-should-be-a-catch-somewhere-right">There should be a catch somewhere, right?</a></li>
+  <li><a href="#best-thing-about-ngpt" id="toc-best-thing-about-ngpt" class="nav-link" data-scroll-target="#best-thing-about-ngpt">Best thing about nGPT?</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Normalized Transformer</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">papers</div>
+    <div class="quarto-category">summary</div>
+    <div class="quarto-category">transformers</div>
+    <div class="quarto-category">research</div>
+    <div class="quarto-category">LLMs</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Aakash Kumar Nain (<a href="https://x.com/A_K_Nain"><span class="citation" data-cites="A_K_Nain">@A_K_Nain</span></a>) </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 23, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>We have been using transformers daily for a couple of years now, but the advancements on the architectural side have remained minimal. This paper from Nvidia proposes a <strong>normalized Transformer (nGPT)</strong>, which performs representation learning on a hypersphere. Here is a summary for the same:</p>
+<section id="token-embeddings-and-output-logits" class="level1">
+<h1>Token embeddings and output logits</h1>
+<ol type="1">
+<li>Both input and output embedding matrices are normalized after each training step.</li>
+<li>The logits are bounded in the range [-1, 1] because of the normalization, which limits the confidence of the probability distribution generated by the softmax.</li>
+<li>To adjust this during training, the authors introduce a trainable scaling parameter <em>sz</em> that scales the logits element-wise.</li>
+</ol>
+</section>
+<section id="layers-and-blocks" class="level1">
+<h1>Layers and Blocks</h1>
+<ol type="1">
+<li>A typical transformer block looks like this where L layers of transformations are applied to the hidden state h, consisting of alternating the self-attention and MLP blocks:<br><br> <img src="paper_screenshots/nGPT/1.png" class="img-fluid" alt="Typical Transformer Block"></li>
+</ol>
+<p><br><br> 2. If we are on a hypersphere, we can use spherical linear interpolation to compute the geodesic distance between two points a and b on the hypersphere. We can approximate SLERP with approximate linear interpolation (LERP) as shown below: <br><br> <img src="paper_screenshots/nGPT/2.png" class="img-fluid" alt="SLERP and LERP"></p>
+<p><br><br> 3. If point a is our hidden state h, and point b represents the point suggested by the attention or MLP block, we can represent our equations for the transformer blocks like this: <br><br> <img src="paper_screenshots/nGPT/3.png" class="img-fluid" alt="Representing hidden state and attention or MLP outputs on hypersphere"></p>
+<p><br><br> 4. Here α<sub>A</sub> ≥0 and α<sub>M</sub> ≥0, with dimensionality d<sub>model</sub>, are learnable parameters applied to the normalized outputs of the attention and MLP blocks, respectively. The norm function normalizes any vector x to have a unit norm and, unlike RMSNorm or LayerNorm, does not introduce any element-wise scaling factors. This normalization can be viewed as the retraction step in Riemannian optimization, mapping the updated solution back to the manifold.</p>
+</section>
+<section id="self-attention-blocks" class="level1">
+<h1>Self-Attention Blocks</h1>
+<ol type="1">
+<li><p>The qkv values produced by the weight matrics W<sub>q</sub>, W<sub>k</sub>, and W<sub>v</sub> in the original transformer are unconstrained, leading to unbounded values in <em>q</em>.</p></li>
+<li><p>In nGPT the authors normalize W<sub>q</sub>, W<sub>k</sub>, W<sub>v</sub> and W<sub>o</sub> along their embedding dimension so that the computed dot products with h can be interpreted as cosine similarity between unit norm vectors bounded in [−1, 1]. Thus, all attention matrices can be viewed as collections of normalized embedding vectors to be compared.</p></li>
+<li><p>Though each element of <em>q</em> and <em>k</em> is now bounded, the norms of these two vectors can still vary. Also, the addition of positional embeddings can further distort <em>q</em> and <em>k</em>. To this end, the authors additionally normalize <em>q</em> and <em>k</em> by introducing a scaling factor s<sub>qk</sub> for each head, ensuring that the dot product of every query and key is under control.</p></li>
+<li><p>In the original Transformer, the query-key dot product is scaled by 1/√d<sub>k</sub> before applying softmax to account for the expected variance of d<sub>k</sub> in the dot product of non-normalized query and key vectors. In the normalized Transformer, the expected variance of the dot product between the normalized query and key vectors is 1/dk. The softmax scaling factor should instead be √d<sub>k</sub> to restore a variance of 1</p></li>
+</ol>
+<p><br><br></p>
+</section>
+<section id="mlp" class="level1">
+<h1>MLP</h1>
+<ol type="1">
+<li><p>The input hidden state <em>h</em> of the MLP block of a classical transformer is first normalized using RMSNorm(or LayerNorm) and then passed through two separate linear projections, producing two intermediate vectors <em>u</em> and <em>v</em>, which are then combined using SwiGLU.</p></li>
+<li><p>The weight matrices W<sub>u</sub> and W<sub>v</sub> in nGPT are normalized. The authors introduce scaling factors s<sub>u</sub> and s<sub>ν</sub> to control their impact. They also rescale ν by √d<sub>model</sub> to optimize SiLU performance.</p></li>
+</ol>
+<p><br><br></p>
+</section>
+<section id="summary-of-all-modifications" class="level1">
+<h1>Summary of all modifications</h1>
+<ol type="1">
+<li>Remove all normalization layers like RMSNorm or LayerNorm.</li>
+<li>After each training step, normalize all matrices (E<sub>input</sub>, E<sub>output</sub>, W<sub>q</sub>, W<sub>k</sub>, W<sub>v</sub>, W<sub>o</sub>, W<sub>u</sub>, W<sub>ν</sub>, and W<sub>o</sub>) along their embedding dimension.</li>
+<li>Replace the updates as follows where α<sub>A</sub> (and also α<sub>M</sub>) is treated with α<sub>A,init</sub> = 0.05 (in order of 1/n_layers) and α<sub>A,scale</sub> = 1/√d<sub>model</sub>.</li>
+<li>Change the softmax scaling factor in attention from 1/√d<sub>k</sub> to √d<sub>k</sub>.</li>
+<li>Implement the rescaling and normalization of q and k where s<sub>qk</sub> is treated with s<sub>qk,init</sub> = 1 and s<sub>qk,scale</sub> = 1/√d<sub>model</sub>.</li>
+<li>Implement the rescaling of the intermediate state of the MLP block where s<sub>u</sub> (and also s<sub>ν</sub>) is treated with s<sub>u,init</sub> = 1 and s<sub>u,scale</sub> = 1</li>
+<li>Implement the rescaling of logits using equation 3, where sz is treated with s<sub>z,init</sub> = 1, s<sub>z,scale</sub> = 1/√d<sub>model</sub>.</li>
+<li>Remove weight decay and learning rate warmup.</li>
+</ol>
+<p><br><br> <img src="paper_screenshots/nGPT/4.png" class="img-fluid" alt="Summary of the changes"></p>
+<p><br><br></p>
+</section>
+<section id="how-fast-is-ngpt-compared-to-gpt" class="level1">
+<h1>How fast is nGPT compared to GPT?</h1>
+<p>A lot! Training the 0.5B and 1B nGPT models is approximately 4x, 10x, and 20x faster at context lengths of 1k, 4k, and 8k tokens, respectively.</p>
+<p><img src="paper_screenshots/nGPT/5.png" class="img-fluid" alt="speed_comparison"> <br><br></p>
+</section>
+<section id="what-about-the-params-and-hparams" class="level1">
+<h1>What about the params and hparams?</h1>
+<p><br><br> <img src="paper_screenshots/nGPT/6.png" class="img-fluid" alt="nGPT_hparams"> <br><br></p>
+</section>
+<section id="there-should-be-a-catch-somewhere-right" class="level1">
+<h1>There should be a catch somewhere, right?</h1>
+<p>Of course, there is always a catch! Quoting directly from the paper: The time cost per step for nGPT is approximately 80% higher with a 4k context length, and 60% higher with an 8k context length. This overhead is not only due to nGPT having 6 normalization steps (2 of them are applied for q and k) per layer instead of 2 but also because nGPT’s normalizations are not yet fully optimized, unlike GPT, where normalization layers are fused with other operations. <br><br></p>
+</section>
+<section id="best-thing-about-ngpt" class="level1">
+<h1>Best thing about nGPT?</h1>
+<p>In standard GPTs, perplexity tends to increase dramatically when tested on sequences longer than pre-training length. In contrast, nGPT maintains a stable perplexity range even at extrapolated lengths. <br><br> <img src="paper_screenshots/nGPT/7.png" class="img-fluid" alt="effect_on_perplexity"> <br><br></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
