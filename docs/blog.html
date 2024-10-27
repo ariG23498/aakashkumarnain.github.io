@@ -73,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
     const options = {
       valueNames: ['listing-date','listing-reading-time','listing-title','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -172,26 +172,101 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(0)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="LLMs">LLMs <span class="quarto-category-count">(2)</span></div><div class="category" data-category="model_merging">model_merging <span class="quarto-category-count">(1)</span></div><div class="category" data-category="papers">papers <span class="quarto-category-count">(2)</span></div><div class="category" data-category="research">research <span class="quarto-category-count">(2)</span></div><div class="category" data-category="summary">summary <span class="quarto-category-count">(2)</span></div><div class="category" data-category="transformers">transformers <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
 
 
-<section id="blog-posts" class="level1">
-<h1>Blog posts</h1>
-<section id="normalized-transformer" class="level5">
-<h5 class="anchored" data-anchor-id="normalized-transformer"><a href="posts/nGPT.html">Normalized Transformer</a></h5>
-<p>Normalized Transformer: Cooked by Nvidia!</p>
 
 
 
-</section>
-</section>
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="papers,summary,transformers,research,LLMs" data-listing-date-sort="1729621800000" data-listing-file-modified-sort="1730051682562" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="body">
+<a href="./posts/paper_summaries/nGPT.html">
+<h3 class="no-anchor listing-title">
+Normalized Transformer
+</h3>
+<div class="listing-subtitle">
 
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('papers'); return false;">
+papers
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('summary'); return false;">
+summary
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('transformers'); return false;">
+transformers
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('research'); return false;">
+research
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('LLMs'); return false;">
+LLMs
+</div>
+</div>
+<a href="./posts/paper_summaries/nGPT.html"> </a>
+</div>
+<div class="metadata">
+<a href="./posts/paper_summaries/nGPT.html">
+<div class="listing-date">
+Oct 23, 2024
+</div>
+<div class="listing-reading-time">
+5 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="papers,summary,transformers,research,LLMs,model_merging" data-listing-date-sort="1728930600000" data-listing-file-modified-sort="1730052404636" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="body">
+<a href="./posts/paper_summaries/model_merging_at_scale.html">
+<h3 class="no-anchor listing-title">
+What Matters for Model Merging at Scale?
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('papers'); return false;">
+papers
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('summary'); return false;">
+summary
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('transformers'); return false;">
+transformers
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('research'); return false;">
+research
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('LLMs'); return false;">
+LLMs
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('model_merging'); return false;">
+model_merging
+</div>
+</div>
+<a href="./posts/paper_summaries/model_merging_at_scale.html"> </a>
+</div>
+<div class="metadata">
+<a href="./posts/paper_summaries/model_merging_at_scale.html">
+<div class="listing-date">
+Oct 15, 2024
+</div>
+<div class="listing-reading-time">
+1 min
+</div>
+</a>
+</div>
+</div>
 </div>
 <div class="listing-no-matching d-none">
 No matching items

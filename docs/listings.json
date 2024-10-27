@@ -1,10 +1,16 @@
 [
   {
     "listing": "/blog.html",
-    "items": []
+    "items": [
+      "/posts/paper_summaries/nGPT.html",
+      "/posts/paper_summaries/model_merging_at_scale.html"
+    ]
   },
   {
     "listing": "/archive.html",
-    "items": []
+    "items": [
+      "/posts/paper_summaries/nGPT.html",
+      "/posts/paper_summaries/model_merging_at_scale.html"
+    ]
   }
 ]
