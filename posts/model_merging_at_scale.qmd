@@ -41,7 +41,6 @@ model merging.
 
 <br><br>
 # Problem Statement
-
 * Focuses on model merging with large models
 * N expert tasks and a base model
 * Expert for each of these N tasks obtained by fully fine-tuning the base model on a specific expert task.
