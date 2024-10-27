@@ -3,6 +3,7 @@ title: "Normalized Transformer"
 subtitle: ""
 author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
 date: "2024-10-23"
+paper: [arXiv](https://arxiv.org/abs/2410.01131)
 categories: [papers, summary, transformers, research, LLMs]
 image: ""
 format:
