@@ -39,7 +39,7 @@ we scale the model size. Most people are either merging models at a small scale 
 merging a limited number of expert models. This paper provides insights into the scalability of
 model merging.
 
-<br><br>
+
 
 # Problem Statement
 
@@ -47,3 +47,39 @@ model merging.
 * N expert tasks and a base model
 * Expert for each of these N tasks obtained by fully fine-tuning the base model on a specific expert task.
 * Four merging methods, including *Averaging*, *Task Arithmetic*, *TIES*, and *DARE*.
+
+
+
+# Experimental Design for Large-Scale Evaluation of Model Merging
+
+* Data
+    + Data settings from the T0 mixture containing 8 held-in and 4 held-out task categories.
+    + The 8 held-in task categories (with a total of 16 datasets) include Multiple-choice QA,
+    Extractive Qa, Closed-Book QA, Sentiment Analysis, Topic Classification, Structure-to-text,
+    Summarization, and Paraphrase Identification. The 4 held-out task categories are Sentence Completion,
+    Natural Language Inference, Co-reference Resolution, and Word Sense Disambiguation.
+
+* Models
+    + PaLM-2 with sizes 1B, 8B, 24B, and 64B as the base models. For all these models,
+    the authors also build an instruction-tuned version of PaLM-2-IT.
+    + For each of the two base model types(non-IT Vs IT) and 4 model sizes, they perform full
+    fine-tuning on the 8 held-in task categories resulting in 64 specialized expert models.
+    + The authors create a large merging experiment grid with the two base models (PaLM-2 and PaLM-2-IT),
+    four model sizes (1B, 8B, 24B, 64B), four Merging methods (Averaging, Task Arithmetic, Dare-TIES,
+    and TIES), the number of constituent models (2, 4, 6, 8), and 3 seeds to randomly select the
+    constituent tasks for the experiment resulting in a total of 384 merging experiments.
+
+
+
+# Evaluation
+
+* Performance evaluated on both held-in and held-out tasks
+* ∼9000 model evaluations across all the experiments.
+
+
+
+# Metrics
+
+* For held-in tasks, the merged model performance is normalized against the corresponding task
+expert model's performance.
+* For held-out tasks, normalization is performed relative to the base model's performance.
