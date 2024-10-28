@@ -1,13 +1,32 @@
 ---
-listing:
-  contents: posts/
-  sort: "date desc"
-  type: default
-  categories: true
-  sort-ui: false
-  filter-ui: false
-  fields: [date, reading-time, title, categories]
-  feed: false
+title: "Blog Posts"
 page-layout: full
 title-block-banner: false
+toc: true
+listing:
+  - id: paper_summaries
+    contents: posts/paper_summaries/
+    sort: "date desc"
+    type: default
+    categories: true
+    sort-ui: false
+    filter-ui: false
+    fields: [date, reading-time, title, categories]
+    feed: false
+
+  - id: maths
+    contents: posts/maths/
+    sort: "date desc"
+    type: default
+    categories: true
+    sort-ui: false
+    filter-ui: false
+    fields: [date, reading-time, title, categories]
+    feed: false
 ---
+
+
+## Paper Summaries
+:::{#paper_summaries}
+:::
+
