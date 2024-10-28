@@ -13,6 +13,7 @@ format:
     code-fold: true
     code-summary: "Show the code"
     highlight-style: oblivion
+    css: styles.css
 execute: 
   echo: false
 ---

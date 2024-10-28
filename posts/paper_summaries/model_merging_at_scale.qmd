@@ -1,6 +1,6 @@
 ---
 title: "What Matters for Model Merging at Scale?"
-subtitle: "[arXiv](https://arxiv.org/abs/2410.03617)  [annotated_paper](https://github.com/AakashKumarNain/annotated_research_papers/blob/master/NLP/model_merging_at_scale.pdf)"
+subtitle: "[arXiv](https://arxiv.org/abs/2410.03617)  |  [annotated_paper](https://github.com/AakashKumarNain/annotated_research_papers/blob/master/NLP/model_merging_at_scale.pdf)"
 author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
 date: "2024-10-15"
 categories: [papers, summary, transformers, research, LLMs, model_merging]
@@ -13,6 +13,7 @@ format:
     code-fold: true
     code-summary: "Show the code"
     highlight-style: oblivion
+    css: styles.css
 execute: 
   echo: false
 ---
@@ -58,6 +59,8 @@ model merging.
     Extractive Qa, Closed-Book QA, Sentiment Analysis, Topic Classification, Structure-to-text,
     Summarization, and Paraphrase Identification. The 4 held-out task categories are Sentence Completion,
     Natural Language Inference, Co-reference Resolution, and Word Sense Disambiguation.
+
+<br>
 
 * Models
     + PaLM-2 with sizes 1B, 8B, 24B, and 64B as the base models. For all these models,
