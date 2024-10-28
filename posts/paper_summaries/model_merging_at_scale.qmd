@@ -1,6 +1,6 @@
 ---
 title: "What Matters for Model Merging at Scale?"
-subtitle: "[arXiv](https://arxiv.org/abs/2410.03617)  |  [annotated_paper](https://github.com/AakashKumarNain/annotated_research_papers/blob/master/NLP/model_merging_at_scale.pdf)"
+subtitle: ""
 author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
 date: "2024-10-15"
 categories: [papers, summary, transformers, research, LLMs, model_merging]
@@ -17,6 +17,9 @@ format:
 execute: 
   echo: false
 ---
+
+[arXiv](https://arxiv.org/abs/2410.03617)<br>
+[annotated_paper](https://github.com/AakashKumarNain/annotated_research_papers/blob/master/NLP/model_merging_at_scale.pdf)
 
 Yesterday, I read this banger paper titled: **What Matters For Model Merging At Scale?**.
 Though I recommend reading the full paper, I am including a summary here in case you are interested
@@ -59,7 +62,7 @@ model merging.
     Extractive Qa, Closed-Book QA, Sentiment Analysis, Topic Classification, Structure-to-text,
     Summarization, and Paraphrase Identification. The 4 held-out task categories are Sentence Completion,
     Natural Language Inference, Co-reference Resolution, and Word Sense Disambiguation.
-
+    
 <br>
 
 * Models
@@ -72,14 +75,14 @@ model merging.
     and TIES), the number of constituent models (2, 4, 6, 8), and 3 seeds to randomly select the
     constituent tasks for the experiment resulting in a total of 384 merging experiments.
 
-
+<br>
 
 # Evaluation
 
 * Performance evaluated on both held-in and held-out tasks
 * ∼9000 model evaluations across all the experiments.
 
-
+<br>
 
 # Metrics
 
@@ -87,6 +90,7 @@ model merging.
 expert model's performance.
 * For held-out tasks, normalization is performed relative to the base model's performance.
 
+<br>
 
 # Experimental Results and Insights
 
