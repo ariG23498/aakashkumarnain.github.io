@@ -161,7 +161,6 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">What Matters for Model Merging at Scale?</h1>
-<p class="subtitle lead"><a href="https://arxiv.org/abs/2410.03617">arXiv</a> | <a href="https://github.com/AakashKumarNain/annotated_research_papers/blob/master/NLP/model_merging_at_scale.pdf">annotated_paper</a></p>
   <div class="quarto-categories">
     <div class="quarto-category">papers</div>
     <div class="quarto-category">summary</div>
@@ -196,6 +195,7 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p><a href="https://arxiv.org/abs/2410.03617">arXiv</a><br> <a href="https://github.com/AakashKumarNain/annotated_research_papers/blob/master/NLP/model_merging_at_scale.pdf">annotated_paper</a></p>
 <p>Yesterday, I read this banger paper titled: <strong>What Matters For Model Merging At Scale?</strong>. Though I recommend reading the full paper, I am including a summary here in case you are interested in the main points. I will also provide the link to an annotated version of this paper.</p>
 <p><br><br> <img src="../paper_screenshots/model_merging_at_scale/1.png" class="img-fluid"> <br><br></p>
 <section id="introduction" class="level1">
@@ -235,6 +235,7 @@ ul.task-list li input[type="checkbox"] {
 <li>The authors create a large merging experiment grid with the two base models (PaLM-2 and PaLM-2-IT), four model sizes (1B, 8B, 24B, 64B), four Merging methods (Averaging, Task Arithmetic, Dare-TIES, and TIES), the number of constituent models (2, 4, 6, 8), and 3 seeds to randomly select the constituent tasks for the experiment resulting in a total of 384 merging experiments.</li>
 </ul></li>
 </ul>
+<p><br></p>
 </section>
 <section id="evaluation" class="level1">
 <h1>Evaluation</h1>
@@ -242,6 +243,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Performance evaluated on both held-in and held-out tasks</li>
 <li>∼9000 model evaluations across all the experiments.</li>
 </ul>
+<p><br></p>
 </section>
 <section id="metrics" class="level1">
 <h1>Metrics</h1>
@@ -249,6 +251,7 @@ ul.task-list li input[type="checkbox"] {
 <li>For held-in tasks, the merged model performance is normalized against the corresponding task expert model’s performance.</li>
 <li>For held-out tasks, normalization is performed relative to the base model’s performance.</li>
 </ul>
+<p><br></p>
 </section>
 <section id="experimental-results-and-insights" class="level1">
 <h1>Experimental Results and Insights</h1>

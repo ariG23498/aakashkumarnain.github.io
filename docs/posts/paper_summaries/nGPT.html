@@ -163,7 +163,6 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Normalized Transformer</h1>
-<p class="subtitle lead"><a href="https://arxiv.org/abs/2410.01131">arXiv</a></p>
   <div class="quarto-categories">
     <div class="quarto-category">papers</div>
     <div class="quarto-category">summary</div>
@@ -197,6 +196,7 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p><a href="https://arxiv.org/abs/2410.01131">arXiv</a><br><br></p>
 <p>We have been using transformers daily for a couple of years now, but the advancements on the architectural side have remained minimal. This paper from Nvidia proposes a <strong>normalized Transformer (nGPT)</strong>, which performs representation learning on a hypersphere. Here is a summary for the same:</p>
 <section id="token-embeddings-and-output-logits" class="level1">
 <h1>Token embeddings and output logits</h1>
@@ -209,11 +209,11 @@ ul.task-list li input[type="checkbox"] {
 <section id="layers-and-blocks" class="level1">
 <h1>Layers and Blocks</h1>
 <ol type="1">
-<li>A typical transformer block looks like this where L layers of transformations are applied to the hidden state h, consisting of alternating the self-attention and MLP blocks:<br><br> <img src="../paper_screenshots/nGPT/1.png" class="img-fluid" alt="Typical Transformer Block"></li>
+<li><p>A typical transformer block looks like this where L layers of transformations are applied to the hidden state h, consisting of alternating the self-attention and MLP blocks: <br><br><img src="../paper_screenshots/nGPT/1.png" class="img-fluid" alt="Typical Transformer Block"><br><br></p></li>
+<li><p>If we are on a hypersphere, we can use spherical linear interpolation to compute the geodesic distance between two points a and b on the hypersphere. We can approximate SLERP with approximate linear interpolation (LERP) as shown below: <br><br><img src="../paper_screenshots/nGPT/2.png" class="img-fluid" alt="SLERP and LERP"><br><br></p></li>
+<li><p>If point a is our hidden state h, and point b represents the point suggested by the attention or MLP block, we can represent our equations for the transformer blocks like this: <br><br><img src="../paper_screenshots/nGPT/3.png" class="img-fluid" alt="Representing hidden state and attention or MLP outputs on hypersphere"><br><br></p></li>
+<li><p>Here α<sub>A</sub> ≥0 and α<sub>M</sub> ≥0, with dimensionality d<sub>model</sub>, are learnable parameters applied to the normalized outputs of the attention and MLP blocks, respectively. The norm function normalizes any vector x to have a unit norm and, unlike RMSNorm or LayerNorm, does not introduce any element-wise scaling factors. This normalization can be viewed as the retraction step in Riemannian optimization, mapping the updated solution back to the manifold.</p></li>
 </ol>
-<p><br><br> 2. If we are on a hypersphere, we can use spherical linear interpolation to compute the geodesic distance between two points a and b on the hypersphere. We can approximate SLERP with approximate linear interpolation (LERP) as shown below: <br><br> <img src="../paper_screenshots/nGPT/2.png" class="img-fluid" alt="SLERP and LERP"></p>
-<p><br><br> 3. If point a is our hidden state h, and point b represents the point suggested by the attention or MLP block, we can represent our equations for the transformer blocks like this: <br><br> <img src="../paper_screenshots/nGPT/3.png" class="img-fluid" alt="Representing hidden state and attention or MLP outputs on hypersphere"></p>
-<p><br><br> 4. Here α<sub>A</sub> ≥0 and α<sub>M</sub> ≥0, with dimensionality d<sub>model</sub>, are learnable parameters applied to the normalized outputs of the attention and MLP blocks, respectively. The norm function normalizes any vector x to have a unit norm and, unlike RMSNorm or LayerNorm, does not introduce any element-wise scaling factors. This normalization can be viewed as the retraction step in Riemannian optimization, mapping the updated solution back to the manifold.</p>
 </section>
 <section id="self-attention-blocks" class="level1">
 <h1>Self-Attention Blocks</h1>
@@ -223,7 +223,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Though each element of <em>q</em> and <em>k</em> is now bounded, the norms of these two vectors can still vary. Also, the addition of positional embeddings can further distort <em>q</em> and <em>k</em>. To this end, the authors additionally normalize <em>q</em> and <em>k</em> by introducing a scaling factor s<sub>qk</sub> for each head, ensuring that the dot product of every query and key is under control.</p></li>
 <li><p>In the original Transformer, the query-key dot product is scaled by 1/√d<sub>k</sub> before applying softmax to account for the expected variance of d<sub>k</sub> in the dot product of non-normalized query and key vectors. In the normalized Transformer, the expected variance of the dot product between the normalized query and key vectors is 1/dk. The softmax scaling factor should instead be √d<sub>k</sub> to restore a variance of 1</p></li>
 </ol>
-<p><br><br></p>
+<p><br></p>
 </section>
 <section id="mlp" class="level1">
 <h1>MLP</h1>
@@ -231,27 +231,26 @@ ul.task-list li input[type="checkbox"] {
 <li><p>The input hidden state <em>h</em> of the MLP block of a classical transformer is first normalized using RMSNorm(or LayerNorm) and then passed through two separate linear projections, producing two intermediate vectors <em>u</em> and <em>v</em>, which are then combined using SwiGLU.</p></li>
 <li><p>The weight matrices W<sub>u</sub> and W<sub>v</sub> in nGPT are normalized. The authors introduce scaling factors s<sub>u</sub> and s<sub>ν</sub> to control their impact. They also rescale ν by √d<sub>model</sub> to optimize SiLU performance.</p></li>
 </ol>
-<p><br><br></p>
+<p><br></p>
 </section>
 <section id="summary-of-all-modifications" class="level1">
 <h1>Summary of all modifications</h1>
 <ol type="1">
-<li>Remove all normalization layers like RMSNorm or LayerNorm.</li>
-<li>After each training step, normalize all matrices (E<sub>input</sub>, E<sub>output</sub>, W<sub>q</sub>, W<sub>k</sub>, W<sub>v</sub>, W<sub>o</sub>, W<sub>u</sub>, W<sub>ν</sub>, and W<sub>o</sub>) along their embedding dimension.</li>
-<li>Replace the updates as follows where α<sub>A</sub> (and also α<sub>M</sub>) is treated with α<sub>A,init</sub> = 0.05 (in order of 1/n_layers) and α<sub>A,scale</sub> = 1/√d<sub>model</sub>.</li>
-<li>Change the softmax scaling factor in attention from 1/√d<sub>k</sub> to √d<sub>k</sub>.</li>
-<li>Implement the rescaling and normalization of q and k where s<sub>qk</sub> is treated with s<sub>qk,init</sub> = 1 and s<sub>qk,scale</sub> = 1/√d<sub>model</sub>.</li>
-<li>Implement the rescaling of the intermediate state of the MLP block where s<sub>u</sub> (and also s<sub>ν</sub>) is treated with s<sub>u,init</sub> = 1 and s<sub>u,scale</sub> = 1</li>
-<li>Implement the rescaling of logits using equation 3, where sz is treated with s<sub>z,init</sub> = 1, s<sub>z,scale</sub> = 1/√d<sub>model</sub>.</li>
-<li>Remove weight decay and learning rate warmup.</li>
+<li><p>Remove all normalization layers like RMSNorm or LayerNorm.</p></li>
+<li><p>After each training step, normalize all matrices (E<sub>input</sub>, E<sub>output</sub>, W<sub>q</sub>, W<sub>k</sub>, W<sub>v</sub>, W<sub>o</sub>, W<sub>u</sub>, W<sub>ν</sub>, and W<sub>o</sub>) along their embedding dimension.</p></li>
+<li><p>Replace the updates as follows where α<sub>A</sub> (and also α<sub>M</sub>) is treated with α<sub>A,init</sub> = 0.05 (in order of 1/n_layers) and α<sub>A,scale</sub> = 1/√d<sub>model</sub>.</p></li>
+<li><p>Change the softmax scaling factor in attention from 1/√d<sub>k</sub> to √d<sub>k</sub>.</p></li>
+<li><p>Implement the rescaling and normalization of q and k where s<sub>qk</sub> is treated with s<sub>qk,init</sub> = 1 and s<sub>qk,scale</sub> = 1/√d<sub>model</sub>.</p></li>
+<li><p>Implement the rescaling of the intermediate state of the MLP block where s<sub>u</sub> (and also s<sub>ν</sub>) is treated with s<sub>u,init</sub> = 1 and s<sub>u,scale</sub> = 1</p></li>
+<li><p>Implement the rescaling of logits using equation 3, where sz is treated with s<sub>z,init</sub> = 1, s<sub>z,scale</sub> = 1/√d<sub>model</sub>.</p></li>
+<li><p>Remove weight decay and learning rate warmup.</p></li>
 </ol>
-<p><br><br> <img src="../paper_screenshots/nGPT/4.png" class="img-fluid" alt="Summary of the changes"></p>
-<p><br><br></p>
+<p><br><br><img src="../paper_screenshots/nGPT/4.png" class="img-fluid" alt="Summary of the changes"><br><br></p>
 </section>
 <section id="how-fast-is-ngpt-compared-to-gpt" class="level1">
 <h1>How fast is nGPT compared to GPT?</h1>
 <p>A lot! Training the 0.5B and 1B nGPT models is approximately 4x, 10x, and 20x faster at context lengths of 1k, 4k, and 8k tokens, respectively.</p>
-<p><img src="../paper_screenshots/nGPT/5.png" class="img-fluid" alt="speed_comparison"> <br><br></p>
+<p><br><br><img src="../paper_screenshots/nGPT/5.png" class="img-fluid" alt="speed_comparison"><br><br></p>
 </section>
 <section id="what-about-the-params-and-hparams" class="level1">
 <h1>What about the params and hparams?</h1>
@@ -259,11 +258,13 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="there-should-be-a-catch-somewhere-right" class="level1">
 <h1>There should be a catch somewhere, right?</h1>
-<p>Of course, there is always a catch! Quoting directly from the paper: The time cost per step for nGPT is approximately 80% higher with a 4k context length, and 60% higher with an 8k context length. This overhead is not only due to nGPT having 6 normalization steps (2 of them are applied for q and k) per layer instead of 2 but also because nGPT’s normalizations are not yet fully optimized, unlike GPT, where normalization layers are fused with other operations. <br><br></p>
+<p>Of course, there is always a catch! Quoting directly from the paper: The time cost per step for nGPT is approximately 80% higher with a 4k context length, and 60% higher with an 8k context length. This overhead is not only due to nGPT having 6 normalization steps (2 of them are applied for q and k) per layer instead of 2 but also because nGPT’s normalizations are not yet fully optimized, unlike GPT, where normalization layers are fused with other operations.</p>
+<p><br></p>
 </section>
 <section id="best-thing-about-ngpt" class="level1">
 <h1>Best thing about nGPT?</h1>
-<p>In standard GPTs, perplexity tends to increase dramatically when tested on sequences longer than pre-training length. In contrast, nGPT maintains a stable perplexity range even at extrapolated lengths. <br><br> <img src="../paper_screenshots/nGPT/7.png" class="img-fluid" alt="effect_on_perplexity"> <br><br></p>
+<p>In standard GPTs, perplexity tends to increase dramatically when tested on sequences longer than pre-training length. In contrast, nGPT maintains a stable perplexity range even at extrapolated lengths.</p>
+<p><br><br><img src="../paper_screenshots/nGPT/7.png" class="img-fluid" alt="effect_on_perplexity"></p>
 
 
 </section>
