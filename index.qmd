@@ -70,8 +70,7 @@ understand the working of diffusion models and the underlying math. <br>
 
 This is a direct port of Mitral-7B model in JAX and Equinox. This port comes with two implementations:
 The first one shows how to port models from PyTorch to Equinox and JAX. This is a 1:1 mapping, and not
-fully optimized. The second implementation is fully optimized for JAX, targeted for the more advanced
-users.
+fully optimized. The second implementation is fully optimized for JAX, targeted for more advanced users.
 
 :::
 
