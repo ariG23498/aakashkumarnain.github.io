@@ -103,3 +103,18 @@ outputs a sentence description of the icon about the potential functionality. An
 GPT-4o will output ’this is not an icon’, while still including this in the dataset.
 5. BLIP-v2 is fine-tuned on this dataset for 1 epoch with a constant learning rate of
 1e−5, no weight decay, and Adam optimizer.
+
+
+<br><br>
+![](../paper_screenshots/omniparser/2.png)
+<br><br>
+
+
+# Results
+
+
+<br><br>
+![](../paper_screenshots/omniparser/3.png)
+<br><br>
+
+
