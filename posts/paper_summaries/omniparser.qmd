@@ -1,0 +1,50 @@
+---
+title: "OmniParser for Pure Vision Based GUI Agent"
+subtitle: ""
+author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
+date: "2024-10-28"
+categories: [papers, summary, research, VLMs, MLLMs]
+image: ""
+format:
+  html:
+    theme: default
+    fontsize: 2em
+    backgroundcolor: rgb(255, 255, 255);
+    code-fold: true
+    code-summary: "Show the code"
+    highlight-style: oblivion
+    css: styles.css
+execute: 
+  echo: false
+---
+
+[arXiv](https://arxiv.org/abs/2408.00203)<br>
+
+
+With the Ferret-v2 paper, Apple demonstrated the power of building multimodal models for mobile
+devices. Now, Microsoft has done the same, but for the desktop UI. Presenting Omniparser, the
+latest advancement from Microsoft for vision-based multimodal workflows. Here is a summary in
+case you are interested: 
+
+
+# Why does UI understanding matter?
+
+Since the last few months, there has been a lot of buzz about agents and system 2. A common theme
+across these explorations is that we want to automate many complex yet mundane tasks with the
+current generation of LLMs and MLLMs. 
+
+For example, an automatic trip planner is an excellent idea. You provide the trip details
+e.g. starting-ending dates, places you want to explore, etc. The system takes this information as
+input and completes the whole task of planning the trip, including but not limited to booking flight
+tickets, hotels, etc.
+
+Some of the sub-tasks in the above example can be completed using DOM alone, but things like captcha
+completion require visual understanding.
+
+
+# Hypothesis
+
+Multimodal models like GPT-4V, when asked to predict the xy coordinates of the interactable regions
+on the screen directly from UI (e.g. screenshots of a web page) perform poorly because of their
+inability to correctly identify the semantic information associated with the icons and other elements
+on the screen.
