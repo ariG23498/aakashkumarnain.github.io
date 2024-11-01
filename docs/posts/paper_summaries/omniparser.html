@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Aakash Kumar Nain (@A_K_Nain)">
+<meta name="dcterms.date" content="2024-10-28">
 
-<title>Aakash Nain - Archive</title>
+<title>Aakash Nain - OmniParser for Pure Vision Based GUI Agent</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -61,39 +61,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -103,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aakash Nain</span>
     </a>
   </div>
@@ -129,11 +99,11 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html" rel="" target="">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
  <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./archive.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="../../archive.html" rel="" target="">
  <span class="menu-text">Archive</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -167,23 +137,56 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-does-ui-understanding-matter" id="toc-why-does-ui-understanding-matter" class="nav-link active" data-scroll-target="#why-does-ui-understanding-matter">Why does UI understanding matter?</a></li>
+  <li><a href="#hypothesis" id="toc-hypothesis" class="nav-link" data-scroll-target="#hypothesis">Hypothesis</a></li>
+  <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method">Method</a></li>
+  <li><a href="#interactable-region-detection" id="toc-interactable-region-detection" class="nav-link" data-scroll-target="#interactable-region-detection">Interactable Region Detection</a></li>
+  <li><a href="#incorporating-local-semantics-of-functionality" id="toc-incorporating-local-semantics-of-functionality" class="nav-link" data-scroll-target="#incorporating-local-semantics-of-functionality">Incorporating Local Semantics of Functionality</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#failure-modes" id="toc-failure-modes" class="nav-link" data-scroll-target="#failure-modes">Failure Modes</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Archive</h1>
-</div>
+<h1 class="title">OmniParser for Pure Vision Based GUI Agent</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">papers</div>
+    <div class="quarto-category">summary</div>
+    <div class="quarto-category">research</div>
+    <div class="quarto-category">VLMs</div>
+    <div class="quarto-category">MLLMs</div>
+  </div>
+  </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Aakash Kumar Nain (<a href="https://x.com/A_K_Nain"><span class="citation" data-cites="A_K_Nain">@A_K_Nain</span></a>) </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 28, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -191,74 +194,72 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p><a href="https://arxiv.org/abs/2408.00203">arXiv</a><br></p>
+<p>With the Ferret-v2 paper, Apple demonstrated the power of building multimodal models for mobile devices. Now, Microsoft has done the same, but for the desktop UI. Presenting Omniparser, the latest advancement from Microsoft for vision-based multimodal workflows. Here is a summary in case you are interested:</p>
+<section id="why-does-ui-understanding-matter" class="level1">
+<h1>Why does UI understanding matter?</h1>
+<p>Since the last few months, there has been a lot of buzz about agents and system 2. A common theme across these explorations is that we want to automate many complex yet mundane tasks with the current generation of LLMs and MLLMs.</p>
+<p>For example, an automatic trip planner is an excellent idea. You provide the trip details e.g.&nbsp;starting-ending dates, places you want to explore, etc. The system takes this information as input and completes the whole task of planning the trip, including but not limited to booking flight tickets, hotels, etc.</p>
+<p>Some of the sub-tasks in the above example can be completed using DOM alone, but things like captcha completion require visual understanding.</p>
+</section>
+<section id="hypothesis" class="level1">
+<h1>Hypothesis</h1>
+<p>Multimodal models like GPT-4V, when asked to predict the xy coordinates of the interactable regions on the screen directly from UI (e.g.&nbsp;screenshots of a web page) perform poorly because of their inability to correctly identify the semantic information associated with the icons and other elements on the screen.</p>
+</section>
+<section id="method" class="level1">
+<h1>Method</h1>
+<p>To elevate the above problem, the authors suggest to break down the task into two steps:</p>
+<ol type="1">
+<li>Understand the content present on screen at the current step to figure out the interactable regions and their corresponding functionality.</li>
+<li>Based on the above information, predict the next action required to complete the task.</li>
+</ol>
+<p>To achieve the above workflow, OmniParser combines the outputs from three different models:</p>
+<ul>
+<li>Interactable icon detection model.</li>
+<li>Icon description model.</li>
+<li>OCR module</li>
+</ul>
+<p>The output is a structured DOM-like representation of the UI, with a screenshot overlaid with bounding boxes for potential interactable elements.</p>
+<p><br><br> <img src="../paper_screenshots/omniparser/1.png" class="img-fluid"> <br><br></p>
+</section>
+<section id="interactable-region-detection" class="level1">
+<h1>Interactable Region Detection</h1>
+<ol type="1">
+<li>Uses the Set-of-Marks approach to overlay bounding boxes of interactable icons on top of UI screenshots.</li>
+<li>Finetune a detection model to extract interactable icons/buttons.</li>
+<li>The authors curated a dataset of interactable icon detection dataset, containing 67k unique screenshot images, each labeled with bounding boxes of interactable icons derived from the DOM tree.</li>
+<li>Finetune the YOLOv8 model on the interactable icon region detection dataset for 20 epoch with a batch size of 256, learning rate of 1e−3, and the Adam optimizer on 4 GPUs.</li>
+<li>An OCR module is also used to extract bounding boxes of text. The authors merge the bounding boxes from the OCR detection module and icon detection module while removing the boxes that have high overlap (90% as a threshold). Every bounding box is assigned a unique ID.</li>
+</ol>
+</section>
+<section id="incorporating-local-semantics-of-functionality" class="level1">
+<h1>Incorporating Local Semantics of Functionality</h1>
+<ol type="1">
+<li>Incorporate local semantics directly into the prompt.</li>
+<li>Generate a description of functionality using another model for each of the interactable regions detected by the interactable region detection model. For text boxes, detected text and the labels are injected into the prompt.</li>
+<li>Uses BLIP-v2 as the icon description model for generating descriptions for the interactable regions.</li>
+<li>For fine-tuning BLIP-v2, the authors curate a dataset of 7k icon-description pairs using GPT-4o. For the description, the authors ask GPT-4o whether the object presented in the parsed bounding box is an app icon. If GPT-4o decides the image is an icon, it outputs a sentence description of the icon about the potential functionality. And if not, GPT-4o will output ’this is not an icon’, while still including this in the dataset.</li>
+<li>BLIP-v2 is fine-tuned on this dataset for 1 epoch with a constant learning rate of 1e−5, no weight decay, and Adam optimizer.</li>
+</ol>
+<p><br><br> <img src="../paper_screenshots/omniparser/2.png" class="img-fluid"> <br><br></p>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<p><br><br> <img src="../paper_screenshots/omniparser/3.png" class="img-fluid"> <br><br></p>
+</section>
+<section id="failure-modes" class="level1">
+<h1>Failure Modes</h1>
+<ol type="1">
+<li>Repeated Icons/Texts: When the screenshot contains repeated elements, and it is required to click/select one of the elements, GPT-4V still fails many times. More granularity in the description of the repeated elements may alleviate the problem.</li>
+<li>Coarse Prediction of Bounding Boxes: The current OCR cannot differentiate between normal text and hyperlinks, hence in some cases elements of the predicted coordinatese of the clickable texts may not be correct.</li>
+<li>Icon Misinterpretation: Given that the icon-description model only sees a part (elements with a bbox) of the full screenshot, the lack of a global view can lead to a wrong description of the detected interactable icons. For example, three dots can be pretty confusing for the current description model</li>
+</ol>
+<p><br><br> <img src="../paper_screenshots/omniparser/4.png" class="img-fluid"> <br><br></p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="papers,summary,research,VLMs,MLLMs" data-listing-date-sort="1730053800000" data-listing-file-modified-sort="1730445816686" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="body">
-<a href="./posts/paper_summaries/omniparser.html">
-<h3 class="no-anchor listing-title">
-OmniParser for Pure Vision Based GUI Agent
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/paper_summaries/omniparser.html">
-<div class="listing-date">
-Oct 28, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="papers,summary,transformers,research,LLMs" data-listing-date-sort="1729621800000" data-listing-file-modified-sort="1730141776985" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
-<div class="body">
-<a href="./posts/paper_summaries/nGPT.html">
-<h3 class="no-anchor listing-title">
-Normalized Transformer
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/paper_summaries/nGPT.html">
-<div class="listing-date">
-Oct 23, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="papers,summary,transformers,research,LLMs,model_merging" data-listing-date-sort="1728930600000" data-listing-file-modified-sort="1730141963543" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="body">
-<a href="./posts/paper_summaries/model_merging_at_scale.html">
-<h3 class="no-anchor listing-title">
-What Matters for Model Merging at Scale?
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/paper_summaries/model_merging_at_scale.html">
-<div class="listing-date">
-Oct 15, 2024
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

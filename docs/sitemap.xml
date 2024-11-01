@@ -2,22 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>/blog.html</loc>
-    <lastmod>2024-10-29T14:22:17.875Z</lastmod>
+    <lastmod>2024-11-01T07:24:30.371Z</lastmod>
   </url>
   <url>
     <loc>/archive.html</loc>
-    <lastmod>2024-10-29T14:22:16.650Z</lastmod>
+    <lastmod>2024-11-01T07:24:28.963Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/omniparser.html</loc>
+    <lastmod>2024-11-01T07:24:27.164Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/nGPT.html</loc>
-    <lastmod>2024-10-29T14:22:14.945Z</lastmod>
+    <lastmod>2024-11-01T07:24:26.481Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/model_merging_at_scale.html</loc>
-    <lastmod>2024-10-29T14:22:15.640Z</lastmod>
+    <lastmod>2024-11-01T07:24:27.856Z</lastmod>
   </url>
   <url>
     <loc>/index.html</loc>
-    <lastmod>2024-10-29T14:22:17.221Z</lastmod>
+    <lastmod>2024-11-01T07:24:29.560Z</lastmod>
   </url>
 </urlset>

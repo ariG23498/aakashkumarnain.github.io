@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/paper_summaries/omniparser.html",
       "/posts/paper_summaries/nGPT.html",
       "/posts/paper_summaries/model_merging_at_scale.html"
     ]
@@ -9,6 +10,7 @@
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/paper_summaries/omniparser.html",
       "/posts/paper_summaries/nGPT.html",
       "/posts/paper_summaries/model_merging_at_scale.html"
     ]
