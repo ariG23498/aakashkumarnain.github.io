@@ -118,3 +118,21 @@ GPT-4o will output ’this is not an icon’, while still including this in the 
 <br><br>
 
 
+# Failure Modes
+
+1. Repeated Icons/Texts: When the screenshot contains repeated elements, and it is
+required to click/select one of the elements, GPT-4V still fails many times. More
+granularity in the description of the repeated elements may alleviate the problem.
+2. Coarse Prediction of Bounding Boxes: The current OCR cannot differentiate between
+normal text and hyperlinks, hence in some cases elements of the predicted coordinatese
+of the clickable texts may not be correct.
+3. Icon Misinterpretation: Given that the icon-description model only sees a part
+(elements with a bbox) of the full screenshot, the lack of a global view can lead
+to a wrong description of the detected interactable icons. For example, three dots
+can be pretty confusing for the current description model
+
+
+<br><br>
+![](../paper_screenshots/omniparser/4.png)
+<br><br>
+
