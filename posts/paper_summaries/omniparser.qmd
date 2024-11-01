@@ -48,3 +48,58 @@ Multimodal models like GPT-4V, when asked to predict the xy coordinates of the i
 on the screen directly from UI (e.g. screenshots of a web page) perform poorly because of their
 inability to correctly identify the semantic information associated with the icons and other elements
 on the screen.
+
+
+# Method
+
+To elevate the above problem, the authors suggest to break down the task into two steps:
+
+1. Understand the content present on screen at the current step to figure out the interactable
+regions and their corresponding functionality.
+2. Based on the above information, predict the next action required to complete the task.
+
+
+To achieve the above workflow, OmniParser combines the outputs from three different models:
+
+* Interactable icon detection model.
+* Icon description model.
+* OCR module
+
+The output is a structured DOM-like representation of the UI, with a screenshot overlaid
+with bounding boxes for potential interactable elements.
+
+<br><br>
+![](../paper_screenshots/omniparser/1.png)
+<br><br>
+
+
+# Interactable Region Detection
+
+1. Uses the Set-of-Marks approach to overlay bounding boxes of interactable icons on top
+of UI screenshots.
+2. Finetune a detection model to extract interactable icons/buttons.
+3. The authors curated a dataset of interactable icon detection dataset, containing 67k
+unique screenshot images, each labeled with bounding boxes of interactable icons derived from
+the DOM tree.
+4. Finetune the YOLOv8 model on the interactable icon region detection dataset for 20 epoch
+with a batch size of 256, learning rate of 1e−3, and the Adam optimizer on 4 GPUs.
+5. An OCR module is also used to extract bounding boxes of text. The authors merge the
+bounding boxes from the OCR detection module and icon detection module while removing the
+boxes that have high overlap (90% as a threshold). Every bounding box is assigned a unique ID.
+
+
+# Incorporating Local Semantics of Functionality
+
+1. Incorporate local semantics directly into the prompt.
+2. Generate a description of functionality using another model for each of the interactable
+regions detected by the interactable region detection model. For text boxes, detected text
+and the labels are injected into the prompt.
+3. Uses BLIP-v2 as the icon description model for generating descriptions for the
+interactable regions.
+4. For fine-tuning BLIP-v2, the authors curate a dataset of 7k icon-description pairs
+using GPT-4o. For the description, the authors ask GPT-4o whether the object presented
+in the parsed bounding box is an app icon. If GPT-4o decides the image is an icon, it
+outputs a sentence description of the icon about the potential functionality. And if not,
+GPT-4o will output ’this is not an icon’, while still including this in the dataset.
+5. BLIP-v2 is fine-tuned on this dataset for 1 epoch with a constant learning rate of
+1e−5, no weight decay, and Adam optimizer.
