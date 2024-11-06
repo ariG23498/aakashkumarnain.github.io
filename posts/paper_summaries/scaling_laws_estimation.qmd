@@ -20,88 +20,42 @@ execute:
 [arXiv](https://arxiv.org/abs/2410.11840)<br>
 
 
-With the Ferret-v2 paper, Apple demonstrated the power of building multimodal models for mobile
-devices. Now, Microsoft has done the same, but for the desktop UI. Presenting Omniparser, the
-latest advancement from Microsoft for vision-based multimodal workflows. Here is a summary in
-case you are interested: 
+Scaling laws have been discussed a lot in the past few years. The OG paper 
+on scaling laws is still one of the best, but this latest paper from IBM and MIT provides
+a fresh perspective. Here is a quick summary in case you are interested:
 
 
-# Why does UI understanding matter?
+# Why should one care about scaling laws?
 
-Since the last few months, there has been a lot of buzz about agents and system 2. A common theme
-across these explorations is that we want to automate many complex yet mundane tasks with the
-current generation of LLMs and MLLMs. 
+* Design choices like architectural modification, data changes, etc., are crucial, but every
+option is expensive to evaluate at scale.
+* What if we use smaller models to assess the design choices? Will the findings be upheld when
+using a larger model?
+* A scaling law extrapolates the performance of a target model from the performance of a set
+of models with fewer parameters or smaller training sets. A high-quality scaling law
+accurately predicts the test performance of the target model.
 
-For example, an automatic trip planner is an excellent idea. You provide the trip details
-e.g. starting-ending dates, places you want to explore, etc. The system takes this information as
-input and completes the whole task of planning the trip, including but not limited to booking flight
-tickets, hotels, etc.
+<br>
 
-Some of the sub-tasks in the above example can be completed using DOM alone, but things like captcha
-completion require visual understanding.
+# Defining a scaling law
 
-
-# Hypothesis
-
-Multimodal models like GPT-4V, when asked to predict the xy coordinates of the interactable regions
-on the screen directly from UI (e.g. screenshots of a web page) perform poorly because of their
-inability to correctly identify the semantic information associated with the icons and other elements
-on the screen.
-
-
-# Method
-
-To elevate the above problem, the authors suggest to break down the task into two steps:
-
-1. Understand the content present on screen at the current step to figure out the interactable
-regions and their corresponding functionality.
-2. Based on the above information, predict the next action required to complete the task.
-
-
-To achieve the above workflow, OmniParser combines the outputs from three different models:
-
-* Interactable icon detection model.
-* Icon description model.
-* OCR module
-
-The output is a structured DOM-like representation of the UI, with a screenshot overlaid
-with bounding boxes for potential interactable elements.
+* A scaling law estimates the loss of a costly model by training cheaper ones that share
+a pretraining procedure and differ by some hyperparameters, typically model size (num_params)
+and number of tokens seen during training (num_toks).
+* The authors define a scaled model family *f* as a set of models, with each f ∈ F differing
+only in size num_params(f ) and number of tokens num_toks(f ).
+* They divide this into subsets. First, the maximal parameter family max params (F)
+containing models in F with the largest number of parameters. This family will generally
+include the target model(s) whose behavior we wish to predict t ∈ F~target~. Second, the
+q-maximal token family max num_toks (F, q) contains all models in *f* trained on at least
+a q-sized fraction of the training set.
+* A scaling law *L(f | F )* estimates the performance of a new model *f* given a model
+family F and is defined as shown below:
 
 <br><br>
-![](../paper_screenshots/omniparser/1.png)
+![](../paper_screenshots/scaling_laws_estimation/1.png)
 <br><br>
 
-
-# Interactable Region Detection
-
-1. Uses the Set-of-Marks approach to overlay bounding boxes of interactable icons on top
-of UI screenshots.
-2. Finetune a detection model to extract interactable icons/buttons.
-3. The authors curated a dataset of interactable icon detection dataset, containing 67k
-unique screenshot images, each labeled with bounding boxes of interactable icons derived from
-the DOM tree.
-4. Finetune the YOLOv8 model on the interactable icon region detection dataset for 20 epoch
-with a batch size of 256, learning rate of 1e−3, and the Adam optimizer on 4 GPUs.
-5. An OCR module is also used to extract bounding boxes of text. The authors merge the
-bounding boxes from the OCR detection module and icon detection module while removing the
-boxes that have high overlap (90% as a threshold). Every bounding box is assigned a unique ID.
-
-
-# Incorporating Local Semantics of Functionality
-
-1. Incorporate local semantics directly into the prompt.
-2. Generate a description of functionality using another model for each of the interactable
-regions detected by the interactable region detection model. For text boxes, detected text
-and the labels are injected into the prompt.
-3. Uses BLIP-v2 as the icon description model for generating descriptions for the
-interactable regions.
-4. For fine-tuning BLIP-v2, the authors curate a dataset of 7k icon-description pairs
-using GPT-4o. For the description, the authors ask GPT-4o whether the object presented
-in the parsed bounding box is an app icon. If GPT-4o decides the image is an icon, it
-outputs a sentence description of the icon about the potential functionality. And if not,
-GPT-4o will output ’this is not an icon’, while still including this in the dataset.
-5. BLIP-v2 is fine-tuned on this dataset for 1 epoch with a constant learning rate of
-1e−5, no weight decay, and Adam optimizer.
 
 
 <br><br>
@@ -109,26 +63,12 @@ GPT-4o will output ’this is not an icon’, while still including this in the 
 <br><br>
 
 
-# Results
 
 
 <br><br>
 ![](../paper_screenshots/omniparser/3.png)
 <br><br>
 
-
-# Failure Modes
-
-1. Repeated Icons/Texts: When the screenshot contains repeated elements, and it is
-required to click/select one of the elements, GPT-4V still fails many times. More
-granularity in the description of the repeated elements may alleviate the problem.
-2. Coarse Prediction of Bounding Boxes: The current OCR cannot differentiate between
-normal text and hyperlinks, hence in some cases elements of the predicted coordinatese
-of the clickable texts may not be correct.
-3. Icon Misinterpretation: Given that the icon-description model only sees a part
-(elements with a bbox) of the full screenshot, the lack of a global view can lead
-to a wrong description of the detected interactable icons. For example, three dots
-can be pretty confusing for the current description model
 
 
 <br><br>
