@@ -118,9 +118,50 @@ rarely get below 5%, and 18% ARE is observed on average across all scaled famili
 ![](../paper_screenshots/scaling_laws_estimation/3.png)
 <br><br>
 
+# Which is good for estimates: Intermediate checkpoints or the final checkpoint?
 
+* A common methodology is to train different models with different numbers of tokens. Most people
+never use intermediate checkpoints as the assumption is the learning rate schedule renders losses
+from intermediate checkpoints uninformative.
+
+* The authors find that almost all, except for the first few checkpoints, help scale laws.
+Specifically, models trained on less than 10B tokens are noisy and should be excluded from
+scaling laws. These models or checkpoints can introduce significant *ARE* in estimating the
+performance of the target model.
 
 <br><br>
-![](../paper_screenshots/omniparser/4.png)
+![](../paper_screenshots/scaling_laws_estimation/4.png)
 <br><br>
+
+# How Big a Model Should I Train?
+
+* It is implicit that bigger models where the num_params are closer to the target model are
+more effective for reliable scaling laws.
+* However, the authors found that the effect is neither strong nor monotonic and varies between
+model families. For example, fitting on all F results in the lowest ARE in most cases. However,
+in the case of GPT, Gopher, and OPT, predicting with the smallest four models is enough to
+achieve less than 10% error. OTOH, the smallest models in Pythia are not predictive enough.
+* The authors suggest diversifying and training each model on differing hyperparameters
+(seed, num_params, num_tokens) and maximizing the information gained.
+
+<br><br>
+![](../paper_screenshots/scaling_laws_estimation/5.png)
+<br><br>
+
+# How Many Models Are Required for Reliable Predictions?
+
+* Larger models are better, but a group of smaller models is equally good.
+* Increasing the number of models helps decrease ARE. Overall, five models are a safe bet,
+and more would improve the robustness of the result. And these models can be small.
+<br>
+
+# What Parameters Do I Need to Estimate?
+
+* The authors computed the PCA of five learned parameters and found that three parameters
+explain 99.49% of the variance.
+* Though the above finding holds for a large number of model families, exceptions exist,
+especially in encoder-decoder models like T5-Pile.
+* Overall, scaling laws might have fewer degrees of freedom than described in the literature.
+num_params and num_tokens remain the most important ones. The authors left out the learning
+rate schedule for future research.
 
