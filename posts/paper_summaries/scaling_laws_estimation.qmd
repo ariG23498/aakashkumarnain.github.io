@@ -73,16 +73,49 @@ a 4% difference bounds the best goodness of fit we should expect or require of s
 * The **Absolute Relative Error (ARE)** is bounded by 4% and can reach 20% with certain
 design choices.
 
+<br>
+
+# When I Train a New Model, Do I Even Need a New Scaling Law?
+
+* Different model families exhibit different scaling behavior.
+* Every design choice like the choices of architecture, training procedure, or the dataset,
+affects the form of scaling laws. Hence, the behavior of a new model family may require a new
+scaling law.
+* Can't we borrow the scaling behaviors between two different model families even if it results
+in poor or biased estimates? To that end, the authors set the num_params scaling
+parameters (A, α) to fixed values reported in the paper titled Scaling data-constrained
+language models and estimate the remaining parameters for individual model families.
+* The authors found that predictions generalize, and a constant num_params scaling factor is
+enough for most models (except the encoder-decoder T5-Pile). However, error rates are bigger
+than in the source family, and predictions for larger models are worse.
 
 <br><br>
-![](../paper_screenshots/omniparser/2.png)
+![](../paper_screenshots/scaling_laws_estimation/2.png)
 <br><br>
 
+# Can I Train the Target Model a Bit Instead of Many Small Models?
 
+* A reasonable assumption to make at this point is that training the target model for a bit
+can be much better than wasting time on training many small models.
+* A good thing about the above assumption is that extrapolation is only required for
+num_tokens as the number of parameters is fixed now.
+* As of now, reliable estimates with this approach require up to 30% of the full training run,
+but this is a good option for future research.
+<br>
+
+
+# Are Even Simpler Baselines Enough?
+
+* Let us take another example. Suppose we have two models belonging to the same small model
+family. One model has the best performance, and the other model has seen more data. Are these
+baselines enough to estimate the performance of the target model without fitting a scaling law?
+* The model with the best performance is expected to be closer to the performance of the target
+model. The authors found that the baselines suffer more than 15% error, mostly above 10%,
+rarely get below 5%, and 18% ARE is observed on average across all scaled families.
 
 
 <br><br>
-![](../paper_screenshots/omniparser/3.png)
+![](../paper_screenshots/scaling_laws_estimation/3.png)
 <br><br>
 
 
