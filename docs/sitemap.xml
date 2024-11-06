@@ -2,26 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>/blog.html</loc>
-    <lastmod>2024-11-01T07:24:30.371Z</lastmod>
+    <lastmod>2024-11-06T10:00:02.600Z</lastmod>
   </url>
   <url>
     <loc>/archive.html</loc>
-    <lastmod>2024-11-01T07:24:28.963Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/omniparser.html</loc>
-    <lastmod>2024-11-01T07:24:27.164Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/nGPT.html</loc>
-    <lastmod>2024-11-01T07:24:26.481Z</lastmod>
+    <lastmod>2024-11-06T10:00:01.168Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/model_merging_at_scale.html</loc>
-    <lastmod>2024-11-01T07:24:27.856Z</lastmod>
+    <lastmod>2024-11-06T09:59:59.273Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/nGPT.html</loc>
+    <lastmod>2024-11-06T09:59:57.908Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/omniparser.html</loc>
+    <lastmod>2024-11-06T09:59:58.598Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/scaling_laws_estimation.html</loc>
+    <lastmod>2024-11-06T10:00:00.057Z</lastmod>
   </url>
   <url>
     <loc>/index.html</loc>
-    <lastmod>2024-11-01T07:24:29.560Z</lastmod>
+    <lastmod>2024-11-06T10:00:01.743Z</lastmod>
   </url>
 </urlset>
