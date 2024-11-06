@@ -56,6 +56,22 @@ family F and is defined as shown below:
 ![](../paper_screenshots/scaling_laws_estimation/1.png)
 <br><br>
 
+*E* is a baseline capturing the general performance of the scaled family. A and α describe
+the scaling effect of num_params, while B and β describe the scaling effect of num_toks.
+These parameters are estimated by first collecting a set of training models F~train~, then
+minimizing the reconstruction error as shown above. *L(f )* denotes the empirical negative
+log-likelihood of some held-out data under the model.
+
+
+# How Well Can I Expect a Scaling Law to Predict?
+
+* To estimate this, we need to know what is considered a meaningful change when comparing
+two models (of the same family). The authors found that any design change that yields less
+than a 4% change in performance has not been considered meaningful in the literature.
+* Also, the variance across the same model with restarts reaches a 3.5% difference. Thus,
+a 4% difference bounds the best goodness of fit we should expect or require of scaling laws.
+* The **Absolute Relative Error (ARE)** is bounded by 4% and can reach 20% with certain
+design choices.
 
 
 <br><br>
