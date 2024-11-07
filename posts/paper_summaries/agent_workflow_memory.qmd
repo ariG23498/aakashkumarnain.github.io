@@ -105,3 +105,24 @@ instructions help extract common tasks or patterns easily.
 <br><br>
 ![](../paper_screenshots/agent_workflow_memory/3.png)
 <br><br>
+
+
+# Online Induction
+
+Addresses the question: What if the agent has not seen this workflow in the past?
+Works in a supervision-free setting where only test queries are needed. Agents process test queries
+in a streaming fashion, where the agents conduct the loop of inducing, integrating, and utilizing
+workflows after running inference for each test task.
+
+* Assume the default memory is *M*.
+* At test timestep *t*, instruction qt is passed to the agent. The agent tries to solve the task by
+creating a trajectory. This instruction paired with the trajectory is the experience formed at this
+timestep.
+* Using LLM as a judge, a binary label {0, 1} is assigned to the output of the trajectory denoting
+failure/success.
+* Every time an experience is considered a success, it is transformed into workflow(s)
+*I(e~t~) → {w~t~}. {wt} is added into the agent memory *M~t~ + {w~t~} → M~(t+1)~*
+
+<br><br>
+![](../paper_screenshots/agent_workflow_memory/4.png)
+<br><br>
