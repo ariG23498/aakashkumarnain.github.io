@@ -5,7 +5,8 @@
       "/posts/paper_summaries/scaling_laws_estimation.html",
       "/posts/paper_summaries/omniparser.html",
       "/posts/paper_summaries/nGPT.html",
-      "/posts/paper_summaries/model_merging_at_scale.html"
+      "/posts/paper_summaries/model_merging_at_scale.html",
+      "/posts/paper_summaries/agent_workflow_memory.html"
     ]
   },
   {
@@ -14,7 +15,8 @@
       "/posts/paper_summaries/scaling_laws_estimation.html",
       "/posts/paper_summaries/omniparser.html",
       "/posts/paper_summaries/nGPT.html",
-      "/posts/paper_summaries/model_merging_at_scale.html"
+      "/posts/paper_summaries/model_merging_at_scale.html",
+      "/posts/paper_summaries/agent_workflow_memory.html"
     ]
   }
 ]
