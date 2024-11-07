@@ -86,10 +86,9 @@ task-solving.
 instructions. For example, instead of prompting "buy a cover for pixel9", the prompt should be
 "buy a black leather cover for my pixel from Amazon and deliver it to my address". Fine-grained
 instructions help extract common tasks or patterns easily.
-* After the workflows W are induced, they are then integrated into the agent as auxiliary memory, 
+* After the workflows W are induced, they are then integrated into the agent as auxiliary memory,<br>
 *M + W →M~w~*.
-* When solving a given instruction q, the agent then produces a series of actions defined by
-
+* When solving a given instruction q, the agent then produces a series of actions defined by <br>
 *L(q, M~w~, o) = L(q, M + W, o) → a*
 
 <br>
