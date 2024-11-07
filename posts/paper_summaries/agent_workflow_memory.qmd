@@ -75,3 +75,32 @@ and the action taken i.e. p=(o, a)
 * An induction module is to induce useful workflows W = {w} from the set of experiences E = {e}
 constructed from past or collected examples. These workflows are then added to the memory or subsequent
 task-solving.
+
+
+# LM-based Workflow Induction
+
+* The induction module *I* induces a set of workflows *W* from one or more past agent experiences *E*.
+* Module *I* prompts the agent to extract common sub-routines from one or more input experiences.
+* If we want to extract common patterns from different workflows, we need to provide more fine-grained
+instructions. For example, instead of prompting "buy a cover for pixel9", the prompt should be
+"buy a black leather cover for my pixel from Amazon and deliver it to my address". Fine-grained
+instructions help extract common tasks or patterns easily.
+* After the workflows W are induced, they are then integrated into the agent as auxiliary memory, 
+*M + W →M~w~*.
+* When solving a given instruction q, the agent then produces a series of actions defined by 
+*L(q, M~w~, o) = L(q, M + W, o) → a*
+
+<br>
+
+# Offline Induction
+
+* Assume that you have annotated examples that represent some experience for some workflow.
+* Induction involves two standalone processes:
+  - Concatenate all training examples into a single prompt and feed them to the LM to create a set of
+  workflows at ‘training’ time; *I(E~train~) → W~offline~*
+  - Incorporates all induced workflows into the agent memory at inference time to solve test instructions
+  *L(q, M + W, o~test~ ) → a~test~
+
+<br><br>
+![](../paper_screenshots/agent_workflow_memory/3.png)
+<br><br>
