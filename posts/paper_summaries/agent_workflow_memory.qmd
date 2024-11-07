@@ -27,7 +27,7 @@ abstract and hard to solve. Planning on the other hand comes in many flavors. If
 system 2, we must augment planning capabilities with memory. After all, an intelligent system should
 be able to extract and learn from past behavior.
 
-The paper "Agent WorkFlow Memory", which came out last week, tries to solve some of these problems,
+The paper **Agent WorkFlow Memory**, which came out last week, tries to solve some of these problems,
 and I think their choice is a good direction.
 
 <br><br>
@@ -57,12 +57,12 @@ Let us define the system first. Suppose we have an LLM L, responsible for carryi
 a text-based Memory M, where the base memory contains documentation of built-in actions such as
 *CLICK* and *TYPE*.
 
-UNTIL a_i != STOP or curr_step > MAX_STEPS_ALLOWED do;
+UNTIL *a~i~ != STOP* or *curr_step > MAX_STEPS_ALLOWED* do;
 
 * To solve a task specified by an instruction in natural language q, the agent acts in an environment
 defined by a transition function T.
 * At each time step ti, the environment state si gives observation oi. This observation is then passed
-into the model to generate action ai via *L(q, M, o~i~) → a~i~*.
+into the model to generate action a~i~ via *L(q, M, o~i~) → a~i~*.
 * The action is executed in the environment and changes the state as *T(s~i~, a~i~) → s~i+1~*.
 
 <br>
@@ -88,7 +88,8 @@ instructions. For example, instead of prompting "buy a cover for pixel9", the pr
 instructions help extract common tasks or patterns easily.
 * After the workflows W are induced, they are then integrated into the agent as auxiliary memory, 
 *M + W →M~w~*.
-* When solving a given instruction q, the agent then produces a series of actions defined by 
+* When solving a given instruction q, the agent then produces a series of actions defined by
+
 *L(q, M~w~, o) = L(q, M + W, o) → a*
 
 <br>
@@ -100,7 +101,7 @@ instructions help extract common tasks or patterns easily.
   - Concatenate all training examples into a single prompt and feed them to the LM to create a set of
   workflows at ‘training’ time; *I(E~train~) → W~offline~*
   - Incorporates all induced workflows into the agent memory at inference time to solve test instructions
-  *L(q, M + W, o~test~ ) → a~test~
+  *L(q, M + W, o~test~ ) → a~test~*
 
 <br><br>
 ![](../paper_screenshots/agent_workflow_memory/3.png)
@@ -121,7 +122,7 @@ timestep.
 * Using LLM as a judge, a binary label {0, 1} is assigned to the output of the trajectory denoting
 failure/success.
 * Every time an experience is considered a success, it is transformed into workflow(s)
-*I(e~t~) → {w~t~}. {wt} is added into the agent memory *M~t~ + {w~t~} → M~(t+1)~*
+*I(e~t~) → {w~t~}*. {wt} is added into the agent memory *M~t~ + {w~t~} → M~(t+1)~*
 
 <br><br>
 ![](../paper_screenshots/agent_workflow_memory/4.png)
