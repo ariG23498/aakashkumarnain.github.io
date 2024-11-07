@@ -1,0 +1,77 @@
+---
+title: "Agent WorkFlow Memory"
+author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
+date: "2024-09-24"
+categories: [papers, summary, research, agents]
+image: ""
+format:
+  html:
+    theme: default
+    fontsize: 2em
+    backgroundcolor: rgb(255, 255, 255);
+    code-fold: true
+    code-summary: "Show the code"
+    highlight-style: oblivion
+    css: styles.css
+execute: 
+  echo: false
+---
+
+[arXiv](https://arxiv.org/abs/2409.07429)<br>
+
+For almost six months, I have been vocal about the differentiation between tool usage with LLMs and
+an agent. Most people correlate pure tool usage with agentic behavior, but IMHO that is only a subset
+of it. If we want to deploy agents, we need some planning and reasoning capabilities. Reasoning is
+abstract and hard to solve. Planning on the other hand comes in many flavors. If we want to go to
+system 2, we must augment planning capabilities with memory. After all, an intelligent system should
+be able to extract and learn from past behavior.
+
+The paper "Agent WorkFlow Memory", which came out last week, tries to solve some of these problems,
+and I think their choice is a good direction.
+
+<br><br>
+![](../paper_screenshots/agent_workflow_memory/1.png)
+<br><br>
+
+# Why do we want to implement a memory module?
+
+* Current language model-based agents struggle with long-horizon tasks and complex action trajectories.
+* When presented with a new task, a common way to induce knowledge about the task is to perform
+in-context learning or fine-tuning.
+* This approach works for a given task but fails to generalize across different tasks even if they share
+the same pattern. For example, planning a trip to a foreign country vs planning a local trip share
+common workflows with minor differences in the booking procedure.
+* Inspired by how humans abstract common task routines from past experiences, we can implement a workflow
+memory module where each workflow represents a goal with a common routine extracted from available
+action trajectories.
+
+<br><br>
+![](../paper_screenshots/agent_workflow_memory/2.png)
+<br><br>
+
+
+# Agent Workflow Memory
+
+Let us define the system first. Suppose we have an LLM L, responsible for carrying out the workflows,
+a text-based Memory M, where the base memory contains documentation of built-in actions such as
+*CLICK* and *TYPE*.
+
+UNTIL a_i != STOP or curr_step > MAX_STEPS_ALLOWED do;
+
+* To solve a task specified by an instruction in natural language q, the agent acts in an environment
+defined by a transition function T.
+* At each time step ti, the environment state si gives observation oi. This observation is then passed
+into the model to generate action ai via *L(q, M, o~i~) → a~i~*.
+* The action is executed in the environment and changes the state as *T(s~i~, a~i~) → s~i+1~*.
+
+<br>
+
+Each completed task forms an experience. This experience is used to extend the workflow memory.
+For each experience that we store, it includes:
+
+* The instruction provided: q
+* The trajectory contains the steps used to solve the workflow. Each step p comprises the current state,
+and the action taken i.e. p=(o, a)
+* An induction module is to induce useful workflows W = {w} from the set of experiences E = {e}
+constructed from past or collected examples. These workflows are then added to the memory or subsequent
+task-solving.
