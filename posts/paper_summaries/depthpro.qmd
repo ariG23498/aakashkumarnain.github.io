@@ -85,7 +85,33 @@ computed by blurring and down sampling the inverse depth maps by a factor of 2 p
 <br><br>
 
 I did not find this in the code, but I have asked the authors to give some implementation details.
-Let us see how it goes.
+Let us see how it goes. <br>
+
+
+# Training Curriculum
+
+The authors note down three important observations before launching a training run:
+* Training on a large mix of real-world and synthetic datasets improves generalization.
+* Real-world datasets are messy, and many times the labels are noisy (missing areas, mismatched depth,
+or false measurements on object boundaries.)
+* Predictions get sharper throughout the training.
+
+
+Based on these observations, the authors design a two-stage training curriculum. In the first stage,
+they aim to learn robust features that allow the network to generalize across domains, and train the
+model on a mix of all labeled training sets. They use MAE for the metric datasets and the normalized MAE
+for non-metric datasets. They also apply scale-and-shift-invariant loss on gradients, but only to
+synthetic datasets.
+
+
+The second stage of training is designed to sharpen boundaries and reveal fine details in the predicted
+depth maps. Given that the synthetic dataset provides high-quality pixel-accurate ground truth, the
+authors use it to minimize the effect of inaccurate ground truth. MAE is supplemented with Mean
+Absolute Gradient Error (MAGE), Mean Absolute Laplace Error (MALE), and the Mean Squared Gradient Error
+(MSGE).
+
+<br>
+
 
 
 
