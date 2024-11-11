@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/paper_summaries/depthpro.html",
       "/posts/paper_summaries/scaling_laws_estimation.html",
       "/posts/paper_summaries/omniparser.html",
       "/posts/paper_summaries/nGPT.html",
@@ -12,6 +13,7 @@
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/paper_summaries/depthpro.html",
       "/posts/paper_summaries/scaling_laws_estimation.html",
       "/posts/paper_summaries/omniparser.html",
       "/posts/paper_summaries/nGPT.html",

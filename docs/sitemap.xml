@@ -2,34 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>/blog.html</loc>
-    <lastmod>2024-11-07T14:59:43.590Z</lastmod>
+    <lastmod>2024-11-11T14:06:02.249Z</lastmod>
   </url>
   <url>
     <loc>/archive.html</loc>
-    <lastmod>2024-11-07T14:59:41.939Z</lastmod>
+    <lastmod>2024-11-11T14:06:00.576Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/scaling_laws_estimation.html</loc>
-    <lastmod>2024-11-07T14:59:40.115Z</lastmod>
+    <lastmod>2024-11-11T14:05:58.719Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/omniparser.html</loc>
-    <lastmod>2024-11-07T14:59:38.668Z</lastmod>
+    <lastmod>2024-11-11T14:05:57.275Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/nGPT.html</loc>
-    <lastmod>2024-11-07T14:59:38.000Z</lastmod>
+    <lastmod>2024-11-11T14:05:55.852Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/depthpro.html</loc>
+    <lastmod>2024-11-11T14:05:56.620Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/model_merging_at_scale.html</loc>
-    <lastmod>2024-11-07T14:59:39.348Z</lastmod>
+    <lastmod>2024-11-11T14:05:57.937Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/agent_workflow_memory.html</loc>
-    <lastmod>2024-11-07T14:59:40.788Z</lastmod>
+    <lastmod>2024-11-11T14:05:59.374Z</lastmod>
   </url>
   <url>
     <loc>/index.html</loc>
-    <lastmod>2024-11-07T14:59:42.512Z</lastmod>
+    <lastmod>2024-11-11T14:06:01.136Z</lastmod>
   </url>
 </urlset>
