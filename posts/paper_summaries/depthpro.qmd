@@ -62,7 +62,7 @@ fine-grained details.
 * The feature patches are then merged into maps and are fed into a DPT-like decoder module.
 
 <br><br>
-![](../paper_screenshots/depth_pro/1.png)
+![](../paper_screenshots/depthpro/1.png)
 <br><br>
 
 # Training Objectives
@@ -81,7 +81,7 @@ derivative operator ∗, such as Scharr or Laplace (L), and `p` is the error nor
 computed by blurring and down sampling the inverse depth maps by a factor of 2 per scale.
 
 <br><br>
-![](../paper_screenshots/depth_pro/2.png)
+![](../paper_screenshots/depthpro/2.png)
 <br><br>
 
 I did not find this in the code, but I have asked the authors to give some implementation details.
@@ -112,6 +112,32 @@ Absolute Gradient Error (MAGE), Mean Absolute Laplace Error (MALE), and the Mean
 
 <br>
 
+# Evaluation metrics for sharp boundaries.
+
+* Common benchmarks for monocular depth prediction rarely take boundary sharpness into account. This may
+be attributed in part to the lack of diverse and realistic datasets with precise pixel-accurate
+ground-truth depth.
+* The authors aim to leverage existing high-quality annotations for matting, saliency, or segmentation
+as ground truth for depth boundaries.
+* They treat annotations for these tasks as binary maps, which define a foreground/background relationship
+between an object and its environment. To ensure that the relationship holds, they only consider pixels
+around edges in the binary map.
+* The hypothesis is that if the depth of pixel i and pixel j differs by more than t%, it suggests the
+presence of an occluding contour between those pixels. Occluding contour c_d(i, j), and overall precision
+and recall for the neighboring pixels are then calculated as shown below:
+
+<br><br>
+![](../paper_screenshots/depthpro/3.png)
+<br>
+
+* The authors report the weighted F1 score with thresholds that range linearly from `tmin = 5` to
+`tmax = 25`, with stronger weights towards high threshold values.
+* The beauty of this method is that it doesn't require any manual edge annotations. It only needs
+pixel-wise ground truth that can be easily obtained for synthetic datasets.
+* The authors also apply non-maximum suppression to values of cˆd within the valid bounds of cˆd(i, j)
+connected components.
+* Occluding contours from binary maps are similarly obtained
+<br>
 
 
 
