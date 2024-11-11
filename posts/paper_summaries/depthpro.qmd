@@ -20,3 +20,23 @@ execute:
 [arXiv](https://arxiv.org/abs/2410.02073)<br>
 
 
+Zero-shot monocular depth estimation in real-time is one of the most challenging problems in vision.
+Applications like novel view synthesis from a single image require a strong depth estimation model.
+The paper **DepthPro** from Apple presents another model that can perform zero-shot depth estimation on
+high-resolution images with low latency.
+
+
+# Desired characteristics of a depth estimation model
+
+* It should not be restricted to a single domain and should produce zero-shot depth estimation on any
+image.
+* The model should produce metric depth maps in a zero-shot regime to accurately reproduce object shapes,
+scene layouts, and absolute scales.
+* The model should produce metric depth maps with absolute scale even if no camera intrinsics
+(such as focal length) are provided with the image. It helps enable novel view synthesis from an
+arbitrary image.
+* The model can operate on high-resolution images and should be able to produce high-quality depth
+maps even for complex objects like hair, fur, etc.
+* It should run with extremely low latency to support applications like view synthesis on demand.
+
+The DepthPro model ticks all the things listed above.
