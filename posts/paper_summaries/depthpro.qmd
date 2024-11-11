@@ -11,7 +11,6 @@ format:
     backgroundcolor: rgb(255, 255, 255);
     code-fold: true
     code-summary: "Show the code"
-    highlight-style: oblivion
     css: styles.css
 execute: 
   echo: false
@@ -68,7 +67,7 @@ fine-grained details.
 # Training Objectives
 
 * The network f predicts a canonical inverse depth image `C = f (I)` for an input image I. The dense
-metric depth map is then obtained as `D~m~ = f~px~ / wC`, where f~px~ is the focal length and `w` is the
+metric depth map is then obtained as D~m~ = f~px~ / wC, where f~px~ is the focal length and `w` is the
 width.
 * All objectives use canonical inverse depth as it prioritizes areas close to the camera over farther
 areas or the whole scene. This supports visual quality in applications such as novel view synthesis.
@@ -123,7 +122,7 @@ as ground truth for depth boundaries.
 between an object and its environment. To ensure that the relationship holds, they only consider pixels
 around edges in the binary map.
 * The hypothesis is that if the depth of pixel i and pixel j differs by more than t%, it suggests the
-presence of an occluding contour between those pixels. Occluding contour c_d(i, j), and overall precision
+presence of an occluding contour between those pixels. Occluding contour c~d(i, j)~, and overall precision
 and recall for the neighboring pixels are then calculated as shown below:
 
 <br><br>
