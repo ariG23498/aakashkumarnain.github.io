@@ -39,4 +39,32 @@ arbitrary image.
 maps even for complex objects like hair, fur, etc.
 * It should run with extremely low latency to support applications like view synthesis on demand.
 
-The DepthPro model ticks all the things listed above.
+The DepthPro model ticks all the things listed above. <br>
+
+
+# Network
+
+* Uses pretrained Vision Transformers (ViTs) as encoders.
+* The key idea is to apply plain ViT encoders on patches extracted at multiple scales and fuse the patch
+predictions into a single high-resolution dense prediction in an end-to-end trainable mode.
+* Two encoders in total: Patch encoder and image encoder.
+* The patch encoder is applied on patches extracted at multiple scales, allowing the model to learn
+scale-invariant representations as weights are shared across scales.
+* The image encoder is applied to the whole image, down sampled from the original resolution to the
+resolution accepted by the base encoder (384 x 384 in this case). The image encoder anchors the patch
+predictions in a global context.
+* The network operates at a fixed resolution of 1536 × 1536 chosen as a multiple of the ViT’s 384×384.
+* The original image with a resolution of 1536 x 1536 is processed with two more down sampled resolutions
+of 784 x 784, and 384 x 384. For each resolution, the image is divided into patches of size 384x384.
+At each scale, the patches are fed into the patch encoder that produces a feature tensor at a resolution
+of 24 × 24 per input patch. Intermediate features for the finest scale are also extracted to capture
+fine-grained details.
+* The feature patches are then merged into maps and are fed into a DPT-like decoder module.
+
+<br><br>
+![](../paper_screenshots/depth_pro/1.png)
+<br><br>
+
+
+
+
