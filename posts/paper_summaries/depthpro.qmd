@@ -65,6 +65,27 @@ fine-grained details.
 ![](../paper_screenshots/depth_pro/1.png)
 <br><br>
 
+# Training Objectives
+
+* The network f predicts a canonical inverse depth image `C = f (I)` for an input image I. The dense
+metric depth map is then obtained as `D~m~ = f~px~ / wC`, where f~px~ is the focal length and `w` is the
+width.
+* All objectives use canonical inverse depth as it prioritizes areas close to the camera over farther
+areas or the whole scene. This supports visual quality in applications such as novel view synthesis.
+* For all metric datasets, the authors compute mean absolute error (MAE) per pixel `i` and discard pixels
+with an error in the top 20% per image for real-world (not for synthetic) datasets.
+* For all non-metric datasets (i.e., those without reliable camera intrinsics or inconsistent scale),
+the authors normalize predictions and ground truth via the mean absolute deviation from the median before
+applying a loss. They also define a multi-scale derivative loss over M scales. The ∇∗ indicate a spatial
+derivative operator ∗, such as Scharr or Laplace (L), and `p` is the error norm. The scales `j` are
+computed by blurring and down sampling the inverse depth maps by a factor of 2 per scale.
+
+<br><br>
+![](../paper_screenshots/depth_pro/2.png)
+<br><br>
+
+I did not find this in the code, but I have asked the authors to give some implementation details.
+Let us see how it goes.
 
 
 
