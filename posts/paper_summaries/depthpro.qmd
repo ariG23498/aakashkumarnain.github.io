@@ -140,4 +140,25 @@ connected components.
 <br>
 
 
+# Focal Length Estimation
+
+* Trained the network to predict focal length to handle cases where the EXIF metadata is either missing
+or is noisy for the input image.
+* The focal estimation head is a small convolutional network that ingests frozen features from the depth
+estimation network and task-specific features from a separate ViT image encoder to predict the horizontal
+angular field of view.
+- This head is trained after the training for depth prediction is complete.
+<br>
+
+
+# Results
+
+<br><br>
+![](../paper_screenshots/depthpro/4.png)
+<br><br>
+
+# Limitations
+
+The model is limited in dealing with translucent surfaces and volumetric scattering, where the definition
+of single-pixel depth is ill-posed and ambiguous.
 
