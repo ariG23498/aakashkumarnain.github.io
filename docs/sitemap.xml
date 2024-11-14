@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>/blog.html</loc>
-    <lastmod>2024-11-11T14:06:02.249Z</lastmod>
+    <lastmod>2024-11-14T15:14:58.354Z</lastmod>
   </url>
   <url>
     <loc>/archive.html</loc>
-    <lastmod>2024-11-11T14:06:00.576Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/scaling_laws_estimation.html</loc>
-    <lastmod>2024-11-11T14:05:58.719Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/omniparser.html</loc>
-    <lastmod>2024-11-11T14:05:57.275Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/nGPT.html</loc>
-    <lastmod>2024-11-11T14:05:55.852Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/depthpro.html</loc>
-    <lastmod>2024-11-11T14:05:56.620Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/model_merging_at_scale.html</loc>
-    <lastmod>2024-11-11T14:05:57.937Z</lastmod>
+    <lastmod>2024-11-14T15:14:56.611Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/agent_workflow_memory.html</loc>
-    <lastmod>2024-11-11T14:05:59.374Z</lastmod>
+    <lastmod>2024-11-14T15:14:54.734Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/model_merging_at_scale.html</loc>
+    <lastmod>2024-11-14T15:14:53.323Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/depthpro.html</loc>
+    <lastmod>2024-11-14T15:14:52.007Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/nGPT.html</loc>
+    <lastmod>2024-11-14T15:14:51.224Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/omniparser.html</loc>
+    <lastmod>2024-11-14T15:14:52.654Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/scaling_laws_estimation.html</loc>
+    <lastmod>2024-11-14T15:14:54.074Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/the_super_weight.html</loc>
+    <lastmod>2024-11-14T15:14:55.392Z</lastmod>
   </url>
   <url>
     <loc>/index.html</loc>
-    <lastmod>2024-11-11T14:06:01.136Z</lastmod>
+    <lastmod>2024-11-14T15:14:57.181Z</lastmod>
   </url>
 </urlset>

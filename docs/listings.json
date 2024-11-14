@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/paper_summaries/the_super_weight.html",
       "/posts/paper_summaries/depthpro.html",
       "/posts/paper_summaries/scaling_laws_estimation.html",
       "/posts/paper_summaries/omniparser.html",
@@ -13,6 +14,7 @@
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/paper_summaries/the_super_weight.html",
       "/posts/paper_summaries/depthpro.html",
       "/posts/paper_summaries/scaling_laws_estimation.html",
       "/posts/paper_summaries/omniparser.html",
