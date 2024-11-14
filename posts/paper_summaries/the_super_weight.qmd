@@ -49,7 +49,7 @@ activations.
 detecting the spikes in the input-output distributions of `down_proj` across the layers. This detection
 only requires a single input prompt rather than a set of validation data or use-case examples.
 * Suppose X is the input with dimensions *(L x H)*, and the weight matrix of the `down_proj` is *W* with
-dimensions *(D x H)*. We can then compute output Y as *Y= X W^T*. If Y~ij~ is a super activation,
+dimensions *(D x H)*. We can then compute output Y as *Y= X W^T^*. If Y~ij~ is a super activation,
 and X~ik~ and W~ik~ are outliers, we can say that Y~ij~ ≈ X~ik~ W~jk~. We can then identify the row from
 the super weight from the channel index given by the input distribution of the activations across all
 layers. Similarly, we can identify the column of the super weight from the channel index of the
@@ -105,7 +105,7 @@ Given that we know the importance of the super activation and super weights, how
   - Proposed a simple method to improve INT4 quantization with large block sizes. 
   - Identify the super weight as described in the previous section. Clip the outlier weight,
   including the super weight, to improve the inlier fit. 
-  - Quantize (Q) and dequantize (Q^−1) the clipped weights. Restore the half-precision super weight after
+  - Quantize (Q) and dequantize (Q^−1^) the clipped weights. Restore the half-precision super weight after
   dequantization (RESTORE)
 
 <br><br>
