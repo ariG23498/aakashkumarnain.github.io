@@ -90,3 +90,24 @@ improvement to a certain scaling factor.
 <br><br>
 ![](../paper_screenshots/the_super_weight/3.png)
 <br><br>
+
+# Weight and Activation Quantization
+
+Given that we know the importance of the super activation and super weights, how should we quantize these?
+
+* **Activation Quantization** 
+  - Simulate W8A8 quantization with FP16 arithmetic and focus solely on addressing one critical activation
+  outlier. Experiments done using round-to-nearest quantization but with some modifications. 
+  - Replace the super activation with the median value (REPLACE), quantize (Q), and dequantize (Q^−1)
+  activations. Then restore the super activation in fp16 (RESTORE)
+
+* **Weight Quantization**
+  - Proposed a simple method to improve INT4 quantization with large block sizes. 
+  - Identify the super weight as described in the previous section. Clip the outlier weight,
+  including the super weight, to improve the inlier fit. 
+  - Quantize (Q) and dequantize (Q^−1) the clipped weights. Restore the half-precision super weight after
+  dequantization (RESTORE)
+
+<br><br>
+![](../paper_screenshots/the_super_weight/4.png)
+<br><br>
