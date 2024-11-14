@@ -111,3 +111,18 @@ Given that we know the importance of the super activation and super weights, how
 <br><br>
 ![](../paper_screenshots/the_super_weight/4.png)
 <br><br>
+
+# Which models did the authors user in their experiments?
+
+Here is table showcasing all the models used in the experiments. All these models are coming from HF.
+<br><br>
+![](../paper_screenshots/the_super_weight/5.png)
+<br><br>
+
+# How does the quantization scheme proposed by the authors perform?
+
+There have been other quantization schemes that were proposed for these outlier weights and the
+massive activations observed in these models. How does the new scheme fare with those?
+<br><br>
+![](../paper_screenshots/the_super_weight/6.png)
+<br><br>
