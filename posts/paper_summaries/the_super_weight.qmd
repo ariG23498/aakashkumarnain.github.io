@@ -17,3 +17,45 @@ execute:
 ---
 
 [arXiv](https://arxiv.org/abs/2411.07191)<br>
+
+A few papers in the past showcased that at a certain scale, a small set of hidden state features contains
+outliers with enormous magnitude. These outliers account for a small percentage of all activations but
+are crucial for preserving the compressed model quality. 
+
+This paper from Apple takes that finding to the extreme, claiming that a tiny subset, at most six scalers,
+is more important than the rest of the others. The authors call them super weights, and pruning them
+destroys model quality.
+
+<br><br>
+![](../paper_screenshots/the_super_weight/1.png)
+<br><br>
+
+# Super weights create super activations
+
+* The paper Massive Activations in Large Language Models showcased that LLMs contain massive activations
+that persist across many layers at the same position irrespective of the input. These activations have a
+constant magnitude and are crucial to the model's performance.
+* The authors observed another interesting thing, i.e., the activation channel of these massive
+activations aligns with the channel of the super weights. To validate if both are related, the authors
+prune the super weight and check its effect on the magnitude of these activations.
+* They found that pruning the super weight reduces the magnitudes of these activations drastically.
+Hence, these activations are created by the super weight. They term these massive activations as super
+activations.
+
+
+# Identifying super weight by activation spikes
+
+* Given the findings in the above section, the authors hypothesize that super weight can be located by
+detecting the spikes in the input-output distributions of `down_proj` across the layers. This detection
+only requires a single input prompt rather than a set of validation data or use-case examples.
+* Suppose X is the input with dimensions *(L x H)*, and the weight matrix of the `down_proj` is *W* with
+dimensions *(D x H)*. We can then compute output Y as *Y= X W^T*. If Y~ij~ is a super activation,
+and X~ik~ and W~ik~ are outliers, we can say that Y~ij~ ≈ X~ik~ W~jk~. We can then identify the row from
+the super weight from the channel index given by the input distribution of the activations across all
+layers. Similarly, we can identify the column of the super weight from the channel index of the
+corresponding layer in the output distribution of the activations.
+* The authors found that the Phi-3-mini-4k-instruct contains the maximum number of super weights, a total
+of six.
+* The authors also found that super weights in the instruct-tuned models are located at the exact
+coordinates as in the pre-trained models, suggesting that instruct fine-tuning does not change the
+position of super weights.
