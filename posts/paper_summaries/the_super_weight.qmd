@@ -59,3 +59,21 @@ of six.
 * The authors also found that super weights in the instruct-tuned models are located at the exact
 coordinates as in the pre-trained models, suggesting that instruct fine-tuning does not change the
 position of super weights.
+
+
+# What impacts the model's quality more: Super weights or super activations?
+
+* Experimented with three conditions:
+  - Original model
+  - Prune the super weight (setting it to zero)
+  - Prune the super weight but restore the super activation
+
+* When the authors prune the super weight, it significantly impairs quality - reducing accuracy on
+zero-shot datasets and increasing perplexity by orders of magnitude.
+* Pruning the super weight but restoring the super activation recovers the quality partially but only
+up to a (low) extent. It suggests that the super weight and super activation need special handling to
+preserve quality.
+
+<br><br>
+![](../paper_screenshots/the_super_weight/2.png)
+<br><br>
