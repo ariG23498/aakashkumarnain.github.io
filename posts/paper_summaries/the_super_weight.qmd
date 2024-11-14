@@ -77,3 +77,16 @@ preserve quality.
 <br><br>
 ![](../paper_screenshots/the_super_weight/2.png)
 <br><br>
+
+# Effect of super weight on the output token probability distribution
+
+* So, what happens to the output of an LLM when you remove the super weight? The probability of
+generating the stopwords amplifies.
+* If super weights are so important, why don't we amplify them more? The authors multiply the super
+weights by a scaling factor ranging from 0.0 to 3.0 to record the impact on the model performance.
+They noticed that even though the improvements are minuscule, there exists a consistent trend of
+improvement to a certain scaling factor.
+
+<br><br>
+![](../paper_screenshots/the_super_weight/3.png)
+<br><br>
