@@ -98,7 +98,7 @@ Given that we know the importance of the super activation and super weights, how
 * **Activation Quantization** 
   - Simulate W8A8 quantization with FP16 arithmetic and focus solely on addressing one critical activation
   outlier. Experiments done using round-to-nearest quantization but with some modifications. 
-  - Replace the super activation with the median value (REPLACE), quantize (Q), and dequantize (Q^−1)
+  - Replace the super activation with the median value (REPLACE), quantize (Q), and dequantize (Q^−1^)
   activations. Then restore the super activation in fp16 (RESTORE)
 
 * **Weight Quantization**
