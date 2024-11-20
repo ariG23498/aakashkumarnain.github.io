@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Aakash Kumar Nain (@A_K_Nain)">
+<meta name="dcterms.date" content="2024-11-20">
 
-<title>Aakash Nain - Archive</title>
+<title>Aakash Nain - Cut Your Losses in Large-Vocabulary Language Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -61,39 +61,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -103,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Aakash Nain</span>
     </a>
   </div>
@@ -129,11 +99,11 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html" rel="" target="">
+    <a class="nav-link" href="../../blog.html" rel="" target="">
  <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./archive.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="../../archive.html" rel="" target="">
  <span class="menu-text">Archive</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -167,23 +137,53 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#preliminaries" id="toc-preliminaries" class="nav-link active" data-scroll-target="#preliminaries">Preliminaries</a></li>
+  <li><a href="#cut-cross-entropy" id="toc-cut-cross-entropy" class="nav-link" data-scroll-target="#cut-cross-entropy">Cut-Cross Entropy</a></li>
+  <li><a href="#memory-efficient-indexed-matrix-multiplication" id="toc-memory-efficient-indexed-matrix-multiplication" class="nav-link" data-scroll-target="#memory-efficient-indexed-matrix-multiplication">Memory Efficient Indexed Matrix Multiplication</a></li>
+  <li><a href="#memory-efficient-linear-log-sum-exp" id="toc-memory-efficient-linear-log-sum-exp" class="nav-link" data-scroll-target="#memory-efficient-linear-log-sum-exp">Memory Efficient Linear log-sum-exp</a></li>
+  <li><a href="#runtime-and-memory" id="toc-runtime-and-memory" class="nav-link" data-scroll-target="#runtime-and-memory">Runtime And Memory</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Archive</h1>
-</div>
+<h1 class="title">Cut Your Losses in Large-Vocabulary Language Models</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">papers</div>
+    <div class="quarto-category">summary</div>
+    <div class="quarto-category">research</div>
+    <div class="quarto-category">LLMs</div>
+  </div>
+  </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Aakash Kumar Nain (<a href="https://x.com/A_K_Nain"><span class="citation" data-cites="A_K_Nain">@A_K_Nain</span></a>) </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 20, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -191,169 +191,78 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p><a href="https://arxiv.org/abs/2411.09009">arXiv</a><br></p>
+<p>We all want to save GPU memory and increase its utilization, right? This latest paper from Apple is exactly what we all need (apart from attention, of course!).</p>
+<p>As we scale models, the vocabulary for these models will also grow (and we want to be in an ideal scenario). One side effect of this is that during the training, the memory footprint of the last layer/op responsible for cross-entropy calculation grows disproportionately. In the case of small models, the memory consumed in the final layer can be an order of magnitude higher than the memory consumption in the rest of the LLM combined. The authors propose Cut Cross-Entropy (CCE), a method that computes the cross-entropy loss without materializing the logits for all tokens into global memory.</p>
+<p>A natural question to ask is that someone should have noticed this before, and it can not be the first one. Well, the answer is yes. Let me put it this way: Optimizing the quadratic cost of attention has been the main focus. We made a couple of improvements in that area, and now we are shifting to this. Though this is not the first time someone has implemented a similar idea (I will provide links to a few references later in this thread), I believe this is the first feature-complete implementation of this concept.</p>
+<section id="preliminaries" class="level1">
+<h1>Preliminaries</h1>
+<p>Before discussing the idea presented in this paper, take a step back and look at some notations described below as a refresher.</p>
+<ul>
+<li>The LLM parameterizes an autoregressive distribution over all possible tokens x<sub>i</sub> ∈ V given the preceding N−1 tokens. V is our vocabulary.</li>
+<li>We can split the LLM into a “feature backbone” f: x<sub>1</sub> … x<sub>i−1</sub> → R<sup>D</sup> and a “classifier” C ∈ R<sup>D×|V|</sup></li>
+<li>The softmax<sub>k</sub>(v) produces the probability over all vocabulary entries from the unnormalized log probabilities (logits).</li>
+<li>At training time, the LLM maximizes the log-likelihood of the next token.</li>
+</ul>
+</section>
+<section id="cut-cross-entropy" class="level1">
+<h1>Cut-Cross Entropy</h1>
+<p>Cross-entropy loss can be written as a combination of two terms, as shown below. The first term is a combination of an indexing operation and matrix multiplication. The second term is a joint log-sum-exp and matrix multiplication operation.</p>
+<p><br><br> <img src="../paper_screenshots/cut_your_losses/1.png" class="img-fluid"> <br><br></p>
+</section>
+<section id="memory-efficient-indexed-matrix-multiplication" class="level1">
+<h1>Memory Efficient Indexed Matrix Multiplication</h1>
+<p>A naive computation of indexed matrix multiplication expressed in the first term above involves either explicit computation of the logits C<sup>T</sup>E with an <em>O(N|V|)</em> memory cost or indexing into the classifier C<sub>x</sub> = [C<sub>x1</sub>…..C<sub>xN</sub>] with an <em>O(ND)</em> memory cost.</p>
+<p>To achieve better efficiency, the authors fuse the classifier indexing C<sub>x</sub> with the consecutive dot product between columns Cx<sub>i</sub> and E<sub>i</sub> in a single CUDA/Triton kernel.</p>
+<ul>
+<li>The kernel retrieves the value x<sub>i</sub>, the xi-th column from C, and the ith column from E and stores them in SRAM.</li>
+<li>Perform a dot product between the retrieved values and write the results to the global memory.</li>
+</ul>
+<p>All the operations are performed in SRAM, and no GPU memory is allocated at any point. Also, the computations are performed block-wise for better GPU efficiency. The backward pass can be merged with the backward pass of the log-sum-exp operation, which will be discussed shortly.</p>
+<p><br> <img src="../paper_screenshots/cut_your_losses/2.png" class="img-fluid"> <br><br></p>
+</section>
+<section id="memory-efficient-linear-log-sum-exp" class="level1">
+<h1>Memory Efficient Linear log-sum-exp</h1>
+<ul>
+<li>Forward pass
+<ul>
+<li>Uses an old trick of blocks and parallelization.</li>
+<li>Divide the output O = C<sup>T</sup>E ∈ R<sup>|V|×N</sup> into a set of blocks of size M<sub>B</sub> × N<sub>B</sub>.</li>
+<li>Retrieve the corresponding parts E<sub>n</sub> of E with size (D × N<sub>B</sub>) and blocks C<sub>m</sub> of C with size (D × M<sub>B</sub>) using independent CUDA blocks. Perform the inner product O<sub>nm</sub> = C<sup>T</sup><sub>m</sub>E<sub>n</sub> along the dimension D.</li>
+<li>Loop over smaller size (D<sub>B</sub> X N<sub>B</sub>) and (D<sub>B</sub> X M<sub>B</sub>) blocks and accumulate O<sub>nm</sub> = Σ<sub>d</sub>(C<sup>T</sup><sub>md</sub>E<sub>nd</sub>) in SRAM.</li>
+<li>Each CUDA block then writes O<sub>nm</sub> back into global memory.</li>
+<li>The same blocking and parallelization strategy is applied to produce log-sum-exp(C<sup>T</sup>E). Each block first computes a matrix multiplication, then the log-sum-exp (or LSE for short) along the vocabulary dimension m for its block, and finally updates log-sum-exp with its result.</li>
+<li>The authors use a spin-lock on an atomic operation in global memory to synchronize the updates by different CUDA blocks for simplicity.</li>
+</ul></li>
+<li>Backward pass</li>
+</ul>
+<p><br> <img src="../paper_screenshots/cut_your_losses/3.png" class="img-fluid"> <br></p>
+<ul>
+<li>Needs two gradient updates. The gradient is defined as shown above.</li>
+<li>To calculate C<sup>T</sup>E, we can take the same approach used in the forward pass and can compute this in SRAM.</li>
+<li>Since softmax(C<sup>T</sup>E) = exp(C<sup>T</sup>E − LSE), we do not need to compute the normalization constant of the softmax, allowing us to reuse the global synchronization of the forward pass and compute the softmax efficiently in parallel.</li>
+<li>The authors implement the second matrix multiplication in the GPU memory as a blockwise implementation would require storing or synchronizing S.</li>
+<li>The authors use two techniques to improve the memory access pattern in this algo: gradient filtering and vocabulary sorting.</li>
+<li><strong>Gradient filtering</strong> is necessary because when items are in bf16, any value below ε = 2e−12 will likely be ignored due to truncation in the summation or rounding in the normalization, directly affecting the softmax matrix. For any column in that matrix, at most 1/ε = 4096 entries have non-trivial values and contribute to the gradient computation. All other values are either rounded to zero or truncated. This sparsity increases with the size of the vocab. The authors exploit this sparsity and skip gradient computation for any block whose corresponding softmax matrix S<sub>nm</sub> has only negligible elements. A threshold of ε = 2e−12 is chosen as the smallest value for no truncation.</li>
+<li>Efficient gradient filtering depends directly on the block-level sparsity of the softmax matrix. Ideally, blocks should be empty (hence skipped) or populated entirely but not partially. The authors group the non-trivial gradients by ordering the tokens by their average logit. In the case of a forward pass, they achieve this using an atomic addition to compute the average logit per token. In the case of the backward pass, divide the vocabulary dimension |V| into blocks with similar average logit instead of arbitrarily.</li>
+</ul>
+<p><br> <img src="../paper_screenshots/cut_your_losses/4.png" class="img-fluid"> <br><br></p>
+</section>
+<section id="runtime-and-memory" class="level1">
+<h1>Runtime And Memory</h1>
+<ul>
+<li>Model: Gemma 2B</li>
+<li>Vocab size: 256, 000</li>
+<li>Hidden dim: 2,304</li>
+<li>Batch size: 8,192 tokens</li>
+</ul>
+<p>Here are the results with different methods</p>
+<p><br> <img src="../paper_screenshots/cut_your_losses/5.png" class="img-fluid"> <br><br></p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="papers,summary,research,LLMs" data-listing-date-sort="1732041000000" data-listing-file-modified-sort="1732118827792" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
-<div class="body">
-<a href="./posts/paper_summaries/cut_your_losses.html">
-<h3 class="no-anchor listing-title">
-Cut Your Losses in Large-Vocabulary Language Models
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/paper_summaries/cut_your_losses.html">
-<div class="listing-date">
-Nov 20, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="papers,summary,research,LLMs" data-listing-date-sort="1731436200000" data-listing-file-modified-sort="1731597273690" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="body">
-<a href="./posts/paper_summaries/the_super_weight.html">
-<h3 class="no-anchor listing-title">
-The Super Weight in Large Language Models
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/paper_summaries/the_super_weight.html">
-<div class="listing-date">
-Nov 13, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="papers,summary,research,vision" data-listing-date-sort="1731004200000" data-listing-file-modified-sort="1731333908334" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
-<div class="body">
-<a href="./posts/paper_summaries/depthpro.html">
-<h3 class="no-anchor listing-title">
-Depth Pro
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/paper_summaries/depthpro.html">
-<div class="listing-date">
-Nov 8, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="papers,summary,research,transformers,scaling" data-listing-date-sort="1730658600000" data-listing-file-modified-sort="1730887529642" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
-<div class="body">
-<a href="./posts/paper_summaries/scaling_laws_estimation.html">
-<h3 class="no-anchor listing-title">
-A Hitchhiker’s Guide to Scaling Law Estimation
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/paper_summaries/scaling_laws_estimation.html">
-<div class="listing-date">
-Nov 4, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="papers,summary,research,VLMs,MLLMs" data-listing-date-sort="1730053800000" data-listing-file-modified-sort="1730445816686" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="body">
-<a href="./posts/paper_summaries/omniparser.html">
-<h3 class="no-anchor listing-title">
-OmniParser for Pure Vision Based GUI Agent
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/paper_summaries/omniparser.html">
-<div class="listing-date">
-Oct 28, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="papers,summary,transformers,research,LLMs" data-listing-date-sort="1729621800000" data-listing-file-modified-sort="1730141776985" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
-<div class="body">
-<a href="./posts/paper_summaries/nGPT.html">
-<h3 class="no-anchor listing-title">
-Normalized Transformer
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/paper_summaries/nGPT.html">
-<div class="listing-date">
-Oct 23, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="papers,summary,transformers,research,LLMs,model_merging" data-listing-date-sort="1728930600000" data-listing-file-modified-sort="1730141963543" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="body">
-<a href="./posts/paper_summaries/model_merging_at_scale.html">
-<h3 class="no-anchor listing-title">
-What Matters for Model Merging at Scale?
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/paper_summaries/model_merging_at_scale.html">
-<div class="listing-date">
-Oct 15, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="papers,summary,research,agents" data-listing-date-sort="1727116200000" data-listing-file-modified-sort="1730991567299" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="body">
-<a href="./posts/paper_summaries/agent_workflow_memory.html">
-<h3 class="no-anchor listing-title">
-Agent WorkFlow Memory
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/paper_summaries/agent_workflow_memory.html">
-<div class="listing-date">
-Sep 24, 2024
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
