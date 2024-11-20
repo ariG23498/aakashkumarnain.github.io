@@ -17,3 +17,21 @@ execute:
 ---
 
 [arXiv](https://arxiv.org/abs/2411.09009)<br>
+
+We all want to save GPU memory and increase its utilization, right? This latest paper from Apple is
+exactly what we all need (apart from attention, of course!).
+
+As we scale models, the vocabulary for these models will also grow (and we want to be in an ideal
+scenario). One side effect of this is that during the training, the memory footprint of the last layer/op
+responsible for cross-entropy calculation grows disproportionately. In the case of small models, the
+memory consumed in the final layer can be an order of magnitude higher than the memory consumption in the
+rest of the LLM combined. The authors propose Cut Cross-Entropy (CCE), a method that computes the
+cross-entropy loss without materializing the logits for all tokens into global memory.
+
+A natural question to ask is that someone should have noticed this before, and it can not be the first
+one. Well, the answer is yes. Let me put it this way: Optimizing the quadratic cost of attention has
+been the main focus. We made a couple of improvements in that area, and now we are shifting to this.
+Though this is not the first time someone has implemented a similar idea (I will provide links to a few
+references later in this thread), I believe this is the first feature-complete implementation of this
+concept.
+
