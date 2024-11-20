@@ -60,3 +60,25 @@ and matrix multiplication operation.
 ![](../paper_screenshots/cut_your_losses/1.png)
 <br><br>
 
+# Memory Efficient Indexed Matrix Multiplication
+
+A naive computation of indexed matrix multiplication expressed in the first term above involves either
+explicit computation of the logits C~^T~E with an `O(N|V|)` memory cost or indexing into the classifier
+C~x~ = [C~x1~.....C~xN~] with an O(ND) memory cost.
+
+
+To achieve better efficiency, the authors fuse the classifier indexing C~x~ with the consecutive dot
+product between columns C~xi~ and E~i~ in a single CUDA/Triton kernel.
+
+* The kernel retrieves the value x~i~, the xi-th column from C, and the ith column from E and stores
+them in SRAM.
+* Perform a dot product between the retrieved values and write the results to the global memory.
+
+
+All the operations are performed in SRAM, and no GPU memory is allocated at any point. Also, the
+computations are performed block-wise for better GPU efficiency. The backward pass can be merged with
+the backward pass of the log-sum-exp operation, which will be discussed shortly.
+
+<br><br>
+![](../paper_screenshots/cut_your_losses/2.png)
+<br><br>
