@@ -133,3 +133,16 @@ the backward pass of the log-sum-exp operation, which will be discussed shortly.
 <br>
 ![](../paper_screenshots/cut_your_losses/4.png)
 <br><br>
+
+# Runtime And Memory
+
+* Model: Gemma 2B
+* Vocab size: 256, 000
+* Hidden dim: 2,304
+* Batch size: 8,192 tokens
+
+Here are the results with different methods
+
+<br>
+![](../paper_screenshots/cut_your_losses/5.png)
+<br><br>
