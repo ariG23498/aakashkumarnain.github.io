@@ -48,3 +48,15 @@ C ∈ R~^D×|V|~
 * The softmax~k(v)~ produces the probability over all vocabulary entries from the unnormalized log
 probabilities (logits).
 * At training time, the LLM maximizes the log-likelihood of the next token.
+
+
+# Cut-Cross Entropy
+
+Cross-entropy loss can be written as a combination of two terms, as shown below. The first term is a
+combination of an indexing operation and matrix multiplication. The second term is a joint log-sum-exp
+and matrix multiplication operation.
+
+<br><br>
+![](../paper_screenshots/cut_your_losses/1.png)
+<br><br>
+
