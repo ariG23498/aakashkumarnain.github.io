@@ -82,3 +82,21 @@ the backward pass of the log-sum-exp operation, which will be discussed shortly.
 <br><br>
 ![](../paper_screenshots/cut_your_losses/2.png)
 <br><br>
+
+# Memory Efficient Linear log-sum-exp
+
+* Forward pass
+  - Uses an old trick of blocks and parallelization.
+  - Divide the output O = C~^T~E ∈ R~^|V|×N~ into a set of blocks of size M~B~ × N~B~.
+  - Retrieve the corresponding parts E~n~ of E with size (D × N~B~) and blocks C~m~ of C with size
+  (D × M~B~) using independent CUDA blocks. Perform the inner product O~nm~ = C~^T~~m~E~n~ along the
+  dimension D.
+  - Loop over smaller size (D~B~ X N~B~) and (D~B~ X M~B~) blocks and accumulate
+  O~nm~ = Σ~d~(C~^T~~md~E~nd~) in SRAM.
+  - Each CUDA block then writes O~nm~ back into global memory.
+  - The same blocking and parallelization strategy is applied to produce log-sum-exp(C~^T~E). Each block
+  first computes a matrix multiplication, then the log-sum-exp (or LSE for short) along the vocabulary
+  dimension m for its block, and finally updates log-sum-exp with its result.
+  - The authors use a spin-lock on an atomic operation in global memory to synchronize the updates by
+  different CUDA blocks for simplicity.
+
