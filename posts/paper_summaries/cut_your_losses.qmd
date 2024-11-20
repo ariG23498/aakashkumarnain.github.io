@@ -42,10 +42,10 @@ Before discussing the idea presented in this paper, take a step back and look at
 below as a refresher.
 
 * The LLM parameterizes an autoregressive distribution over all possible tokens x~i~ ∈ V given the
-preceding `N − 1` tokens. `V` is our vocabulary.
-* We can split the LLM into a "feature backbone" f: x~1~ ... x~i−1~ → R~^D~ and a "classifier"
-C ∈ R~^D×|V|~
-* The softmax~k(v)~ produces the probability over all vocabulary entries from the unnormalized log
+preceding N−1 tokens. V is our vocabulary.
+* We can split the LLM into a "feature backbone" f: x~1~ ... x~i−1~ → R^D^ and a "classifier"
+C ∈ R^D×|V|^
+* The softmax~k~(v) produces the probability over all vocabulary entries from the unnormalized log
 probabilities (logits).
 * At training time, the LLM maximizes the log-likelihood of the next token.
 
@@ -63,12 +63,12 @@ and matrix multiplication operation.
 # Memory Efficient Indexed Matrix Multiplication
 
 A naive computation of indexed matrix multiplication expressed in the first term above involves either
-explicit computation of the logits C~^T~E with an `O(N|V|)` memory cost or indexing into the classifier
-C~x~ = [C~x1~.....C~xN~] with an O(ND) memory cost.
+explicit computation of the logits C^T^E with an *O(N|V|)* memory cost or indexing into the classifier
+C~x~ = [C~x1~.....C~xN~] with an *O(ND)* memory cost.
 
 
 To achieve better efficiency, the authors fuse the classifier indexing C~x~ with the consecutive dot
-product between columns C~xi~ and E~i~ in a single CUDA/Triton kernel.
+product between columns Cx~i~ and E~i~ in a single CUDA/Triton kernel.
 
 * The kernel retrieves the value x~i~, the xi-th column from C, and the ith column from E and stores
 them in SRAM.
@@ -79,7 +79,7 @@ All the operations are performed in SRAM, and no GPU memory is allocated at any 
 computations are performed block-wise for better GPU efficiency. The backward pass can be merged with
 the backward pass of the log-sum-exp operation, which will be discussed shortly.
 
-<br><br>
+<br>
 ![](../paper_screenshots/cut_your_losses/2.png)
 <br><br>
 
@@ -87,39 +87,42 @@ the backward pass of the log-sum-exp operation, which will be discussed shortly.
 
 * Forward pass
   - Uses an old trick of blocks and parallelization.
-  - Divide the output O = C~^T~E ∈ R~^|V|×N~ into a set of blocks of size M~B~ × N~B~.
+  - Divide the output O = C^T^E ∈ R^|V|×N^ into a set of blocks of size M~B~ × N~B~.
   - Retrieve the corresponding parts E~n~ of E with size (D × N~B~) and blocks C~m~ of C with size
-  (D × M~B~) using independent CUDA blocks. Perform the inner product O~nm~ = C~^T~~m~E~n~ along the
+  (D × M~B~) using independent CUDA blocks. Perform the inner product O~nm~ = C^T^~m~E~n~ along the
   dimension D.
   - Loop over smaller size (D~B~ X N~B~) and (D~B~ X M~B~) blocks and accumulate
-  O~nm~ = Σ~d~(C~^T~~md~E~nd~) in SRAM.
+  O~nm~ = Σ~d~(C^T^~md~E~nd~) in SRAM.
   - Each CUDA block then writes O~nm~ back into global memory.
-  - The same blocking and parallelization strategy is applied to produce log-sum-exp(C~^T~E). Each block
+  - The same blocking and parallelization strategy is applied to produce log-sum-exp(C^T^E). Each block
   first computes a matrix multiplication, then the log-sum-exp (or LSE for short) along the vocabulary
   dimension m for its block, and finally updates log-sum-exp with its result.
   - The authors use a spin-lock on an atomic operation in global memory to synchronize the updates by
   different CUDA blocks for simplicity.
 
-* Backward pass: Needs two gradient updates. The gradient is defined as shown below.
+* Backward pass
+
 <br>
 ![](../paper_screenshots/cut_your_losses/3.png)
 <br>
-  - To calculate C~^T~E, we can take the same approach used in the forward pass and can compute this in
+
+  - Needs two gradient updates. The gradient is defined as shown above.
+  - To calculate C^T^E, we can take the same approach used in the forward pass and can compute this in
   SRAM.
-  - Since softmax(C~^T~E) = exp(C~^T~E − LSE), we do not need to compute the normalization constant of
+  - Since softmax(C^T^E) = exp(C^T^E − LSE), we do not need to compute the normalization constant of
   the softmax, allowing us to reuse the global synchronization of the forward pass and compute the
   softmax efficiently in parallel.
   - The authors implement the second matrix multiplication in the GPU memory as a blockwise implementation
   would require storing or synchronizing S.
   - The authors use two techniques to improve the memory access pattern in this algo: gradient filtering
   and vocabulary sorting.
-  - **Gradient filtering** is necessary because when items are in bf16, any value below `ε = 2e−12` will
+  - **Gradient filtering** is necessary because when items are in bf16, any value below ε = 2e−12 will
   likely be ignored due to truncation in the summation or rounding in the normalization, directly
-  affecting the softmax matrix. For any column in that matrix, at most \frac{1}{ε} = 4096 entries have
+  affecting the softmax matrix. For any column in that matrix, at most 1/ε = 4096 entries have
   non-trivial values and contribute to the gradient computation. All other values are either rounded to
   zero or truncated. This sparsity increases with the size of the vocab. The authors exploit this
   sparsity and skip gradient computation for any block whose corresponding softmax matrix S~nm~ has only
-  negligible elements. A threshold of `ε = 2e−12` is chosen as the smallest value for no truncation.
+  negligible elements. A threshold of ε = 2e−12 is chosen as the smallest value for no truncation.
   - Efficient gradient filtering depends directly on the block-level sparsity of the softmax matrix.
   Ideally, blocks should be empty (hence skipped) or populated entirely but not partially. The authors
   group the non-trivial gradients by ordering the tokens by their average logit. In the case of a
@@ -129,4 +132,4 @@ the backward pass of the log-sum-exp operation, which will be discussed shortly.
 
 <br>
 ![](../paper_screenshots/cut_your_losses/4.png)
-<br>
+<br><br>
