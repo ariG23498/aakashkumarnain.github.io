@@ -35,3 +35,16 @@ Though this is not the first time someone has implemented a similar idea (I will
 references later in this thread), I believe this is the first feature-complete implementation of this
 concept.
 
+
+# Preliminaries
+
+Before discussing the idea presented in this paper, take a step back and look at some notations described
+below as a refresher.
+
+* The LLM parameterizes an autoregressive distribution over all possible tokens x~i~ ∈ V given the
+preceding `N − 1` tokens. `V` is our vocabulary.
+* We can split the LLM into a "feature backbone" f: x~1~ ... x~i−1~ → R~^D~ and a "classifier"
+C ∈ R~^D×|V|~
+* The softmax~k(v)~ produces the probability over all vocabulary entries from the unnormalized log
+probabilities (logits).
+* At training time, the LLM maximizes the log-likelihood of the next token.
