@@ -100,3 +100,33 @@ the backward pass of the log-sum-exp operation, which will be discussed shortly.
   - The authors use a spin-lock on an atomic operation in global memory to synchronize the updates by
   different CUDA blocks for simplicity.
 
+* Backward pass: Needs two gradient updates. The gradient is defined as shown below.
+<br>
+![](../paper_screenshots/cut_your_losses/3.png)
+<br>
+  - To calculate C~^T~E, we can take the same approach used in the forward pass and can compute this in
+  SRAM.
+  - Since softmax(C~^T~E) = exp(C~^T~E − LSE), we do not need to compute the normalization constant of
+  the softmax, allowing us to reuse the global synchronization of the forward pass and compute the
+  softmax efficiently in parallel.
+  - The authors implement the second matrix multiplication in the GPU memory as a blockwise implementation
+  would require storing or synchronizing S.
+  - The authors use two techniques to improve the memory access pattern in this algo: gradient filtering
+  and vocabulary sorting.
+  - **Gradient filtering** is necessary because when items are in bf16, any value below `ε = 2e−12` will
+  likely be ignored due to truncation in the summation or rounding in the normalization, directly
+  affecting the softmax matrix. For any column in that matrix, at most \frac{1}{ε} = 4096 entries have
+  non-trivial values and contribute to the gradient computation. All other values are either rounded to
+  zero or truncated. This sparsity increases with the size of the vocab. The authors exploit this
+  sparsity and skip gradient computation for any block whose corresponding softmax matrix S~nm~ has only
+  negligible elements. A threshold of `ε = 2e−12` is chosen as the smallest value for no truncation.
+  - Efficient gradient filtering depends directly on the block-level sparsity of the softmax matrix.
+  Ideally, blocks should be empty (hence skipped) or populated entirely but not partially. The authors
+  group the non-trivial gradients by ordering the tokens by their average logit. In the case of a
+  forward pass, they achieve this using an atomic addition to compute the average logit per token. In the
+  case of the backward pass, divide the vocabulary dimension |V| into blocks with similar average logit
+  instead of arbitrarily.
+
+<br>
+![](../paper_screenshots/cut_your_losses/4.png)
+<br>
