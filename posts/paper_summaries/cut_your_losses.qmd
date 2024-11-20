@@ -102,10 +102,7 @@ the backward pass of the log-sum-exp operation, which will be discussed shortly.
 
 * Backward pass
 
-<br>
-![](../paper_screenshots/cut_your_losses/3.png)
-<br>
-
+  ![](../paper_screenshots/cut_your_losses/3.png)<br>
   - Needs two gradient updates. The gradient is defined as shown above.
   - To calculate C^T^E, we can take the same approach used in the forward pass and can compute this in
   SRAM.

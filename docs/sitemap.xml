@@ -2,46 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>/blog.html</loc>
-    <lastmod>2024-11-20T16:15:53.688Z</lastmod>
+    <lastmod>2024-11-20T16:23:19.204Z</lastmod>
   </url>
   <url>
     <loc>/archive.html</loc>
-    <lastmod>2024-11-20T16:15:51.824Z</lastmod>
+    <lastmod>2024-11-20T16:23:17.855Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/agent_workflow_memory.html</loc>
-    <lastmod>2024-11-20T16:15:49.859Z</lastmod>
+    <lastmod>2024-11-20T16:22:07.667Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/scaling_laws_estimation.html</loc>
-    <lastmod>2024-11-20T16:15:48.435Z</lastmod>
+    <lastmod>2024-11-20T16:22:06.301Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/omniparser.html</loc>
-    <lastmod>2024-11-20T16:15:46.945Z</lastmod>
+    <lastmod>2024-11-20T16:22:04.874Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/nGPT.html</loc>
-    <lastmod>2024-11-20T16:15:45.519Z</lastmod>
+    <lastmod>2024-11-20T16:22:03.455Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/depthpro.html</loc>
-    <lastmod>2024-11-20T16:15:46.306Z</lastmod>
+    <lastmod>2024-11-20T16:22:04.231Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/model_merging_at_scale.html</loc>
-    <lastmod>2024-11-20T16:15:47.674Z</lastmod>
+    <lastmod>2024-11-20T16:22:05.546Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/cut_your_losses.html</loc>
-    <lastmod>2024-11-20T16:15:49.181Z</lastmod>
+    <lastmod>2024-11-20T16:23:16.477Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/the_super_weight.html</loc>
-    <lastmod>2024-11-20T16:15:50.530Z</lastmod>
+    <lastmod>2024-11-20T16:22:08.333Z</lastmod>
   </url>
   <url>
     <loc>/index.html</loc>
-    <lastmod>2024-11-20T16:15:52.430Z</lastmod>
+    <lastmod>2024-11-20T16:22:10.226Z</lastmod>
   </url>
 </urlset>

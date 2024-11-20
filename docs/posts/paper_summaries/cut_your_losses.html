@@ -224,7 +224,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="memory-efficient-linear-log-sum-exp" class="level1">
 <h1>Memory Efficient Linear log-sum-exp</h1>
 <ul>
-<li>Forward pass
+<li><p>Forward pass</p>
 <ul>
 <li>Uses an old trick of blocks and parallelization.</li>
 <li>Divide the output O = C<sup>T</sup>E ∈ R<sup>|V|×N</sup> into a set of blocks of size M<sub>B</sub> × N<sub>B</sub>.</li>
@@ -234,9 +234,8 @@ ul.task-list li input[type="checkbox"] {
 <li>The same blocking and parallelization strategy is applied to produce log-sum-exp(C<sup>T</sup>E). Each block first computes a matrix multiplication, then the log-sum-exp (or LSE for short) along the vocabulary dimension m for its block, and finally updates log-sum-exp with its result.</li>
 <li>The authors use a spin-lock on an atomic operation in global memory to synchronize the updates by different CUDA blocks for simplicity.</li>
 </ul></li>
-<li>Backward pass</li>
-</ul>
-<p><br> <img src="../paper_screenshots/cut_your_losses/3.png" class="img-fluid"> <br></p>
+<li><p>Backward pass</p>
+<p><img src="../paper_screenshots/cut_your_losses/3.png" class="img-fluid"><br></p>
 <ul>
 <li>Needs two gradient updates. The gradient is defined as shown above.</li>
 <li>To calculate C<sup>T</sup>E, we can take the same approach used in the forward pass and can compute this in SRAM.</li>
@@ -245,6 +244,7 @@ ul.task-list li input[type="checkbox"] {
 <li>The authors use two techniques to improve the memory access pattern in this algo: gradient filtering and vocabulary sorting.</li>
 <li><strong>Gradient filtering</strong> is necessary because when items are in bf16, any value below ε = 2e−12 will likely be ignored due to truncation in the summation or rounding in the normalization, directly affecting the softmax matrix. For any column in that matrix, at most 1/ε = 4096 entries have non-trivial values and contribute to the gradient computation. All other values are either rounded to zero or truncated. This sparsity increases with the size of the vocab. The authors exploit this sparsity and skip gradient computation for any block whose corresponding softmax matrix S<sub>nm</sub> has only negligible elements. A threshold of ε = 2e−12 is chosen as the smallest value for no truncation.</li>
 <li>Efficient gradient filtering depends directly on the block-level sparsity of the softmax matrix. Ideally, blocks should be empty (hence skipped) or populated entirely but not partially. The authors group the non-trivial gradients by ordering the tokens by their average logit. In the case of a forward pass, they achieve this using an atomic addition to compute the average logit per token. In the case of the backward pass, divide the vocabulary dimension |V| into blocks with similar average logit instead of arbitrarily.</li>
+</ul></li>
 </ul>
 <p><br> <img src="../paper_screenshots/cut_your_losses/4.png" class="img-fluid"> <br><br></p>
 </section>
