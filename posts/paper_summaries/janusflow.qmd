@@ -34,11 +34,11 @@ The JanusFlow paper is crisp and to the point.
 In multimodal understanding tasks, the LLM processes an input sequence consisting of interleaved text and
 image data.
 
-* Text is tokenized into discrete tokens. Each token is transformed into an embedding of dimension 𝐷𝑒𝑚𝑏.
-* An image encoder f_enc encodes images into feature maps of shape 𝐻𝑖𝑚 × 𝑊𝑖𝑚 × 𝐷𝑒𝑛𝑐. The authors use a
-pre-trained SigLIP-Large-Patch/16 model as the image encoder (f_enc).
+* Text is tokenized into discrete tokens. Each token is transformed into an embedding of dimension 𝐷~𝑒𝑚𝑏~.
+* An image encoder f_enc encodes images into feature maps of shape 𝐻~𝑖𝑚~ × 𝑊~𝑖𝑚~ × 𝐷~𝑒𝑛𝑐~. The authors use
+a pre-trained SigLIP-Large-Patch/16 model as the image encoder (f~enc~).
 * The image feature map is flattened and projected through a linear transformation layer into a sequence
-of embeddings with shape (𝐻_𝑖𝑚 𝑊_𝑖𝑚) × 𝐷𝑒𝑚𝑏.
+of embeddings with shape (𝐻~𝑖𝑚~ 𝑊~𝑖𝑚~) × 𝐷~𝑒𝑚𝑏~.
 * The text and image embeddings are concatenated to form the input sequence to the LLM. Special tokens
 |BOI| and |EOI| are inserted before and after the image tokens to help the model locate the image
 embeddings in the sequence.
@@ -53,22 +53,22 @@ embeddings in the sequence.
 The same LLM used for multimodal understanding employs rectified flow for image generation.
 
 * Generation occurs in the latent space using a pre-trained SDXL-VAE.
-* The LLM takes a text sequence 𝑥_𝑐𝑜𝑛 as a condition and generates a corresponding image using rectified
+* The LLM takes a text sequence 𝑥~𝑐𝑜𝑛~ as a condition and generates a corresponding image using rectified
 flow.
-* Start by sampling Gaussian noise z0 of shape 𝐻_𝑙𝑎𝑡𝑒𝑛𝑡 × 𝑊_𝑙𝑎𝑡𝑒𝑛𝑡 × 𝐷_𝑙𝑎𝑡𝑒𝑛𝑡 in the latent space.
-* A generation encoder g_enc transforms the above image(noise in the beginning) into a sequence of
-embeddings (H_𝑔𝑒𝑛 W_𝑔𝑒𝑛) × 𝐷𝑒𝑚𝑏. The authors use ConvNext blocks initialized from scratch in the
+* Start by sampling Gaussian noise z0 of shape 𝐻~𝑙𝑎𝑡𝑒𝑛𝑡~ × 𝑊~𝑙𝑎𝑡𝑒𝑛𝑡~ × 𝐷~𝑙𝑎𝑡𝑒𝑛𝑡~ in the latent space.
+* A generation encoder *g~enc~* transforms the above image(noise in the beginning) into a sequence of
+embeddings (H~𝑔𝑒𝑛~ W~𝑔𝑒𝑛~) × 𝐷~𝑒𝑚𝑏~. The authors use ConvNext blocks initialized from scratch in the
 generation encoder here.
 * The above sequence is then concatenated with a time embedding representing the current time step 
 𝑡 (𝑡 = 0 at the beginning), resulting in a sequence of length 
-(𝐻_𝑔𝑒𝑛 • 𝑊_𝑔𝑒𝑛 + 1). Special token |BOI| is prepended to indicate the start of image generation in the
+(𝐻~𝑔𝑒𝑛~ 𝑊~𝑔𝑒𝑛~ + 1). Special token |BOI| is prepended to indicate the start of image generation in the
 sequence.
 * The LLM predicts the next token autoregressively. The output is then transformed to a velocity vector
-of shape 𝐻_𝑙𝑎𝑡𝑒𝑛𝑡 × 𝑊_𝑙𝑎𝑡𝑒𝑛𝑡 × 𝐷_𝑙𝑎𝑡𝑒𝑛𝑡 by a generation decoder g_dec. The authors use ConvNext blocks
+of shape 𝐻~𝑙𝑎𝑡𝑒𝑛𝑡~ × 𝑊~𝑙𝑎𝑡𝑒𝑛𝑡~ × 𝐷~𝑙𝑎𝑡𝑒𝑛𝑡~ by a generation decoder g~dec~. The authors use ConvNext blocks
 initialized from scratch in the generation decoder.
-* The transformed output state is then updated by a standard Euler solver: 𝑧(𝑡+d𝑡) = 𝑧_𝑡 + 𝑣(𝑧_𝑡, 𝑡)d𝑡.
+* The transformed output state is then updated by a standard Euler solver: 𝑧~𝑡+d𝑡~ = 𝑧~𝑡~ + 𝑣(𝑧~𝑡~, 𝑡)d𝑡.
 The step size dt is defined by the user.
-* Use z_dt as the input, replacing z0 in the above steps iteratively till we obtain z1.
+* Use z~dt~ as the input, replacing z~0~ in the above steps iteratively till we obtain z~1~.
 * To improve the image generation quality, the authors use the good old classifier-free guidance (CFG).
 𝑤 ⩾ 1 controls the magnitude of CFG, and increasing 𝑤 yields higher semantic alignment.
 
@@ -128,9 +128,9 @@ is dropped during training to enable CFG.
 <br>
 
 * **Representation Alignment Regularization:** For generation tasks, features from the understanding
-encoder 𝑓𝑒𝑛𝑐 are aligned with the intermediate features of the LLM as shown below. The function sim(...)
+encoder 𝑓𝑒𝑛𝑐 are aligned with the intermediate features of the LLM as shown below. The function `sim(...)`
 computes the mean of element-wise cosine similarity between embeddings. This alignment loss helps the
-LLM’s internal feature space (given noisy input 𝑧𝑡) align with the understanding encoder’s semantic
+LLM’s internal feature space (given noisy input 𝑧~𝑡~) align with the understanding encoder’s semantic
 feature space, thereby improving generation quality when producing images from new random noise and text
 conditions during inference.
 
@@ -138,8 +138,8 @@ conditions during inference.
 ![](../paper_screenshots/janusflow/4.png)
 <br>
 
-All three objectives are applied across all training stages. Multimodal understanding tasks use L(𝐴𝑅),
-while image generation tasks employ the combined loss L(𝑅𝐹) + L(𝑅𝐸𝑃𝐴).
+All three objectives are applied across all training stages. Multimodal understanding tasks use L~𝐴𝑅~,
+while image generation tasks employ the combined loss L~𝑅𝐹~ + L~𝑅𝐸𝑃𝐴~.
 
 
 # Hparams used in training
