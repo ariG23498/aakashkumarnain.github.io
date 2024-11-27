@@ -1,0 +1,78 @@
+---
+title: "JanusFlow"
+subtitle: "Harmonizing Autoregression and Rectified Flow for Unified Multimodal Understanding
+and Generation"
+author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
+date: "2024-11-25"
+categories: [papers, summary, research, MLLMs, generation]
+image: ""
+format:
+  html:
+    theme: default
+    fontsize: 2em
+    backgroundcolor: rgb(255, 255, 255);
+    code-fold: true
+    code-summary: "Show the code"
+    highlight-style: oblivion
+    css: styles.css
+execute: 
+  echo: false
+---
+
+[arXiv](https://arxiv.org/abs/2411.07975)<br>
+[annotated_paper](https://github.com/AakashKumarNain/annotated_research_papers/blob/master/MLLMs/janusflow.pdf)
+
+
+We all have been impressed by the quality of models produced by Deepseek. I thought Qwen was good, but
+the main highlight is JanusFlow. Apart from the MM1 paper from Apple, I believe JanusFlow is one of the
+best papers on modern MLLMs. It combines both image understanding and image generation in a single model.
+The JanusFlow paper is crisp and to the point.
+
+
+# MultiModal Understanding
+
+In multimodal understanding tasks, the LLM processes an input sequence consisting of interleaved text and
+image data.
+
+* Text is tokenized into discrete tokens. Each token is transformed into an embedding of dimension 𝐷𝑒𝑚𝑏.
+* An image encoder f_enc encodes images into feature maps of shape 𝐻𝑖𝑚 × 𝑊𝑖𝑚 × 𝐷𝑒𝑛𝑐. The authors use a
+pre-trained SigLIP-Large-Patch/16 model as the image encoder (f_enc).
+* The image feature map is flattened and projected through a linear transformation layer into a sequence
+of embeddings with shape (𝐻_𝑖𝑚 𝑊_𝑖𝑚) × 𝐷𝑒𝑚𝑏.
+* The text and image embeddings are concatenated to form the input sequence to the LLM. Special tokens
+|BOI| and |EOI| are inserted before and after the image tokens to help the model locate the image
+embeddings in the sequence.
+* Based on the above sequence of input embeddings, the LLM predicts the next token autoregressively.
+
+<br>
+![](../paper_screenshots/janusflow/1.png)
+<br>
+
+# Image Generation
+
+The same LLM used for multimodal understanding employs rectified flow for image generation.
+
+* Generation occurs in the latent space using a pre-trained SDXL-VAE.
+* The LLM takes a text sequence 𝑥_𝑐𝑜𝑛 as a condition and generates a corresponding image using rectified
+flow.
+* Start by sampling Gaussian noise z0 of shape 𝐻_𝑙𝑎𝑡𝑒𝑛𝑡 × 𝑊_𝑙𝑎𝑡𝑒𝑛𝑡 × 𝐷_𝑙𝑎𝑡𝑒𝑛𝑡 in the latent space.
+* A generation encoder g_enc transforms the above image(noise in the beginning) into a sequence of
+embeddings (H_𝑔𝑒𝑛 W_𝑔𝑒𝑛) × 𝐷𝑒𝑚𝑏. The authors use ConvNext blocks initialized from scratch in the
+generation encoder here.
+* The above sequence is then concatenated with a time embedding representing the current time step 
+𝑡 (𝑡 = 0 at the beginning), resulting in a sequence of length 
+(𝐻_𝑔𝑒𝑛 • 𝑊_𝑔𝑒𝑛 + 1). Special token |BOI| is prepended to indicate the start of image generation in the
+sequence.
+* The LLM predicts the next token autoregressively. The output is then transformed to a velocity vector
+of shape 𝐻_𝑙𝑎𝑡𝑒𝑛𝑡 × 𝑊_𝑙𝑎𝑡𝑒𝑛𝑡 × 𝐷_𝑙𝑎𝑡𝑒𝑛𝑡 by a generation decoder g_dec. The authors use ConvNext blocks
+initialized from scratch in the generation decoder.
+* The transformed output state is then updated by a standard Euler solver: 𝑧(𝑡+d𝑡) = 𝑧_𝑡 + 𝑣(𝑧_𝑡, 𝑡)d𝑡.
+The step size dt is defined by the user.
+* Use z_dt as the input, replacing z0 in the above steps iteratively till we obtain z1.
+* To improve the image generation quality, the authors use the good old classifier-free guidance (CFG).
+𝑤 ⩾ 1 controls the magnitude of CFG, and increasing 𝑤 yields higher semantic alignment.
+
+
+Pay attention to the details here. Not only do the authors employ separate image encoders for
+understanding and generation, but they also use different kinds of models, SigLIP for understanding and
+ConvNext for generation.
