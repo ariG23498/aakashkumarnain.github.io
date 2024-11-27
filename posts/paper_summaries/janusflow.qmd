@@ -76,3 +76,33 @@ The step size dt is defined by the user.
 Pay attention to the details here. Not only do the authors employ separate image encoders for
 understanding and generation, but they also use different kinds of models, SigLIP for understanding and
 ConvNext for generation.
+
+
+# Training Schemes
+
+The authors adopt a three-stage sequential training:
+
+1. **Adaptation:** Randomly initialized components such as the linear layers, generation encoder, and
+generation decoder are trained in this stage.
+2. **Unified pre-training:** Once the adaptation phase is complete, the authors train the entire model
+except for the visual encoder. The training incorporates three data types; multimodal understanding,
+image generation, and text-only data. At the start, the data mixture contains more multimodal
+understanding data, and the authors then increase the ratio of image generation data gradually.
+3. **Supervised Fine-tuning (SFT):** At this stage, the SigLIP image encoder is also unfrozen. The model
+is fine-tuned using instruction-tuning data, which comprises dialogues, task-specific conversations,
+and high-quality text-conditioned image generation examples.
+
+
+This training scheme reminds me of the old transfer learning followed by the layer-wise fine-tuning
+paradigm widely used in the peak CNN era of 2014-18.
+
+<br>
+![](../paper_screenshots/janusflow/2.png)
+<br>
+
+The first two stages use three types of data: multimodal understanding data, image generation data, and
+text-only data. The multimodal understanding data contains image-caption pairs, charts and tables, and
+task data (ShareGPT4V). The image generation data comes from different sources like LAION-Aesthetics,
+SAM, etc., and 2 million in-house samples. All samples go through a filtration process to ensure only
+high quality. For text-only data, the authors use the text corpus of DeepSeek-LLM. Similarly, the SFT
+uses three types of data: Multimodal instruction data, image generation data, and text-only data.
