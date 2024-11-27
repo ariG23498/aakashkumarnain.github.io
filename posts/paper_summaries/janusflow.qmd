@@ -106,3 +106,19 @@ task data (ShareGPT4V). The image generation data comes from different sources l
 SAM, etc., and 2 million in-house samples. All samples go through a filtration process to ensure only
 high quality. For text-only data, the authors use the text corpus of DeepSeek-LLM. Similarly, the SFT
 uses three types of data: Multimodal instruction data, image generation data, and text-only data.
+
+
+# Training Objective
+
+Training JanusFlow involves two types of data, multimodal understanding data and image generation data.
+Both types of data contain two parts: “condition” and “response”. The data is formatted in pairs as 
+𝑥 = (𝑥𝑐𝑜𝑛, 𝑥𝑟𝑒𝑠), where the superscript 𝑐𝑜𝑛 denotes “condition” and 𝑟𝑒𝑠 denotes “response”.  The sequence
+length of x is denoted by L, while the sequence lengths of xcon and xres are denoted by L_con and L_res
+respectively. 𝜃 denotes all the trainable parameters.
+
+1. **Autoregression Objective:** For multimodal understanding tasks, 𝑥𝑟𝑒𝑠 contains only text tokens, and
+the model is trained using the maximum likelihood principle where the loss is calculated over tokens in
+xres.
+2. **Rectified Flow Objective:** For image generation tasks, 𝑥𝑐𝑜𝑛 consists of text tokens and 𝑥𝑟𝑒𝑠 is the
+corresponding image, and the model is trained with the rectified flow objective. 10% of the text prompt
+is dropped during training to enable CFG.
