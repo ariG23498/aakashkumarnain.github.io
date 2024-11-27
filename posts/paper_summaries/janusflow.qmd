@@ -138,3 +138,24 @@ conditions during inference.
 ![](../paper_screenshots/janusflow/4.png)
 <br>
 
+All three objectives are applied across all training stages. Multimodal understanding tasks use L(𝐴𝑅),
+while image generation tasks employ the combined loss L(𝑅𝐹) + L(𝑅𝐸𝑃𝐴).
+
+
+# Hparams used in training
+
+Here is the list of all the hparams used in the training at different stages:
+
+<br>
+![](../paper_screenshots/janusflow/5.png)
+<br>
+
+# Results
+
+Here are the results for both image generation and multimodal understanding tasks. The one big complaint
+I have in these evaluations is the use of FID. I think it is high time to ditch the FID. It is
+meaningless most of the time.
+
+<br>
+![](../paper_screenshots/janusflow/6.png)
+<br>
