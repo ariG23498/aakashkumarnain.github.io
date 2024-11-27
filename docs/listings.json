@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/paper_summaries/janusflow.html",
       "/posts/paper_summaries/cut_your_losses.html",
       "/posts/paper_summaries/the_super_weight.html",
       "/posts/paper_summaries/depthpro.html",
@@ -15,6 +16,7 @@
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/paper_summaries/janusflow.html",
       "/posts/paper_summaries/cut_your_losses.html",
       "/posts/paper_summaries/the_super_weight.html",
       "/posts/paper_summaries/depthpro.html",

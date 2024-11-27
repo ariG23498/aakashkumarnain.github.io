@@ -2,46 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>/blog.html</loc>
-    <lastmod>2024-11-20T16:23:19.204Z</lastmod>
+    <lastmod>2024-11-27T15:49:47.168Z</lastmod>
   </url>
   <url>
     <loc>/archive.html</loc>
-    <lastmod>2024-11-20T16:23:17.855Z</lastmod>
+    <lastmod>2024-11-27T15:49:45.190Z</lastmod>
   </url>
   <url>
-    <loc>/posts/paper_summaries/agent_workflow_memory.html</loc>
-    <lastmod>2024-11-20T16:22:07.667Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/scaling_laws_estimation.html</loc>
-    <lastmod>2024-11-20T16:22:06.301Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/omniparser.html</loc>
-    <lastmod>2024-11-20T16:22:04.874Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/nGPT.html</loc>
-    <lastmod>2024-11-20T16:22:03.455Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/depthpro.html</loc>
-    <lastmod>2024-11-20T16:22:04.231Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/paper_summaries/model_merging_at_scale.html</loc>
-    <lastmod>2024-11-20T16:22:05.546Z</lastmod>
+    <loc>/posts/paper_summaries/janusflow.html</loc>
+    <lastmod>2024-11-27T15:49:43.139Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/cut_your_losses.html</loc>
-    <lastmod>2024-11-20T16:23:16.477Z</lastmod>
+    <lastmod>2024-11-27T15:49:41.732Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/model_merging_at_scale.html</loc>
+    <lastmod>2024-11-27T15:49:40.243Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/depthpro.html</loc>
+    <lastmod>2024-11-27T15:49:38.928Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/nGPT.html</loc>
+    <lastmod>2024-11-27T15:49:38.148Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/omniparser.html</loc>
+    <lastmod>2024-11-27T15:49:39.572Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/scaling_laws_estimation.html</loc>
+    <lastmod>2024-11-27T15:49:41.005Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/paper_summaries/agent_workflow_memory.html</loc>
+    <lastmod>2024-11-27T15:49:42.432Z</lastmod>
   </url>
   <url>
     <loc>/posts/paper_summaries/the_super_weight.html</loc>
-    <lastmod>2024-11-20T16:22:08.333Z</lastmod>
+    <lastmod>2024-11-27T15:49:43.811Z</lastmod>
   </url>
   <url>
     <loc>/index.html</loc>
-    <lastmod>2024-11-20T16:22:10.226Z</lastmod>
+    <lastmod>2024-11-27T15:49:45.800Z</lastmod>
   </url>
 </urlset>

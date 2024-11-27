@@ -1,3 +1,20 @@
 .content {
     color: white; /* Replace with your desired text color */
 }
+
+pre {
+    background-color: #f8f8f8;  /* Light gray background */
+    border-radius: 4px;
+    padding: 1em;
+   }
+   
+code {
+    color: white;  /* Code text color */
+    font-family: 'Courier New', monospace;
+}
+   
+/* Syntax highlighting colors
+.hljs-keyword { color: #0000ff; }
+.hljs-string { color: #008000; }
+.hljs-number { color: #ff8c00; }
+.hljs-comment { color: #808080; } */
