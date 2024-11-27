@@ -14,8 +14,8 @@ listing:
     fields: [date, reading-time, title, categories]
     feed: false
 
-  - id: maths
-    contents: posts/maths/
+  - id: ml_dl
+    contents: posts/ml_dl_concepts/
     sort: "date desc"
     type: default
     categories: true
