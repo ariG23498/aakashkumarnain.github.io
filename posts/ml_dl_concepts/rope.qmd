@@ -24,3 +24,26 @@ it treats a sequence as a set of tokens. It is not position-aware, and it is per
 
 The order of words in a language matters; hence, we need a mechanism to insert word order information
 in our model. This is where position encoding kicks in.
+
+
+# Desired properties of a position encoding
+If we encode positions for the model, what would be the ideal design? The simplest thing we can do is
+initialize a learnable position embedding and let the model figure out the values during training. Not a
+bad idea for starters, but can we do better? What are the desirable properties of an encoding scheme if it
+is not learned implicitly? Here are a few of them:
+
+1. **A unique value for every position in a sequence:** The encoding scheme should assign a unique value
+for every position irrespective of the sequence length. 
+2. **Consistent relative distance between two positions:** Irrespective of the length of a sequence, the
+relative distance between two positions should be consistent across sequences. For example, the relative
+distance between encodings of the 2nd position and 3rd position should be the same in sequences of
+different lengths. 
+3. **Long-term decay:** An inductive bias about words is that words far distant from the current word
+carry less relevant information. That means our position encoding should follow a long-term decay effect
+for relatively distant positions.
+4. **Extensible:** What if we encounter a lengthier sequence at test time than the length of any sequence
+encountered during training? Ideally, we want our encoding scheme to be extensible, without much effort
+and breaking any other assumption.
+5. **Deterministic:** Determinism is mostly a nice property to have. It can help debug a few aspects if
+we encounter something unexpected.
+
