@@ -11,7 +11,6 @@ format:
     backgroundcolor: rgb(255, 255, 255);
     code-fold: true
     code-summary: "Show the code"
-    css: styles.css
 execute: 
   echo: false
 ---
@@ -59,13 +58,16 @@ of rotary position encoding.
 
 # Preliminary
 
-Let S~N~ = {w~i~}^N^~i=1~ be a sequence of `N` input tokens with *w~i~* being the ith token. Each token(word in this case) in the sequence is defined by a `d`-dimensional vector embedding containing no position information. The self-attention layer first incorporates position information into the word embeddings and then transforms them into queries, keys, and value representations. We can define these
+Let $S_N=\{w_i\}^N_i=1$ be a sequence of `N` input tokens with $w_i$ being the ith token. Each token(word in this case) in the sequence is defined by a `d`-dimensional vector embedding containing no position information. The self-attention layer first incorporates position information into the word embeddings and then transforms them into queries, keys, and value representations. We can define these
 transforms as shown below:
 
-\begin{center}
-q_m = f_q(x_m, m)
-k_n = f_k(x_n, n)
-v_n = f_v(x_n, n)
-\end{center}
+$$
+\begin{align}
+& q_m = f_q(x_m, m) \\
+& k_n = f_k(x_n, n) \\
+& v_n = f_v(x_n, n) 
+\end{align}
+$$
 
+where $m$ and $n$ represents the $mth$ and $nth$ positions respectively. 
 
