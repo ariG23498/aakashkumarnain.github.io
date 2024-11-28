@@ -2,7 +2,7 @@
 title: "Rotary Position Embeddings"
 author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
 date: "2024-11-28"
-categories: [llms, embeddings, position encoding]
+categories: [llms, embeddings, position encoding, advanced]
 image: ""
 format:
   html:
@@ -45,6 +45,27 @@ for relatively distant positions.
 4. **Extensible:** What if we encounter a lengthier sequence at test time than the length of any sequence
 encountered during training? Ideally, we want our encoding scheme to be extensible, without much effort
 and breaking any other assumption.
-5. **Deterministic:** Determinism is mostly a nice property to have. It can help debug a few aspects if
+5. **Deterministic:** Determinism is mostly a nice-to-have property. It can help debug a few aspects if
 we encounter something unexpected.
+
+
+There are different encoding schemes, e.g., absolute position encoding, binary encoding, relative
+position encoding, rotary position encoding, etc. Here, we will discuss the two most widely used position
+encoding: sinusoidal position encoding and rotary position encoding. I could have covered relative
+position encoding, but I assume the reader is familiar with these concepts. If not, I will provide some
+resources about them. Also, I could have skipped sinusoidal position encoding, but it lays the foundation
+of rotary position encoding.
+
+
+# Preliminary
+
+Let S~N~ = {w~i~}^N^~i=1~ be a sequence of `N` input tokens with *w~i~* being the ith token. Each token(word in this case) in the sequence is defined by a `d`-dimensional vector embedding containing no position information. The self-attention layer first incorporates position information into the word embeddings and then transforms them into queries, keys, and value representations. We can define these
+transforms as shown below:
+
+\begin{center}
+q_m = f_q(x_m, m)
+k_n = f_k(x_n, n)
+v_n = f_v(x_n, n)
+\end{center}
+
 
