@@ -1,0 +1,26 @@
+---
+title: "Rotary Position Embeddings"
+author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
+date: "2024-11-28"
+categories: [llms, embeddings, position encoding]
+image: ""
+format:
+  html:
+    theme: default
+    fontsize: 2em
+    backgroundcolor: rgb(255, 255, 255);
+    code-fold: true
+    code-summary: "Show the code"
+    css: styles.css
+execute: 
+  echo: false
+---
+
+# Why bother with position encoding?
+
+Self-attention in transformer-based models is one of the most used operations in the history of deep
+learning. Though self-attention is extremely powerful, one of the weaknesses of self-attention is that
+it treats a sequence as a set of tokens. It is not position-aware, and it is permutation equivariant. 
+
+The order of words in a language matters; hence, we need a mechanism to insert word order information
+in our model. This is where position encoding kicks in.
