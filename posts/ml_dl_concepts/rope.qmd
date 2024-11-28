@@ -27,6 +27,7 @@ in our model. This is where position encoding kicks in.
 
 
 # Desired properties of a position encoding
+
 If we encode positions for the model, what would be the ideal design? The simplest thing we can do is
 initialize a learnable position embedding and let the model figure out the values during training. Not a
 bad idea for starters, but can we do better? What are the desirable properties of an encoding scheme if it
