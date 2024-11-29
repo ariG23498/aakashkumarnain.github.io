@@ -25,6 +25,29 @@ The order of words in a language matters; hence, we need a mechanism to insert w
 in our model. This is where position encoding kicks in.
 
 
+# Preliminary
+
+Let $S_N=\{w_i\}^N_i=1$ be a sequence of `N` input tokens with $w_i$ being the ith token. Each token(word in this case) in the sequence is defined by a `d`-dimensional vector embedding containing no position information. The self-attention layer first incorporates position information into the word embeddings and then transforms them into queries, keys, and value representations. We can define these
+transforms as shown below:
+
+$$
+\begin{align}
+& q_m = f_q(x_m, m) \\
+& k_n = f_k(x_n, n) \tag{1} \\ 
+& v_n = f_v(x_n, n) 
+\end{align}
+$$
+
+where $m$ and $n$ represents the $mth$ and $nth$ positions respectively. We can simplify these
+transformations in a single equation as:
+
+$$
+f_t(x_i, i) = W_t(x_i + p_i) \tag{2} \\
+$$
+
+where $t \in (q, k, v)$, and $p_i$ is represents a `d` dimensional vector depending of the position of token $x_i$.
+
+
 # Desired properties of a position encoding
 
 If we encode positions for the model, what would be the ideal design? The simplest thing we can do is
@@ -54,27 +77,3 @@ encoding: sinusoidal position encoding and rotary position encoding. I could hav
 position encoding, but I assume the reader is familiar with these concepts. If not, I will provide some
 resources about them. Also, I could have skipped sinusoidal position encoding, but it lays the foundation
 of rotary position encoding.
-
-
-# Preliminary
-
-Let $S_N=\{w_i\}^N_i=1$ be a sequence of `N` input tokens with $w_i$ being the ith token. Each token(word in this case) in the sequence is defined by a `d`-dimensional vector embedding containing no position information. The self-attention layer first incorporates position information into the word embeddings and then transforms them into queries, keys, and value representations. We can define these
-transforms as shown below:
-
-$$
-\begin{align}
-& q_m = f_q(x_m, m) \\
-& k_n = f_k(x_n, n) \tag{1} \\ 
-& v_n = f_v(x_n, n) 
-\end{align}
-$$
-
-where $m$ and $n$ represents the $mth$ and $nth$ positions respectively. We can simplify these
-transformations in a single equation as:
-
-$$
-f_t(x_i, i) = W_t(x_i + p_i) \tag{2} \\
-$$
-
-where $t \in (q, k, v)$, and $p_i$ is represents a `d` dimensional vector depending of the position of token $x_i$.
-
