@@ -62,3 +62,14 @@ NTP is applied to the above sequence regardless of the modality.
 <br>
 ![](../paper_screenshots/aim_v2/3.png)
 <br>
+
+# Hyperparameters for pretraining
+
+Here is the list of all the hyperparameters used in the pretraining stage. They use SigLIP tokenizer and truncate any text longer than 77 tokens. 
+
+<br>
+![](../paper_screenshots/aim_v2/4.png)
+<br>
+
+I am once again asking people not to use AdamW anymore and to use SOAP at a bare minimum. This will make your training runs more efficient, and you are likely to save enough $
+
