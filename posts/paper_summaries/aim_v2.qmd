@@ -73,3 +73,19 @@ Here is the list of all the hyperparameters used in the pretraining stage. They 
 
 I am once again asking people not to use AdamW anymore and to use SOAP at a bare minimum. This will make your training runs more efficient, and you are likely to save enough $
 
+
+# Post-Training
+
+1. **High-resolution Adaptation**
+  - Pretraining was done with an image resolution of 224px, but many downstream tasks like detection and segmentation benefit from high-resolution images. 
+  - The authors fine-tuned the AIMv2 models. The high-resolution adaptation stage utilizes 2 billion image-text pairs sampled from the same pool as the pretraining stage but without any synthetic captions. 
+  - Zero for weight decay is important for stable training at this stage.
+
+2. **Native Resolution Fine-tuning** 
+  - Seeks to make the model more robust by training it with variable aspect ratios and resolutions. 
+  - For a mini-batch i, they randomly sample area A and resize the images to fit within this area while maintaining their aspect ratios. Then they adjust the mini-batch size B_i such that $C = A_i B_i$. Here $C$ is the total number of image patches in the mini-batch.
+  - The authors chose $A = 2^n$, where n is sampled from a truncated normal distribution within the range $[−1, 1]$.
+
+<br>
+![](../paper_screenshots/aim_v2/5.png)
+<br>
