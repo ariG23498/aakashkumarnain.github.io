@@ -41,14 +41,6 @@ $$
 
 where $m$ and $n$ represents the $mth$ and $nth$ positions respectively.
 
-We can simplify the representations of the above transformations with a single equation as:
-
-$$
-f_t(x_i, i) = W_t(x_i + p_i) \tag{2} \\
-$$
-
-where $t \in (q, k, v)$, and $p_i$ is represents a `d` dimensional vector depending of the position of token $x_i$.
-
 
 # Desired properties of a position encoding
 
@@ -78,9 +70,14 @@ position encoding, rotary position encoding, etc. Here, we will discuss the two 
 encoding: sinusoidal position encoding and rotary position encoding. Assuming the reader is familiar with concepts like relative position encoding, we will skip that discussion here. We could have skipped sinusoidal position encoding, but it lays the foundation of rotary position encoding. Also, we will try to keep the notations in line with the Roformer paper as much as possible. <br>
 
 
-# Sinusoidal Position Encoding
+# Sinusoidal Positional Encoding
 
-Sinusoidal encoding was proposed in the paper Attention is All You Need. They proposed to generate $p_i$ using the sinusoidal function:
+A typical choice for equation(1) is to formulate it this way:
+$$
+f_t(x_i, i) = W_t(x_i + p_i) \tag{2} \\
+$$
+
+Sinusoidal encoding was proposed in the paper Attention is All You Need. They proposed to generate $p_i$ in the above equation using the sinusoidal function:
 $$
 \begin{cases}
 p_{i,2t} &= \sin(k/10000^{2t/d}) \\
@@ -88,7 +85,9 @@ p_{i,2t+1} &= \cos(k/10000^{2t/d}) \\ \tag{3}
 \end{cases}
 $$
 
-where $p_i,2_t$ is the $2th$ element of the d-dimensional vector $p$. The wavelengths form a geometric progression from $2π$ to $10000 · 2π$. 
+where $p_i,2_t$ is the $2t$h element of the d-dimensional vector $p$. The wavelengths form a geometric progression from $2π$ to $10000 · 2π$. 
+
+where $t \in (q, k, v)$, and $p_i$ is represents a `d` dimensional vector depending of the position of token $x_i$.
 
 Many people do not know sinusoidal encoding was suggested so the model can learn to attend to relative positions. Yes, relative positions! This is mostly because people do not read papers with "attention". Let us take an example with $d=2$.
 
@@ -116,7 +115,7 @@ $$
 \end{align*}
 $$
 
-Expanding $sin(pos+k)$ and $cos(pos+k)$, we have:
+<br>Expanding $sin(pos+k)$ and $cos(pos+k)$, we have:
 
 $$
 \begin{align*}
@@ -148,3 +147,20 @@ $$
 $$
 
 That's a rotation matrix! So, our models have been learning to attend relative positions since 2017. If that is the case, what is wrong with sinusoidal position encoding?
+
+Before we answer that question, take a look at the visualization below. There is a two-dimensional vector x=(1, 1), and we add the sinusoidal position encoding for different positions to this vector.
+
+![](./animations/sinsuoidal.mp4){autoplay=true}
+
+<br><br>
+
+Though we assume that the model can attend to relative positions easily, the one thing that is a bit bothering is the stochasticity. Our pointer is moving almost randomly. The pattern here does not look so good, but it doesn't necessarily mean it is also bad for the model to learn, especially at scale. All we can say is that with so much stochasticity across different dimensions, the model will have a hard time learning that relative positions can be attended using a rotation matrix and that the model may start memorizing. 
+
+Another thing to note from equation(2) is that sinusoidal positional encodings are additive. This means indirectly adding the  "relatedness" of two tokens to the positional encoding. A side effect of this is that two highly related tokens can get high attention scores irrespective of the distance between them. This is still okay for NLP-related problems but doesn't hold for other domains like protein sequencing.
+
+The authors of the Attention is All You Need paper also hypothesized that hard-coded sinusoidal positional encodings may help to extrapolate to longer sequences compared to the length of the sequences seen during training. The hypothesis does not hold in practice.
+
+<br><br>
+
+
+
