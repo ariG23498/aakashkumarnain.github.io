@@ -100,3 +100,12 @@ Aim to assess the quality of AIMv2 models as off-the-shelf backbones for recogni
 <br>
 ![](../paper_screenshots/aim_v2/6.png)
 <br>
+
+# Object Detection and Grounding
+
+* Evaluate the performance of AIMv2 on Open-Vocabulary Detection (OVD) and Referring Expression Comprehension (REC).
+* AIMV2 outperforms DINOv2 and other vision-language pre-trained models on all benchmarks but one, showing strong performance on LVIS.
+
+<br>
+![](../paper_screenshots/aim_v2/7.png)
+<br>
