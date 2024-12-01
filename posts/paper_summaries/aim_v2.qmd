@@ -39,3 +39,15 @@ NTP is applied to the above sequence regardless of the modality.
 *  <br>![](../paper_screenshots/aim_v2/2.png)<br>
 * The overall objective is to minimize $L= L(text) + α ∗ L(img)$. $L(text)$ is a standard cross-entropy loss applied to the text domain, whereas $L(img)$ is an l2 pixel-level regression loss for the image domain. The model predicts the next token for the text and the next patch for the image part.
 * Separate linear layers are used for different modalities to map the output of the multimodal decoder to appropriate output dimensions for image patches and vocabulary, respectively.
+
+
+# Architecture
+
+* ViT as the vision encoder. The authors experimented with different-sized encoders ranging from 300M to 3B params. An image resolution of 224px is used.
+* Self-attention with the vision encoder utilizes a prefix attention mask. This strategy facilitates the use of bidirectional attention during inference without additional tuning.
+* Randomly sample a prefix length M from the uniform distribution as $M ∼ U\{1, 2, . . . , I − 1\}$ where $I$ is the number of image patches.
+* The pixel loss (l2 loss ) is computed exclusively for non-prefix patches $\{ x_i \ | \ i > M \}$.
+* SwiGLU as the FFN layer, and RMSNorm as the normalization layer both in the vision encoder and the multimodal decoder.
+* A single multimodal decoder that decodes the next token for both modalities concurrently in an autoregressive fashion. The decoder receives concatenated sequences of image and text features as input and employs causal attention in the self-attention operations. Image features and raw text tokens are each linearly projected and embedded into d dimensional vectors. The outputs of the decoder are processed through two separate linear heads, one for image tokens and another for text tokens, to predict the next token in each modality, respectively.
+* Irrespective of the encoder size, the capacity of the decoder is fixed for all experiments.
+
