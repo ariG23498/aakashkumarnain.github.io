@@ -89,3 +89,14 @@ I am once again asking people not to use AdamW anymore and to use SOAP at a bare
 <br>
 ![](../paper_screenshots/aim_v2/5.png)
 <br>
+
+# Attentive Probing
+
+Aim to assess the quality of AIMv2 models as off-the-shelf backbones for recognition benchmarks. Here, the vision encoder remains frozen, and only an attentive probe classifier is trained on top of the last layerfeatures.
+
+* AIMV2 significantly outperforms generative unsupervised methods such as MAE and AIM, even with much smaller capacity models.
+* AIMV2-1B and the smaller AIMV2-H provide competitive performance, outperforming DINOv2 on several benchmarks, including the IN-1k, Food101, DTD, and Cars datasets.
+
+<br>
+![](../paper_screenshots/aim_v2/6.png)
+<br>
