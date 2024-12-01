@@ -38,8 +38,9 @@ $$
 \end{align}
 $$
 
-where $m$ and $n$ represents the $mth$ and $nth$ positions respectively. We can simplify these
-transformations in a single equation as:
+where $m$ and $n$ represents the $mth$ and $nth$ positions respectively.
+
+We can simplify the representations of the above transformations with a single equation as:
 
 $$
 f_t(x_i, i) = W_t(x_i + p_i) \tag{2} \\
@@ -73,7 +74,75 @@ we encounter something unexpected.
 
 There are different encoding schemes, e.g., absolute position encoding, binary encoding, relative
 position encoding, rotary position encoding, etc. Here, we will discuss the two most widely used position
-encoding: sinusoidal position encoding and rotary position encoding. I could have covered relative
-position encoding, but I assume the reader is familiar with these concepts. If not, I will provide some
-resources about them. Also, I could have skipped sinusoidal position encoding, but it lays the foundation
-of rotary position encoding.
+encoding: sinusoidal position encoding and rotary position encoding. Assuming the reader is familiar with concepts like relative position encoding, we will skip that discussion here. We could have skipped sinusoidal position encoding, but it lays the foundation of rotary position encoding. Also, we will try to keep the notations in line with the Roformer paper as much as possible.
+
+
+# Sinusoidal Position Encoding
+
+Sinusoidal encoding was proposed in the paper Attention is All You Need. They proposed to generate $p_i$ using the sinusoidal function:
+$$
+\begin{cases}
+p_{i,2t} &= \sin(k/10000^{2t/d}) \\
+p_{i,2t+1} &= \cos(k/10000^{2t/d}) \\ \tag{3}
+\end{cases}
+$$
+
+where $p_i,2_t$ is the $2th$ element of the d-dimensional vector $p$. The wavelengths form a geometric progression from $2π$ to $10000 · 2π$. 
+
+Many people do not know sinusoidal encoding was suggested so the model can learn to attend to relative positions. Yes, relative positions! This is mostly because people do not read papers with "attention". Let us take an example with $d=2$. Plug sinusoidal encoding into equation 3:
+
+$$
+\begin{align*}
+    d = 2 \rightarrow i={[0, 1]}
+\end{align*}
+$$
+
+Let us calculate the position encoding values for $position=pos$:
+
+$$
+\begin{align*}
+    PE_{pos,0} &= \sin(pos/10000^{2*0/d}) = sin(pos) \\
+    PE_{pos,1} &= \cos(pos/10000^{2*0/d}) = cos(pos) \\
+\end{align*}
+$$
+
+Now, let us calculate the position encoding for an offset `k` i.e., $position=pos+k$:
+
+$$
+\begin{align*}
+    PE_{pos+k, 0} &= \sin((pos+k)/10000^{2*0/d}) = \sin(pos+k) \\
+    PE_{pos+k, 1} &= \cos((pos+k)/10000^{2*0/d}) = \cos(pos+k) \\
+\end{align*}
+$$
+
+Expanding $sin(pos+k)$ and $cos(pos+k)$, we have:
+
+$$
+\begin{align*}
+    \sin(pos+k) &= \sin(pos)\sin(k) + \cos(pos)\cos(k) \\
+                &= PE_{pos, 0} \sin(k) + PE_{pos, 1} \cos(k) \\ \\
+    \cos(pos+k) &= \cos(pos)\cos(k) - \sin(pos)\sin(k) \\
+                &= PE_{pos, 1} \cos(k) - PE_{pos, 0} \sin(k) \\
+\end{align*}
+$$
+
+We can combine the above two equations in a nice matrix notation:
+
+$$
+\begin{align*}
+\begin{bmatrix}
+    PE_{pos+k,0} \\
+    PE_{pos+k,1}
+\end{bmatrix} &= 
+\begin{bmatrix}
+    \cos(k)  & \sin(k) \\ 
+    -\sin(k) & \cos(k)
+\end{bmatrix}
+\begin{bmatrix}
+    PE_{pos,0} \\
+    PE_{pos,1}
+\end{bmatrix}
+\end{align*}
+$$
+
+
