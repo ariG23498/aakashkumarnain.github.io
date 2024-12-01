@@ -109,3 +109,17 @@ Aim to assess the quality of AIMv2 models as off-the-shelf backbones for recogni
 <br>
 ![](../paper_screenshots/aim_v2/7.png)
 <br>
+
+# Multimodal Understanding
+
+Evaluate AIMv2 both on instruction tuning and in-context learning.
+
+* 2-layer MLP connector between the vision encoder and the LLM (e.g., Llama 3.0). The parameters of the vision encoder are frozen during this stage.
+* The connector and the LLM are jointly trained in this stage, but the learning rate for the connector is scaled by a factor of 8.
+* The authors use Llava SFT mixture and Llama-3.0 8B LLM decoder. All models are trained for a single epoch in this stage.
+* The smallest model, AIMV2-L, outperforms CLIP, SigLIP, and DINOv2 on most benchmarks, even when the baselines use larger capacities or higher input resolutions.
+* For in-context learning, the vision encoder in the MM1 settings is replaced by the AIMv2 vision encoder, and the same evaluation setup is established as in MM1.
+
+<br>
+![](../paper_screenshots/aim_v2/8.png)
+<br>
