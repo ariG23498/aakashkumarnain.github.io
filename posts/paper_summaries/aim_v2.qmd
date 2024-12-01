@@ -51,3 +51,14 @@ NTP is applied to the above sequence regardless of the modality.
 * A single multimodal decoder that decodes the next token for both modalities concurrently in an autoregressive fashion. The decoder receives concatenated sequences of image and text features as input and employs causal attention in the self-attention operations. Image features and raw text tokens are each linearly projected and embedded into d dimensional vectors. The outputs of the decoder are processed through two separate linear heads, one for image tokens and another for text tokens, to predict the next token in each modality, respectively.
 * Irrespective of the encoder size, the capacity of the decoder is fixed for all experiments.
 
+
+# Pretraining Data Mixture
+
+* Combination of public and private datasets containing pairs of images and text data.
+* Public datasets: DFN-2B and COYO
+* Private datasets: High-Quality Image-Text Pairs (HQITP)
+* The authors generated and used synthetic captions as well.
+
+<br>
+![](../paper_screenshots/aim_v2/3.png)
+<br>
