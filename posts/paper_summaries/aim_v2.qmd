@@ -19,3 +19,12 @@ execute:
 ---
 
 [arXiv](https://arxiv.org/abs/2411.14402)<br>
+
+The multimodality space is now evolving in a much better way. The focus has shifted to finding the bottlenecks and fixing things on the fundamental level in multimodality. This paper from Apple introduces AIMv2, and effort is in a similar direction, except that they only do it for the autoregressive models.
+
+<br>
+![](../paper_screenshots/aim_v2/1.png)
+<br>
+
+AIMv2, a family of open vision models pre-trained to generate image patches and text tokens autoregressively. Unlike the other models in this category, it does not require extremely large batch sizes or specialized inter-batch communication methods.
+
