@@ -36,7 +36,7 @@ AIMv2, a family of open vision models pre-trained to generate image patches and 
 * (image, text) is chosen as the desired sequence to enable stronger conditioning on the visual features.
 NTP is applied to the above sequence regardless of the modality.
 * Separate loss functions for the image and text parts are defined as shown below:
-*  <br>![](../paper_screenshots/aim_v2/2.png)<br>
+ <br>![](../paper_screenshots/aim_v2/2.png)(width=800)<br><br>
 * The overall objective is to minimize $L= L(text) + α ∗ L(img)$. $L(text)$ is a standard cross-entropy loss applied to the text domain, whereas $L(img)$ is an l2 pixel-level regression loss for the image domain. The model predicts the next token for the text and the next patch for the image part.
 * Separate linear layers are used for different modalities to map the output of the multimodal decoder to appropriate output dimensions for image patches and vocabulary, respectively.
 
@@ -60,7 +60,7 @@ NTP is applied to the above sequence regardless of the modality.
 * The authors generated and used synthetic captions as well.
 
 <br>
-![](../paper_screenshots/aim_v2/3.png)
+![](../paper_screenshots/aim_v2/3.png)(width=800)
 <br>
 
 # Hyperparameters for pretraining
@@ -68,7 +68,7 @@ NTP is applied to the above sequence regardless of the modality.
 Here is the list of all the hyperparameters used in the pretraining stage. They use SigLIP tokenizer and truncate any text longer than 77 tokens. 
 
 <br>
-![](../paper_screenshots/aim_v2/4.png)
+![](../paper_screenshots/aim_v2/4.png)(width=800)
 <br>
 
 I am once again asking people not to use AdamW anymore and to use SOAP at a bare minimum. This will make your training runs more efficient, and you are likely to save enough $
@@ -87,7 +87,7 @@ I am once again asking people not to use AdamW anymore and to use SOAP at a bare
   - The authors chose $A = 2^n$, where n is sampled from a truncated normal distribution within the range $[−1, 1]$.
 
 <br>
-![](../paper_screenshots/aim_v2/5.png)
+![](../paper_screenshots/aim_v2/5.png)(width=800)
 <br>
 
 # Attentive Probing
@@ -107,7 +107,7 @@ Aim to assess the quality of AIMv2 models as off-the-shelf backbones for recogni
 * AIMV2 outperforms DINOv2 and other vision-language pre-trained models on all benchmarks but one, showing strong performance on LVIS.
 
 <br>
-![](../paper_screenshots/aim_v2/7.png)
+![](../paper_screenshots/aim_v2/7.png)(width=800)
 <br>
 
 # Multimodal Understanding
@@ -121,5 +121,5 @@ Evaluate AIMv2 both on instruction tuning and in-context learning.
 * For in-context learning, the vision encoder in the MM1 settings is replaced by the AIMv2 vision encoder, and the same evaluation setup is established as in MM1.
 
 <br>
-![](../paper_screenshots/aim_v2/8.png)
+![](../paper_screenshots/aim_v2/8.png)(width=800)
 <br>
