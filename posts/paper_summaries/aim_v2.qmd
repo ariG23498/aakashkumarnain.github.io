@@ -36,7 +36,7 @@ AIMv2, a family of open vision models pre-trained to generate image patches and 
 * (image, text) is chosen as the desired sequence to enable stronger conditioning on the visual features.
 NTP is applied to the above sequence regardless of the modality.
 * Separate loss functions for the image and text parts are defined as shown below:
- <br>![](../paper_screenshots/aim_v2/2.png){{width=800}}<br><br>
+ <br>![](../paper_screenshots/aim_v2/2.png){width=800}<br><br>
 * The overall objective is to minimize $L= L(text) + α ∗ L(img)$. $L(text)$ is a standard cross-entropy loss applied to the text domain, whereas $L(img)$ is an l2 pixel-level regression loss for the image domain. The model predicts the next token for the text and the next patch for the image part.
 * Separate linear layers are used for different modalities to map the output of the multimodal decoder to appropriate output dimensions for image patches and vocabulary, respectively.
 
