@@ -1,11 +1,10 @@
-.content {
-    color: white; /* Replace with your desired text color */
+pre {
+    background-color: #f8f8f8;  /* Light gray background */
+    border-radius: 4px;
+    padding: 1em;
+   }
+   
+code {
+    color: white;  /* Code text color */
+    font-family: 'Courier New', monospace;
 }
-
-/* <!--
-:::{.callout-tip collapse="true" appearance="simple" .callout-note icon=false}
-# Expand contents
-:::{#paper_summaries}
-:::
-:::
---> */

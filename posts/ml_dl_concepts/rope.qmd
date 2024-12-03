@@ -2,7 +2,7 @@
 title: "Rotary Position Embeddings"
 author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
 date: "2024-11-28"
-categories: [llms, embeddings, position encoding, advanced]
+# categories: [llms, embeddings, position encoding, advanced]
 image: ""
 format:
   html:
@@ -152,7 +152,6 @@ Before we answer that question, take a look at the visualization below. There is
 
 ![](./animations/sinsuoidal.mp4){autoplay=true}
 
-<br><br>
 
 Though we assume that the model can attend to relative positions easily, the one thing that is a bit bothering is the stochasticity. Our pointer is moving almost randomly. The pattern here does not look so good, but it doesn't necessarily mean it is also bad for the model to learn, especially at scale. All we can say is that with so much stochasticity across different dimensions, the model will have a hard time learning that relative positions can be attended using a rotation matrix and that the model may start memorizing. 
 
@@ -160,7 +159,84 @@ Another thing to note from equation(2) is that sinusoidal positional encodings a
 
 The authors of the Attention is All You Need paper also hypothesized that hard-coded sinusoidal positional encodings may help to extrapolate to longer sequences compared to the length of the sequences seen during training. The hypothesis does not hold in practice.
 
-<br><br>
 
+# Rotary Position Encoding: The Easy Way
 
+From the above discussion, two things are clear:
 
+1. Encoding relative positions is crucial for attention, but additive methods like sinusoidal encodings are not the best way to do it.
+2. Leveraging a rotation matrix in some form is a good choice for encoding relative positions.
+
+RoPE leverages the above findings. It rotates an encoded vector by some angle θ based on its position in a sequence. Take a look at the visualization below. Here, we are using a 2D vector to demonstrate the rotation of the encoded vector for the token *Python* in a sequence. One interesting aspect is that the number of tokens occurring after the query token (*Python* in this case) does not affect the embedding. The amount of rotation is purely dependent on the token's position in the sequence. 
+
+Is it any good? Let us take an example in 2D to demonstrate this. Suppose *Python* is the query token, *love* is the key token, and we want to compute attention scores between them in two different sequences as given below:
+
+* Python is love
+* Coding in Python is love
+
+So, the tokens in our first sequence will be rotated as:
+
+$$
+\begin{align*}
+Python \rightarrow 1θ \\
+is \rightarrow 2θ \\             
+love \rightarrow 3θ \\
+\end{align*}
+$$
+
+Similarly, the tokens in our second sequence will be rotated as:
+
+$$
+\begin{align*}
+    Coding \rightarrow 1θ \\
+    in \rightarrow 2θ \\
+    Python \rightarrow 3θ \\
+    is \rightarrow 4θ \\
+    love \rightarrow 5θ \\
+\end{align*}
+$$
+
+The relative distance between our query token *Python* and the key token *love* is 2θ. So, the dot product $q^Tk$ remains the same in both sequences. For a 2D case, if we generalize the rotation used in RoPE, we can rewrite our rotation matrix as follows:
+
+$$
+\begin{align*}
+    R_\Theta^p =
+    \begin{bmatrix}
+    \cos(p\theta)  & -\sin(p\theta) \\ 
+    \sin(p\theta) & \cos(p\theta)
+    \end{bmatrix}
+\end{align*}
+$$
+
+where $p$ is the token's position in a sequence. Let us revisit equation(1) now:
+
+$$
+\begin{align*}
+    & q_m = f_q(x_m, m) \\
+    & k_n = f_k(x_n, n)  \\ 
+    & v_n = f_v(x_n, n) 
+\end{align*}
+$$
+
+The term $q^T_mk_n$ enables knowledge conveyance between tokens at different positions in the attention mechanism. We are interested in finding a transformation with the hope that the inner product encodes position information only in the relative form:
+
+$$
+\begin{align*}
+\langle f_q(\boldsymbol{x}_m, m), f_k(\boldsymbol{x}_n, n)\rangle = g(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n).
+\end{align*}
+$$
+
+Let us check how RoPE fulfills this criteria. Note that $m$ and $n$ represents the $mth$ and $nth$ positions respectively. Also, to clarify $q$ and $k$ represent a single query and a single key. Do not get confused by the notation.
+
+$$
+\begin{align*}
+    q_m &= f_q(x_m, m) = R_\Theta^m \ W_q x_m \\
+    k_n &= f_k(x_n, n) = R_\Theta^n \ W_k x_n \\ \\
+    q_m^T \ k_n &= x_m^T W_q^T \ (R_\Theta^m)^T \ \ R_\Theta^n \ W_k x_n \\
+              &= x_m^T W_q^T \ R_\Theta^{-m}  \ \   R_\Theta^n \ W_k x_n \quad 
+                    \text{(Transpose of a rotation matrix is its inverse)} \\
+              &= x_m^T W_q^T \ R_\Theta^{n-m} \ W_k x_n \\
+\end{align*}
+$$
+
+So, RoPE is encoding the relative position information in the attention calculation, which we wanted. We looked only at a 2D case and want to generalize this for N dimensions. But before doing that, let us look at it from another angle, similar to what was presented in the Roformer paper.
