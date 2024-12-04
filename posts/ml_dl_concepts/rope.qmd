@@ -33,9 +33,9 @@ transforms as shown below:
 
 $$
 \begin{align}
-& q_m = f_q(x_m, m) \\
-& k_n = f_k(x_n, n) \tag{1} \\ 
-& v_n = f_v(x_n, n) 
+    & q_m = f_q(x_m, m) \\
+    & k_n = f_k(x_n, n) \tag{1} \\ 
+    & v_n = f_v(x_n, n) 
 \end{align}
 $$
 
@@ -203,7 +203,7 @@ $$
     R_\Theta^p =
     \begin{bmatrix}
     \cos(p\theta)  & -\sin(p\theta) \\ 
-    \sin(p\theta) & \cos(p\theta)
+    \sin(p\theta) & \cos(p\theta) \tag{6}
     \end{bmatrix}
 \end{align*}
 $$
@@ -239,4 +239,31 @@ $$
 \end{align*}
 $$
 
-So, RoPE is encoding the relative position information in the attention calculation, which we wanted. We looked only at a 2D case and want to generalize this for N dimensions. But before doing that, let us look at it from another angle, similar to what was presented in the Roformer paper.
+So, RoPE is encoding the relative position information in the attention calculation, which we wanted. Remember the point we made about stochasticity in sinusoidal encodings? Does RoPE fare better in that aspect? Here is how our vector moves in 2D if we use RoPE instead of sinusoidal encodings: 
+
+
+We looked only at a 2D case and want to generalize this for N dimensions. But before doing that, let us look at it from another angle, similar to what was presented in the Roformer paper. We are looking for something that can encode relative positions in the attention mechanism, and it should not be an additive method like sinusoidal position encoding. Mathematics is the answer to all our problems! We will exploit the geometrical properties of vectors, especially the complex form/representation of vectors. But why the complex form? We will get an answer to this question once we have finished our quest to find the desired transformation for our query and key vectors.
+
+Let us rewrite our query and key transforms presented in equation 1, in complex form:
+
+$$
+\begin{align*}
+q_m &= f_q(\boldsymbol{x}_q, m) = R_q(\boldsymbol{x}_q, m) \ e^{i\Theta_q(\boldsymbol{x}_q,m)} \\
+k_n &= f_k(\boldsymbol{x}_k, n) = R_k(\boldsymbol{x}_k, n) \ e^{i\Theta_k(\boldsymbol{x}_k,n)} \tag{7}
+\end{align*}
+$$
+
+Assuming there exists a transformation $g$ shown below capable of encoding relative position, we aim to find a solution of $f_q$ and $f_k$
+
+$$
+\begin{align*}
+g(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n) &= \langle f_q(\boldsymbol{x}_m, m), f_k(\boldsymbol{x}_n, n)\rangle \\
+    &=  \langle R_q(\boldsymbol{x}_q, m) \ e^{i\Theta_q(\boldsymbol{x}_q, \ m)},
+        R_k(\boldsymbol{x}_k, n) \ e^{i\Theta_k(\boldsymbol{x}_k,\ n)} \rangle \\
+    &=  R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m) \ 
+        e^{i\Theta_g(\boldsymbol{x}_q, \ \boldsymbol{x}_k, \ n-m)} \\
+\end{align*}
+$$
+
+where $R$ represents the radical and $\Theta$ represents the angular components respectively.
+
