@@ -280,8 +280,8 @@ Remember the point we made about stochasticity in sinusoidal encodings? Does RoP
  aspect? Here is how our vector moves in 2D if we use RoPE instead of sinusoidal encodings: 
 
 
-We looked only at a 2D case and want to generalize this for N dimensions. But before doing that, let us
-look at it from another angle, similar to what was presented in the Roformer paper. 
+We looked only at a 2D case and want to generalize this for $d$ dimensions with $d > 2$. But before doing
+that, let us look at it from another angle, similar to what was presented in the Roformer paper. 
 
 
 # Rotary Position Encoding: The Mathematical View
@@ -405,3 +405,16 @@ $$
     \end{pmatrix}
 \end{align*}
 $$
+
+
+# Beyond 2D
+
+Generalizing our 2D results to $d$ dimensions is easy. If our embeddings are d-dimensional
+($d>2$, and d is even), we can split them into $d/2$ blocks, and for each block, we can repeat the same
+thing we have for the 2D case. That way, we will end up with a diagonal rotation matrix, where the value
+of theta differs for each dimension. We can then apply the rotation matrix to each block independently
+and combine the results afterward. The rotation speed varies across the blocks. 
+
+Here is an example with $d=4$. The query vector is split into blocks of size two. Similarly, the key
+vector is divided, and rotation is applied to each group independently. Notice the difference in the
+speed of the two pointers shown below.
