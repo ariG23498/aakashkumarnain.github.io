@@ -159,10 +159,10 @@ $$
 \end{align*}
 $$
 
-That's a rotation matrix! So, our models have been learning to attend relative positions since 2017.
-If that is the case, what is wrong with sinusoidal position encoding?
+That's a transposed rotation matrix! So, our models have been learning to attend relative positions
+since 2017. If that is the case, what is wrong with sinusoidal position encoding?
 
-Take a look at the visualization below. We have a two-dimensional vector x=(1, 1), and we add
+Take a look at the visualization below. We have a two-dimensional vector $x=[1, 1]$, and we add
 sinusoidal position encoding for different positions to this vector.
 
 ![](./animations/sinsuoidal.mp4){autoplay=true}
@@ -320,7 +320,7 @@ gives us:
 
 $$
 \begin{align*}
-R_q(\boldsymbol{x}_q, m)R_k(\boldsymbol{x}_k, n) &= R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m), \\
+R_q(\boldsymbol{x}_q, m)R_k(\boldsymbol{x}_k, n) &= R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m) \\
 \Theta_k(\boldsymbol{x}_k, n) - \Theta_q(\boldsymbol{x}_q, m) &= \Theta_g(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m) \tag{9}
 \end{align*}
 $$
@@ -330,7 +330,7 @@ Also, when no positional information is provided, we expect the following condit
 
 $$
 \begin{align*}
-    \boldsymbol{q} &= \|q\|e^{i\theta_q} = f_q(\boldsymbol{x}_q, 0) = R_q(\boldsymbol{x}_q,0)e^{i\Theta_q(\boldsymbol{x}_q,0)}, \\
+    \boldsymbol{q} &= \|q\|e^{i\theta_q} = f_q(\boldsymbol{x}_q, 0) = R_q(\boldsymbol{x}_q,0)e^{i\Theta_q(\boldsymbol{x}_q,0)} \\
     \boldsymbol{k} &= \|k\|e^{i\theta_k} = f_q(\boldsymbol{x}_k, 0) = R_k(\boldsymbol{x}_k,0)e^{i\Theta_k(\boldsymbol{x}_k,0)} \tag{10}
 \end{align*}
 $$
@@ -341,21 +341,21 @@ $$
 \begin{align*}
     R_q(\boldsymbol{x}_q, m)R_k(\boldsymbol{x}_k, m) &= R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 0) \ \text{using eq. 8} \\
     &= R_q(\boldsymbol{x}_q, 0)R_k(\boldsymbol{x}_k, 0) \\
-    & = \|q\|\|k\|, \tag{11a} \\
+    & = \|q\|\|k\| \tag{11a} \\
     \Theta_k(\boldsymbol{x}_k, m) - \Theta_q(\boldsymbol{x}_q, m) &= \Theta_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 0) \\
     &= \Theta_k(\boldsymbol{x}_k, 0) - \Theta_q(\boldsymbol{x}_q, 0) \\
     &= \theta_k - \theta_q \tag{11b}
 \end{align*}
 $$
 
-From equation $11a$, we have
+<br>From equation $(11a)$, we have
 $R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m) = R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 0) = \|q\|\|k\|$
 implying that all radial components $R_g, R_q, R_k$ are independent from the position information. 
 
-Similarly, from equation $11b$, we have
+Similarly, from equation $(11b)$, we have
 $\Theta_q(\boldsymbol{x}_q, m) - \theta_q = \Theta_k(\boldsymbol{x}_k, m) - \theta_k \text{ for all } q, k, m$,
-which indicates that the angular components do not dependent on the query and the key vectors, and depends
-only on the position $m$. We can simply this by rewriting the above equation:
+which indicates that the angular components do not dependent on the query and the key vectors, and
+depends only on the position $m$. We can simply this by rewriting the above equation:
 
 $$
 \begin{align*}
@@ -365,14 +365,18 @@ $$
 \end{align*}
 $$
 
-Suppose we have $n=m+1$, plugging this in equation (9), and using equation (12), we get:
+<br>Suppose we have $n=m+1$, plugging this in equation (9), and using equation (12), we get:
 
-$\phi(m+1) - \phi(m) = \Theta_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 1) + \theta_q - \theta_k$
+$$
+\phi(m+1) - \phi(m) = \Theta_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 1) + \theta_q - \theta_k
+$$
 
-Since RHS in the above equation is a constant and does not depend on $m$, with continuous integer inputs,
-it produce an arithmetic progression which can be written as:
+<br>Since RHS in the above equation is a constant and does not depend on $m$, with continuous integer
+inputs,it produce an arithmetic progression which can be written as:
 
-$\phi(m) = m\theta + \gamma$ \ tag{13}
+$$
+\phi(m) = m\theta + \gamma \tag{13}
+$$
 
 where $\theta, \gamma \in \mathbb{R}$ are constants and $\theta$ is non-zero. We can simply
 set $\gamma=0$.
@@ -501,3 +505,12 @@ Have you ever wondered how RoPE behaves with image tokens? You may find a thing 
 4. **What about extending the context length?** We will talk about it in the next part
 
 
+# References
+
+* [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
+* [Roformer](https://arxiv.org/abs/2104.09864)
+* [Round and Round We Go!](https://arxiv.org/abs/2410.06205)
+* [Rotary Embeddings: A Relative Revolution](https://blog.eleuther.ai/rotary-embeddings/)
+* [RoPE explained](https://www.youtube.com/watch?v=GQPOtyITy54)
+* [How Rotary Position Embedding Supercharges Modern LLMs](https://www.youtube.com/watch?v=SMBkImDWOyQ)
+* [Manim examples](https://docs.manim.community/en/stable/examples.html)
