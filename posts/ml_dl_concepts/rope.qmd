@@ -432,6 +432,17 @@ $$
 \end{pmatrix}  \tag{15}
 $$
 
+<br>RoPE is then applied to the query and key vectors for attention calculation as:
+
+$$
+\boldsymbol{q}_m^\top \boldsymbol{k}_n =
+(\boldsymbol{R}_{\Theta,m}^d \boldsymbol{W}_q \boldsymbol{x}_m)^\top (\boldsymbol{R}_{\Theta,n}^d \boldsymbol{W}_k \boldsymbol{x}_n)
+= \boldsymbol{x}_m^\top \boldsymbol{W}_q^\top \boldsymbol{R}_{\Theta,n-m}^d \boldsymbol{W}_k \boldsymbol{x}_n
+\tag{16}
+$$
+
 <br>Here is an example with $d=4$. The query vector is split into blocks of size two. Similarly, the key
 vector is divided, and rotation is applied to each group independently. Notice the difference in the
 speed of the two pointers shown below.
+
+
