@@ -1,5 +1,6 @@
 ---
 title: "Rotary Position Embeddings"
+subtitle: "A figure among cyphers: Part-1"
 author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
 date: "2024-11-28"
 # categories: [llms, embeddings, position encoding, advanced]
@@ -444,5 +445,59 @@ $$
 <br>Here is an example with $d=4$. The query vector is split into blocks of size two. Similarly, the key
 vector is divided, and rotation is applied to each group independently. Notice the difference in the
 speed of the two pointers shown below.
+
+
+A recent [paper](https://arxiv.org/abs/2410.06205) from DeepMind found some interesting aspects about
+these frequencies. For example, in the case of Gemma-7B, these high frequencies are responsible for the
+*diagonal head* and the *previous token head* in some layers. 
+
+On the other hand, the low frequencies are not very sensitive to the relative distance. It helps the
+transformers to maintain *semantic attention* over a large context. This is why models with very long
+context windows tend to use a very high value for the base frequency (theta) in practice. For example,
+with a context length of 128k, LLama 3 uses a base frequency of 500,000 leading the low frequencies to
+rotate at roughly $1/500,000$ radians per token.
+
+
+# Optimization
+
+There is one major problem with equation 16. Our rotation matrix is sparse, and though sparsity is good
+in many places, it is not in this case. We are wasting memory because of that sparsity. Another issue is
+that equation 16 is also not computationally efficient. 
+
+We can fix both the issue with a bit of cleverness. Taking advantage of that sparsity along with
+elementwise operations, we can do that computation more efficiently, as shown below:
+
+$$
+\boldsymbol{R}^d_{\Theta,m} \boldsymbol{x} =
+\begin{pmatrix}
+    x_1 \\ x_2 \\ x_3 \\ x_4 \\ \vdots \\ x_{d-1} \\ x_d
+\end{pmatrix}
+\otimes
+\begin{pmatrix}
+    \cos m\theta_1 \\ \cos m\theta_1 \\ \cos m\theta_2 \\ \cos m\theta_2 \\ \vdots \\ \cos m\theta_{d/2} \\ \cos m\theta_{d/2}
+\end{pmatrix}
++
+\begin{pmatrix}
+    -x_2 \\ x_1 \\ -x_4 \\ x_3 \\ \vdots \\ -x_d \\ x_{d-1}
+\end{pmatrix}
+\otimes
+\begin{pmatrix}
+    \sin m\theta_1 \\ \sin m\theta_1 \\ \sin m\theta_2 \\ \sin m\theta_2 \\ \vdots \\ \sin m\theta_{d/2} \\ \sin m\theta_{d/2}
+\end{pmatrix} 
+\tag{17}
+$$
+
+<br>
+
+# What else?
+
+1. **Is RoPE all we need?** Though RoPE seems the perfect encoding, it is far from ideal.
+For example, the idea of long-term decay does not hold in many situations with RoPE.
+2. **What about other options like NoPE, HoPE, etc?** None of these encodings is a clear winner in every
+case. In many situations, sinusoidal is more than sufficient. The advantage of using RoPE is that it is
+a solid baseline over others.
+3. **Does RoPE work well for other modalities?** People like to slap RoPE in every possible situation.
+Have you ever wondered how RoPE behaves with image tokens? You may find a thing or two in there.
+4. **What about extending the context length?** We will talk about it in the next part
 
 
