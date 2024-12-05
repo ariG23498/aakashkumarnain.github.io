@@ -28,7 +28,10 @@ in our model. This is where position encoding kicks in.
 
 # Preliminary
 
-Let $S_N=\{w_i\}^N_i=1$ be a sequence of `N` input tokens with $w_i$ being the ith token. Each token(word in this case) in the sequence is defined by a `d`-dimensional vector embedding containing no position information. The self-attention layer first incorporates position information into the word embeddings and then transforms them into queries, keys, and value representations. We can define these
+Let $S_N=\{w_i\}^N_i=1$ be a sequence of $N$ input tokens with $w_i$ being the ith token. Each
+token(word in this case) in the sequence is defined by a $d$-dimensional vector embedding containing
+no position information. The self-attention layer first incorporates position information into the word
+embeddings and then transforms them into queries, keys, and value representations. We can define these
 transforms as shown below:
 
 $$
@@ -67,7 +70,11 @@ we encounter something unexpected.
 
 There are different encoding schemes, e.g., absolute position encoding, binary encoding, relative
 position encoding, rotary position encoding, etc. Here, we will discuss the two most widely used position
-encoding: sinusoidal position encoding and rotary position encoding. Assuming the reader is familiar with concepts like relative position encoding, we will skip that discussion here. We could have skipped sinusoidal position encoding, but it lays the foundation of rotary position encoding. Also, we will try to keep the notations in line with the Roformer paper as much as possible. <br>
+encodings: sinusoidal position encoding and rotary position encoding. Assuming the reader is familiar with
+concepts like absolute and binary position encodings, we will skip that discussion here. We could have
+skipped sinusoidal position encoding, but it lays the foundation of rotary position encoding. Also,
+we will try to keep the notations in line with the [Roformer](https://arxiv.org/abs/2104.09864) paper
+as much as possible. <br>
 
 
 # Sinusoidal Positional Encoding
@@ -77,7 +84,11 @@ $$
 f_t(x_i, i) = W_t(x_i + p_i) \tag{2} \\
 $$
 
-Sinusoidal encoding was proposed in the paper Attention is All You Need. They proposed to generate $p_i$ in the above equation using the sinusoidal function:
+where $t \in (q, k, v)$, and $p_i$ is represents a $d$ dimensional vector depending of the position of
+token $x_i$. It simply means that we encode the position and add it to the token embedding.
+
+Sinusoidal encoding was proposed in the paper Attention is All You Need. They proposed to generate $p_i$
+in the above equation using the sinusoidal function:
 $$
 \begin{cases}
 p_{i,2t} &= \sin(k/10000^{2t/d}) \\
@@ -85,11 +96,12 @@ p_{i,2t+1} &= \cos(k/10000^{2t/d}) \\ \tag{3}
 \end{cases}
 $$
 
-where $p_i,2_t$ is the $2t$h element of the d-dimensional vector $p$. The wavelengths form a geometric progression from $2π$ to $10000 · 2π$. 
+where $p_{i,2_t}$ is the $2t$h element of the d-dimensional vector $p$. The wavelengths form a geometric
+progression from $2π$ to $10000 · 2π$. 
 
-where $t \in (q, k, v)$, and $p_i$ is represents a `d` dimensional vector depending of the position of token $x_i$.
-
-Many people do not know sinusoidal encoding was suggested so the model can learn to attend to relative positions. Yes, relative positions! This is mostly because people do not read papers with "attention". Let us take an example with $d=2$.
+Many people do not know sinusoidal encoding was suggested so the model can learn to attend to relative
+positions. Yes, relative positions! This is mostly because people do not read papers with "attention".
+Let us take an example with $d=2$ to prove it.
 
 $$
 \begin{align*}
@@ -97,7 +109,7 @@ $$
 \end{align*}
 $$
 
-Let us calculate the position encoding values for $position=pos$ using equation 3:
+Let us calculate the sinusoidal position encodings for $position=pos$ using equation 3:
 
 $$
 \begin{align*}
@@ -106,7 +118,7 @@ $$
 \end{align*}
 $$
 
-Now, let us calculate the position encoding for an offset $k$ i.e., $position=pos+k$:
+Now, let us calculate the sinusoidal position encodings for an offset $k \$ i.e., $position=pos+k$:
 
 $$
 \begin{align*}
@@ -126,7 +138,7 @@ $$
 \end{align*}
 $$
 
-We can combine equation(4) and equation(5) in a nice matrix notation:
+We can combine equation (4) and equation (5) in a nice matrix notation:
 
 $$
 \begin{align*}
@@ -146,30 +158,48 @@ $$
 \end{align*}
 $$
 
-That's a rotation matrix! So, our models have been learning to attend relative positions since 2017. If that is the case, what is wrong with sinusoidal position encoding?
+That's a rotation matrix! So, our models have been learning to attend relative positions since 2017.
+If that is the case, what is wrong with sinusoidal position encoding?
 
-Before we answer that question, take a look at the visualization below. There is a two-dimensional vector x=(1, 1), and we add the sinusoidal position encoding for different positions to this vector.
+Take a look at the visualization below. We have a two-dimensional vector x=(1, 1), and we add
+sinusoidal position encoding for different positions to this vector.
 
 ![](./animations/sinsuoidal.mp4){autoplay=true}
 
 
-Though we assume that the model can attend to relative positions easily, the one thing that is a bit bothering is the stochasticity. Our pointer is moving almost randomly. The pattern here does not look so good, but it doesn't necessarily mean it is also bad for the model to learn, especially at scale. All we can say is that with so much stochasticity across different dimensions, the model will have a hard time learning that relative positions can be attended using a rotation matrix and that the model may start memorizing. 
+Though we assume that the model can attend to relative positions easily, the one thing that is a bit
+bothering is the stochasticity. Our pointer is moving almost randomly. The pattern here does not look
+good. But this doesn't necessarily mean it is also bad for the model to learn, especially at scale.
+All we can say is that with so much stochasticity across different dimensions, the model will have a
+hard time learning that relative positions can be attended using a rotation matrix and that the model
+may start memorizing. 
 
-Another thing to note from equation(2) is that sinusoidal positional encodings are additive. This means indirectly adding the  "relatedness" of two tokens to the positional encoding. A side effect of this is that two highly related tokens can get high attention scores irrespective of the distance between them. This is still okay for NLP-related problems but doesn't hold for other domains like protein sequencing.
+Another thing to note from equation (2) is that sinusoidal positional encodings are additive. This means
+indirectly adding the  "relatedness" of two tokens to the positional encoding. A side effect of this
+is that two highly related tokens can get high attention scores irrespective of the distance between them. This is still okay for NLP-related problems but doesn't hold for other domains like protein sequencing.
 
-The authors of the Attention is All You Need paper also hypothesized that hard-coded sinusoidal positional encodings may help to extrapolate to longer sequences compared to the length of the sequences seen during training. The hypothesis does not hold in practice.
+The authors of the **Attention is All You Need** paper also hypothesized that hard-coded sinusoidal
+positional encodings may help to extrapolate to longer sequences compared to the length of the
+sequences seen during training. The hypothesis does not hold in practice.
 
 
 # Rotary Position Encoding: The Easy Way
 
 From the above discussion, two things are clear:
 
-1. Encoding relative positions is crucial for attention, but additive methods like sinusoidal encodings are not the best way to do it.
+1. Encoding relative positions is crucial for attention, but additive methods like sinusoidal encodings
+are not the best way to do it.
 2. Leveraging a rotation matrix in some form is a good choice for encoding relative positions.
 
-RoPE leverages the above findings. It rotates an encoded vector by some angle θ based on its position in a sequence. Take a look at the visualization below. Here, we are using a 2D vector to demonstrate the rotation of the encoded vector for the token *Python* in a sequence. One interesting aspect is that the number of tokens occurring after the query token (*Python* in this case) does not affect the embedding. The amount of rotation is purely dependent on the token's position in the sequence. 
+RoPE leverages the above findings. It rotates an encoded vector by some angle θ based on its position in
+a sequence. Take a look at the visualization below. Here, we are using a 2D vector to demonstrate the
+rotation of the encoded vector for the token *Python* in a sequence. One interesting aspect is that the
+number of tokens occurring after the query token (*Python* in this case) does not affect the embedding.
+The amount of rotation is purely dependent on the token's position in the sequence. 
 
-Is it any good? Let us take an example in 2D to demonstrate this. Suppose *Python* is the query token, *love* is the key token, and we want to compute attention scores between them in two different sequences as given below:
+Is it any good? Let us take an example in 2D to demonstrate this. Suppose *Python* is the query token,
+*love* is the key token, and we want to compute attention scores between them in two different sequences
+as given below:
 
 * Python is love
 * Coding in Python is love
@@ -196,7 +226,9 @@ $$
 \end{align*}
 $$
 
-The relative distance between our query token *Python* and the key token *love* is 2θ. So, the dot product $q^Tk$ remains the same in both sequences. For a 2D case, if we generalize the rotation used in RoPE, we can rewrite our rotation matrix as follows:
+The relative distance between our query token *Python* and the key token *love* is 2θ. So, the dot product
+$q^Tk$ remains the same in both sequences. For a 2D case, if we generalize the rotation used in RoPE,
+we can rewrite our rotation matrix as follows:
 
 $$
 \begin{align*}
@@ -218,7 +250,9 @@ $$
 \end{align*}
 $$
 
-The term $q^T_mk_n$ enables knowledge conveyance between tokens at different positions in the attention mechanism. We are interested in finding a transformation with the hope that the inner product encodes position information only in the relative form:
+The term $q^T_mk_n$ enables knowledge conveyance between tokens at different positions in the attention
+mechanism. We are interested in finding a transformation with the hope that the inner product encodes
+position information only in the relative form:
 
 $$
 \begin{align*}
@@ -226,7 +260,9 @@ $$
 \end{align*}
 $$
 
-Let us check how RoPE fulfills this criteria. Note that $m$ and $n$ represents the $mth$ and $nth$ positions respectively. Also, to clarify $q$ and $k$ represent a single query and a single key. Do not get confused by the notation.
+Let us check how RoPE fulfills this criteria. Note that $m$ and $n$ represents the $mth$ and $nth$
+positions respectively. Also, to clarify $q$ and $k$ represent a single query and a single key. Do not
+get confused by the notation.
 
 $$
 \begin{align*}
@@ -239,10 +275,22 @@ $$
 \end{align*}
 $$
 
-So, RoPE is encoding the relative position information in the attention calculation, which we wanted. Remember the point we made about stochasticity in sinusoidal encodings? Does RoPE fare better in that aspect? Here is how our vector moves in 2D if we use RoPE instead of sinusoidal encodings: 
+So, RoPE is encoding the relative position information in the attention calculation, which we wanted.
+Remember the point we made about stochasticity in sinusoidal encodings? Does RoPE fare better in tha
+ aspect? Here is how our vector moves in 2D if we use RoPE instead of sinusoidal encodings: 
 
 
-We looked only at a 2D case and want to generalize this for N dimensions. But before doing that, let us look at it from another angle, similar to what was presented in the Roformer paper. We are looking for something that can encode relative positions in the attention mechanism, and it should not be an additive method like sinusoidal position encoding. Mathematics is the answer to all our problems! We will exploit the geometrical properties of vectors, especially the complex form/representation of vectors. But why the complex form? We will get an answer to this question once we have finished our quest to find the desired transformation for our query and key vectors.
+We looked only at a 2D case and want to generalize this for N dimensions. But before doing that, let us
+look at it from another angle, similar to what was presented in the Roformer paper. 
+
+
+# Rotary Position Encoding: The Mathematical View
+
+We are looking for something that can encode relative positions in the attention mechanism, and it
+should not be an additive method like sinusoidal position encoding. Mathematics is the answer to all our
+problems! We will exploit the geometrical properties of vectors, especially the complex
+form/representation of vectors. But why the complex form? We will get an answer to this question once
+we have finished our quest to find the desired transformation for our query and key vectors.
 
 Let us rewrite our query and key transforms presented in equation 1, in complex form:
 
@@ -253,7 +301,8 @@ k_n &= f_k(\boldsymbol{x}_k, n) = R_k(\boldsymbol{x}_k, n) \ e^{i\Theta_k(\bolds
 \end{align*}
 $$
 
-Assuming there exists a transformation $g$ shown below capable of encoding relative position, we aim to find a solution of $f_q$ and $f_k$
+Assuming there exists a transformation $g$ shown below capable of encoding relative position, we aim to
+find a solution of $f_q$ and $f_k$
 
 $$
 \begin{align*}
@@ -261,9 +310,37 @@ g(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n) &= \langle f_q(\boldsymbol{x}_m, m), 
     &=  \langle R_q(\boldsymbol{x}_q, m) \ e^{i\Theta_q(\boldsymbol{x}_q, \ m)},
         R_k(\boldsymbol{x}_k, n) \ e^{i\Theta_k(\boldsymbol{x}_k,\ n)} \rangle \\
     &=  R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m) \ 
-        e^{i\Theta_g(\boldsymbol{x}_q, \ \boldsymbol{x}_k, \ n-m)} \\
+        e^{i\Theta_g(\boldsymbol{x}_q, \ \boldsymbol{x}_k, \ n-m)} \tag{8} \\
 \end{align*}
 $$
 
-where $R$ represents the radical and $\Theta$ represents the angular components respectively.
+where $R$ and $\Theta$ represents radical and angular components respectively. Also, when no positional
+information is provided, we expect the following conditions to be satisfied:
 
+$$
+\begin{align*}
+    \boldsymbol{q} &= \|q\|e^{i\theta_q} = f_q(\boldsymbol{x}_q, 0) = R_q(\boldsymbol{x}_q,0)e^{i\Theta_q(\boldsymbol{x}_q,0)}, \\
+    \boldsymbol{k} &= \|k\|e^{i\theta_k} = f_q(\boldsymbol{x}_k, 0) = R_k(\boldsymbol{x}_k,0)e^{i\Theta_k(\boldsymbol{x}_k,0)} \tag{9}
+\end{align*}
+$$
+
+When $m=n$, we have:
+
+$$
+\begin{align*}
+    R_q(\boldsymbol{x}_q, m)R_k(\boldsymbol{x}_k, m) &= R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 0) \ \text{using eq. 8} \\
+    &= R_q(\boldsymbol{x}_q, 0)R_k(\boldsymbol{x}_k, 0) \\
+    & = \|q\|\|k\|, \tag{10a} \\
+    \Theta_k(\boldsymbol{x}_k, m) - \Theta_q(\boldsymbol{x}_q, m) &= \Theta_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 0) \\
+    &= \Theta_k(\boldsymbol{x}_k, 0) - \Theta_q(\boldsymbol{x}_q, 0) \\
+    &= \theta_k - \theta_q \tag{10b}
+\end{align*}
+$$
+
+From equation $10a$, we have
+$R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m) = R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 0) = \|q\|\|k\|$
+implying that all radial components $R_g, R_q, R_k$ are independent from the position information. 
+
+Similarly, from equation $10b$, we have
+$\Theta_f(\boldsymbol{q}, m) - \Theta(\boldsymbol{q}) = \Theta_f(\boldsymbol{k}, m) - \Theta(\boldsymbol{k}) \text{ for all } \boldsymbol{q}, \boldsymbol{k}, m.$
+which indicates that the angular components do not dependent on the query and the key.
