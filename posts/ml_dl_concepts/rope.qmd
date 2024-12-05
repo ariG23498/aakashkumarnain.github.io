@@ -226,7 +226,7 @@ $$
 \end{align*}
 $$
 
-The relative distance between our query token *Python* and the key token *love* is 2θ. So, the dot product
+The relative distance between our query token *Python* and the key token *love* is 2θ. The inner product
 $q^Tk$ remains the same in both sequences. For a 2D case, if we generalize the rotation used in RoPE,
 we can rewrite our rotation matrix as follows:
 
@@ -402,7 +402,7 @@ $$
     \begin{pmatrix}
         x_m^{(1)} \\
         x_m^{(2)}
-    \end{pmatrix}
+    \end{pmatrix}  \tag{13}
 \end{align*}
 $$
 
@@ -415,6 +415,23 @@ thing we have for the 2D case. That way, we will end up with a diagonal rotation
 of theta differs for each dimension. We can then apply the rotation matrix to each block independently
 and combine the results afterward. The rotation speed varies across the blocks. 
 
-Here is an example with $d=4$. The query vector is split into blocks of size two. Similarly, the key
+$$f_{\{q,k\}}(x_m,m) = \boldsymbol{R}^d_{\Theta,m}\boldsymbol{W}_{\{q,k\}}x_m \tag{14}$$
+
+where
+
+$$
+\boldsymbol{R}^d_{\Theta,m} = 
+        \begin{pmatrix}
+            \cos m\theta_1 & -\sin m\theta_1 & 0 & 0 & \cdots & 0 & 0 \\
+            \sin m\theta_1 & \cos m\theta_1 & 0 & 0 & \cdots & 0 & 0 \\
+            0 & 0 & \cos m\theta_2 & -\sin m\theta_2 & \cdots & 0 & 0 \\
+            0 & 0 & \sin m\theta_2 & \cos m\theta_2 & \cdots & 0 & 0 \\
+            \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+            0 & 0 & 0 & 0 & \cdots & \cos m\theta_{d/2} & -\sin m\theta_{d/2} \\
+            0 & 0 & 0 & 0 & \cdots & \sin m\theta_{d/2} & \cos m\theta_{d/2}
+\end{pmatrix}  \tag{15}
+$$
+
+<br>Here is an example with $d=4$. The query vector is split into blocks of size two. Similarly, the key
 vector is divided, and rotation is applied to each group independently. Notice the difference in the
 speed of the two pointers shown below.
