@@ -310,17 +310,27 @@ g(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n) &= \langle f_q(\boldsymbol{x}_m, m), 
     &=  \langle R_q(\boldsymbol{x}_q, m) \ e^{i\Theta_q(\boldsymbol{x}_q, \ m)},
         R_k(\boldsymbol{x}_k, n) \ e^{i\Theta_k(\boldsymbol{x}_k,\ n)} \rangle \\
     &=  R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m) \ 
-        e^{i\Theta_g(\boldsymbol{x}_q, \ \boldsymbol{x}_k, \ n-m)} \tag{8} \\
+        e^{i\Theta_g(\boldsymbol{x}_q, \ \boldsymbol{x}_k, \ n-m)} \tag{8} \\ \\
 \end{align*}
 $$
 
-where $R$ and $\Theta$ represents radical and angular components respectively. Also, when no positional
-information is provided, we expect the following conditions to be satisfied:
+where $R$ and $\Theta$ represents radical and angular components respectively.Plugging them in equation 7,
+gives us:
+
+$$
+\begin{align*}
+R_q(\boldsymbol{x}_q, m)R_k(\boldsymbol{x}_k, n) &= R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m), \\
+\Theta_k(\boldsymbol{x}_k, n) - \Theta_q(\boldsymbol{x}_q, m) &= \Theta_g(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m) \tag{9}
+\end{align*}
+$$
+
+
+Also, when no positional information is provided, we expect the following conditions to be satisfied:
 
 $$
 \begin{align*}
     \boldsymbol{q} &= \|q\|e^{i\theta_q} = f_q(\boldsymbol{x}_q, 0) = R_q(\boldsymbol{x}_q,0)e^{i\Theta_q(\boldsymbol{x}_q,0)}, \\
-    \boldsymbol{k} &= \|k\|e^{i\theta_k} = f_q(\boldsymbol{x}_k, 0) = R_k(\boldsymbol{x}_k,0)e^{i\Theta_k(\boldsymbol{x}_k,0)} \tag{9}
+    \boldsymbol{k} &= \|k\|e^{i\theta_k} = f_q(\boldsymbol{x}_k, 0) = R_k(\boldsymbol{x}_k,0)e^{i\Theta_k(\boldsymbol{x}_k,0)} \tag{10}
 \end{align*}
 $$
 
@@ -330,17 +340,68 @@ $$
 \begin{align*}
     R_q(\boldsymbol{x}_q, m)R_k(\boldsymbol{x}_k, m) &= R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 0) \ \text{using eq. 8} \\
     &= R_q(\boldsymbol{x}_q, 0)R_k(\boldsymbol{x}_k, 0) \\
-    & = \|q\|\|k\|, \tag{10a} \\
+    & = \|q\|\|k\|, \tag{11a} \\
     \Theta_k(\boldsymbol{x}_k, m) - \Theta_q(\boldsymbol{x}_q, m) &= \Theta_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 0) \\
     &= \Theta_k(\boldsymbol{x}_k, 0) - \Theta_q(\boldsymbol{x}_q, 0) \\
-    &= \theta_k - \theta_q \tag{10b}
+    &= \theta_k - \theta_q \tag{11b}
 \end{align*}
 $$
 
-From equation $10a$, we have
+From equation $11a$, we have
 $R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m) = R_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 0) = \|q\|\|k\|$
 implying that all radial components $R_g, R_q, R_k$ are independent from the position information. 
 
-Similarly, from equation $10b$, we have
-$\Theta_f(\boldsymbol{q}, m) - \Theta(\boldsymbol{q}) = \Theta_f(\boldsymbol{k}, m) - \Theta(\boldsymbol{k}) \text{ for all } \boldsymbol{q}, \boldsymbol{k}, m.$
-which indicates that the angular components do not dependent on the query and the key.
+Similarly, from equation $11b$, we have
+$\Theta_q(\boldsymbol{x}_q, m) - \theta_q = \Theta_k(\boldsymbol{x}_k, m) - \theta_k \text{ for all } q, k, m$,
+which indicates that the angular components do not dependent on the query and the key vectors, and depends
+only on the position $m$. We can simply this by rewriting the above equation:
+
+$$
+\begin{align*}
+    \Theta_q(\boldsymbol{x}_q, m) - \theta_q &= \Theta_k(\boldsymbol{x}_k, m) - \theta_k \\
+    \Theta_q(\boldsymbol{x}_q, m) - \Theta_k(\boldsymbol{x}_k, m) &= \theta_q - \theta_k \\
+    \Theta_f(\boldsymbol{x}_{\{q, k\}}, m) - \theta_{\{q, k\}} &= \phi(m) \tag{12}
+\end{align*}
+$$
+
+Suppose we have $n=m+1$, plugging this in equation (9), and using equation (12), we get:
+
+$\phi(m+1) - \phi(m) = \Theta_g(\boldsymbol{x}_q, \boldsymbol{x}_k, 1) + \theta_q - \theta_k$
+
+Since RHS in the above equation is a constant and does not depend on $m$, with continuous integer inputs,
+it produce an arithmetic progression which can be written as:
+
+$\phi(m) = m\theta + \gamma$ \ tag{13}
+
+where $\theta, \gamma \in \mathbb{R}$ are constants and $\theta$ is non-zero. We can simply
+set $\gamma=0$.
+
+Therefore, for a 2D case, we can write $f_q$ and $f_k$ as:
+
+$$
+\begin{align*}
+f_q(\boldsymbol{x}_m, m) &= (W_q\boldsymbol{x}_m)e^{im\theta} \\
+f_k(\boldsymbol{x}_n, n) &= (W_k\boldsymbol{x}_n)e^{in\theta} \\
+g(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n) &= Re[(W_q\boldsymbol{x}_m)(W_k\boldsymbol{x}_n)^*e^{i(m-n)\theta}]
+\end{align*}
+$$
+
+We can further write this in the form of matrix multiplication as:
+
+$$
+\begin{align*}
+    f_{\{q,k\}}(\boldsymbol{x}_m, m) = 
+    \begin{pmatrix}
+        \cos m\theta & -\sin m\theta \\
+        \sin m\theta & \cos m\theta
+    \end{pmatrix}
+    \begin{pmatrix}
+        W_{\{q,k\}}^{(11)} & W_{\{q,k\}}^{(12)} \\
+        W_{\{q,k\}}^{(21)} & W_{\{q,k\}}^{(22)}
+    \end{pmatrix}
+    \begin{pmatrix}
+        x_m^{(1)} \\
+        x_m^{(2)}
+    \end{pmatrix}
+\end{align*}
+$$
