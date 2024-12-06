@@ -165,7 +165,7 @@ since 2017. If that is the case, what is wrong with sinusoidal position encoding
 Take a look at the visualization below. We have a two-dimensional vector $x=[1, 1]$, and we add
 sinusoidal position encoding for different positions to this vector.
 
-![](./animations/sinsuoidal.mp4){autoplay=true}
+![](./animations/rope/SinuSoidalEncoding.mp4){autoplay=true, loop=true}
 
 
 Though we assume that the model can attend to relative positions easily, the one thing that is a bit
@@ -205,27 +205,9 @@ as given below:
 * Python is love
 * Coding in Python is love
 
-So, the tokens in our first sequence will be rotated as:
+This is how the tokens will be rotated in each of the two sequences:
 
-$$
-\begin{align*}
-Python \rightarrow 1θ \\
-is \rightarrow 2θ \\             
-love \rightarrow 3θ \\
-\end{align*}
-$$
-
-Similarly, the tokens in our second sequence will be rotated as:
-
-$$
-\begin{align*}
-    Coding \rightarrow 1θ \\
-    in \rightarrow 2θ \\
-    Python \rightarrow 3θ \\
-    is \rightarrow 4θ \\
-    love \rightarrow 5θ \\
-\end{align*}
-$$
+![](./animations/rope/TextAnimation2.mp4){autoplay=true, loop=true}
 
 The relative distance between our query token *Python* and the key token *love* is 2θ. The inner product
 $q^Tk$ remains the same in both sequences. For a 2D case, if we generalize the rotation used in RoPE,
@@ -280,6 +262,7 @@ So, RoPE is encoding the relative position information in the attention calculat
 Remember the point we made about stochasticity in sinusoidal encodings? Does RoPE fare better in tha
  aspect? Here is how our vector moves in 2D if we use RoPE instead of sinusoidal encodings: 
 
+![](./animations/rope/Rope2DOneVector.mp4){autoplay=true, loop=true}
 
 We looked only at a 2D case and want to generalize this for $d$ dimensions with $d > 2$. But before doing
 that, let us look at it from another angle, similar to what was presented in the Roformer paper. 
@@ -315,7 +298,7 @@ g(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n) &= \langle f_q(\boldsymbol{x}_m, m), 
 \end{align*}
 $$
 
-where $R$ and $\Theta$ represents radical and angular components respectively.Plugging them in equation 7,
+where $R$ and $\Theta$ represents radical and angular components respectively. Plugging them in equation 7,
 gives us:
 
 $$
@@ -372,7 +355,7 @@ $$
 $$
 
 <br>Since RHS in the above equation is a constant and does not depend on $m$, with continuous integer
-inputs,it produce an arithmetic progression which can be written as:
+inputs, it produces an arithmetic progression that can be written as:
 
 $$
 \phi(m) = m\theta + \gamma \tag{13}
@@ -391,7 +374,8 @@ g(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n) &= Re[(W_q\boldsymbol{x}_m)(W_k\bolds
 \end{align*}
 $$
 
-We can further write this in the form of matrix multiplication as:
+where $Re[·]$ is the real part of a complex number and $(W_k x_n)^*$ represents the conjugate complex
+number of $(W_k x_n)$. We can further write $f_{\{q, k\}}$  in the form of matrix multiplication as:
 
 $$
 \begin{align*}
@@ -450,12 +434,16 @@ $$
 vector is divided, and rotation is applied to each group independently. Notice the difference in the
 speed of the two pointers shown below.
 
+![](./animations/rope/Rope2DTwoVectors.mp4){autoplay=true, loop=true}
 
-A recent [paper](https://arxiv.org/abs/2410.06205) from DeepMind found some interesting aspects about
+
+<br>A recent [paper](https://arxiv.org/abs/2410.06205) from DeepMind found some interesting aspects about
 these frequencies. For example, in the case of Gemma-7B, these high frequencies are responsible for the
-*diagonal head* and the *previous token head* in some layers. 
+*diagonal head* and the *previous token head* in some layers.
 
-On the other hand, the low frequencies are not very sensitive to the relative distance. It helps the
+![](./images/rope/frquency.png){width=750}
+
+<br>On the other hand, the low frequencies are not very sensitive to the relative distance. It helps the
 transformers to maintain *semantic attention* over a large context. This is why models with very long
 context windows tend to use a very high value for the base frequency (theta) in practice. For example,
 with a context length of 128k, LLama 3 uses a base frequency of 500,000 leading the low frequencies to
