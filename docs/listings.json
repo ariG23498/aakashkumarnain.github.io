@@ -11,12 +11,14 @@
       "/posts/paper_summaries/omniparser.html",
       "/posts/paper_summaries/nGPT.html",
       "/posts/paper_summaries/model_merging_at_scale.html",
-      "/posts/paper_summaries/agent_workflow_memory.html"
+      "/posts/paper_summaries/agent_workflow_memory.html",
+      "/posts/ml_dl_concepts/rope.html"
     ]
   },
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/ml_dl_concepts/rope.html",
       "/posts/paper_summaries/aim_v2.html",
       "/posts/paper_summaries/janusflow.html",
       "/posts/paper_summaries/cut_your_losses.html",
