@@ -2,7 +2,7 @@
 title: "Rotary Position Embeddings"
 subtitle: "A figure among cyphers: Part-1"
 author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
-date: "2024-11-28"
+date: "2024-12-08"
 # categories: [llms, embeddings, position encoding, advanced]
 image: ""
 format:
@@ -110,7 +110,7 @@ $$
 \end{align*}
 $$
 
-Let us calculate the sinusoidal position encodings for $position=pos$ using equation 3:
+Now calculate the sinusoidal position encodings for $position=pos$ using equation 3:
 
 $$
 \begin{align*}
@@ -119,7 +119,7 @@ $$
 \end{align*}
 $$
 
-Now, let us calculate the sinusoidal position encodings for an offset $k \$ i.e., $position=pos+k$:
+Similarly, let us calculate the sinusoidal position encodings for an offset $k$ i.e., $position=pos+k$:
 
 $$
 \begin{align*}
@@ -160,7 +160,7 @@ $$
 $$
 
 That's a transposed rotation matrix! So, our models have been learning to attend relative positions
-since 2017. If that is the case, what is wrong with sinusoidal position encoding?
+since 2017. If that is the case, what is wrong with sinusoidal position encoding? A few things...
 
 Take a look at the visualization below. We have a two-dimensional vector $x=[1, 1]$, and we add
 sinusoidal position encoding for different positions to this vector.
@@ -169,10 +169,7 @@ sinusoidal position encoding for different positions to this vector.
 
 
 Though we assume that the model can attend to relative positions easily, the one thing that is a bit
-bothering is the stochasticity. Our pointer is moving almost randomly. The pattern here does not look
-good. But this doesn't necessarily mean it is also bad for the model to learn, especially at scale.
-All we can say is that with so much stochasticity across different dimensions, the model will have a
-hard time learning that relative positions can be attended using a rotation matrix and that the model
+bothering, as noted in the above visualization, is the stochasticity. Our pointer is moving almost randomly. The pattern here does not look good. But this doesn't necessarily mean it is also bad for the model to learn, especially at scale. All we can say is that with so much stochasticity across different dimensions, the model will have a hard time learning that relative positions can be attended using a rotation matrix and that the model
 may start memorizing. 
 
 Another thing to note from equation (2) is that sinusoidal positional encodings are additive. This means
@@ -192,11 +189,7 @@ From the above discussion, two things are clear:
 are not the best way to do it.
 2. Leveraging a rotation matrix in some form is a good choice for encoding relative positions.
 
-RoPE leverages the above findings. It rotates an encoded vector by some angle θ based on its position in
-a sequence. Take a look at the visualization below. Here, we are using a 2D vector to demonstrate the
-rotation of the encoded vector for the token *Python* in a sequence. One interesting aspect is that the
-number of tokens occurring after the query token (*Python* in this case) does not affect the embedding.
-The amount of rotation is purely dependent on the token's position in the sequence. 
+RoPE leverages the above findings. It rotates an encoded vector by some angle $\theta$ based on its position in a sequence. Take a look at the visualization below. Here, we are using a 2D vector to demonstrate the rotation of the encoded vector for the token *Python* in a sequence. One interesting aspect is that the number of tokens occurring after the query token (*Python* in this case) does not affect the embedding. The amount of rotation is purely dependent on the token's position in the sequence. 
 
 Is it any good? Let us take an example in 2D to demonstrate this. Suppose *Python* is the query token,
 *love* is the key token, and we want to compute attention scores between them in two different sequences
@@ -209,9 +202,7 @@ This is how the tokens will be rotated in each of the two sequences:
 
 ![](./animations/rope/TextAnimation2.mp4){autoplay=true, loop=true}
 
-The relative distance between our query token *Python* and the key token *love* is 2θ. The inner product
-$q^Tk$ remains the same in both sequences. For a 2D case, if we generalize the rotation used in RoPE,
-we can rewrite our rotation matrix as follows:
+The relative distance between our query token *Python* and the key token *love* is $2\theta$ in both sequences. The inner product $q^Tk$ remains the same in both sequences. For a 2D case, if we generalize the rotation used in RoPE, we can rewrite our rotation matrix as follows:
 
 $$
 \begin{align*}
@@ -259,24 +250,23 @@ $$
 $$
 
 So, RoPE is encoding the relative position information in the attention calculation, which we wanted.
-Remember the point we made about stochasticity in sinusoidal encodings? Does RoPE fare better in tha
- aspect? Here is how our vector moves in 2D if we use RoPE instead of sinusoidal encodings: 
+Remember the point we made about stochasticity in sinusoidal encodings? Does RoPE fare better in that
+aspect? Here is how our vector moves in 2D if we use RoPE instead of sinusoidal encodings: 
 
 ![](./animations/rope/Rope2DOneVector.mp4){autoplay=true, loop=true}
 
-We looked only at a 2D case and want to generalize this for $d$ dimensions with $d > 2$. But before doing
-that, let us look at it from another angle, similar to what was presented in the Roformer paper. 
+We looked only at a 2D case, but we would want to generalize this for $d$ dimensions with $d > 2$. Before doing that, let us look at it from another perspective, similar to what was presented in the Roformer paper. 
 
 
 # Rotary Position Encoding: The Mathematical View
 
 We are looking for something that can encode relative positions in the attention mechanism, and it
-should not be an additive method like sinusoidal position encoding. Mathematics is the answer to all our
+should not be an additive method like sinusoidal position encoding. Mathematics is the solution to all our
 problems! We will exploit the geometrical properties of vectors, especially the complex
-form/representation of vectors. But why the complex form? We will get an answer to this question once
+form/representation of vectors. But why the complex form? We will get an answer to that question once
 we have finished our quest to find the desired transformation for our query and key vectors.
 
-Let us rewrite our query and key transforms presented in equation 1, in complex form:
+Let us rewrite our query and key transforms presented in equation (1), in complex form:
 
 $$
 \begin{align*}
@@ -298,8 +288,7 @@ g(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n) &= \langle f_q(\boldsymbol{x}_m, m), 
 \end{align*}
 $$
 
-where $R$ and $\Theta$ represents radical and angular components respectively. Plugging them in equation 7,
-gives us:
+where $R$ and $\Theta$ represents radial and angular components respectively. Plugging them in equation (7), gives us:
 
 $$
 \begin{align*}
@@ -396,6 +385,8 @@ $$
 $$
 
 
+Representing the vectors in their complex form helps us formulate the maths of it in a much simpler way.
+
 # Beyond 2D
 
 Generalizing our 2D results to $d$ dimensions is easy. If our embeddings are d-dimensional
@@ -430,9 +421,7 @@ $$
 \tag{16}
 $$
 
-<br>Here is an example with $d=4$. The query vector is split into blocks of size two. Similarly, the key
-vector is divided, and rotation is applied to each group independently. Notice the difference in the
-speed of the two pointers shown below.
+<br>Here is an example with $d=4$. The query vector is split into blocks of size two, and rotation is applied to each group independently. Notice the difference in the speed of the two pointers shown below.
 
 ![](./animations/rope/Rope2DTwoVectors.mp4){autoplay=true, loop=true}
 
@@ -445,19 +434,19 @@ these frequencies. For example, in the case of Gemma-7B, these high frequencies 
 
 <br>On the other hand, the low frequencies are not very sensitive to the relative distance. It helps the
 transformers to maintain *semantic attention* over a large context. This is why models with very long
-context windows tend to use a very high value for the base frequency (theta) in practice. For example,
-with a context length of 128k, LLama 3 uses a base frequency of 500,000 leading the low frequencies to
+context windows tend to use a very high value for the base frequency $(\theta)$ in practice. For example,
+with a context length of 128K, LLama 3 uses a base frequency of 500,000 leading the low frequencies to
 rotate at roughly $1/500,000$ radians per token.
 
 
 # Optimization
 
-There is one major problem with equation 16. Our rotation matrix is sparse, and though sparsity is good
+There is one major problem with equation (16). Our rotation matrix is sparse, and though sparsity is good
 in many places, it is not in this case. We are wasting memory because of that sparsity. Another issue is
-that equation 16 is also not computationally efficient. 
+that equation (16) is not computationally efficient. 
 
 We can fix both the issue with a bit of cleverness. Taking advantage of that sparsity along with
-elementwise operations, we can do that computation more efficiently, as shown below:
+elementwise operations, we can compute the same thing more efficiently, as shown below:
 
 $$
 \boldsymbol{R}^d_{\Theta,m} \boldsymbol{x} =
