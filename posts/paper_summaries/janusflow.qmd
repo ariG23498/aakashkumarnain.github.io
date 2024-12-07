@@ -1,7 +1,6 @@
 ---
 title: "JanusFlow"
-subtitle: "Harmonizing Autoregression and Rectified Flow for Unified Multimodal Understanding
-and Generation"
+subtitle: "Harmonizing Autoregression and Rectified Flow for Unified Multimodal Understanding and Generation"
 author: "Aakash Kumar Nain ([@A_K_Nain](https://x.com/A_K_Nain))"
 date: "2024-11-25"
 categories: [papers, summary, research, MLLMs, generation]
