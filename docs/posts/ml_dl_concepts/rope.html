@@ -258,7 +258,7 @@ p_{i,2t+1} &amp;= \cos(k/10000^{2t/d}) \\ \tag{3}
 <p><br>Expanding <span class="math inline">\(sin(pos+k)\)</span> and <span class="math inline">\(cos(pos+k)\)</span>, we have:</p>
 <p><span class="math display">\[
 \begin{align*}
-    \sin(pos+k) &amp;= \sin(pos)\sin(k) + \cos(pos)\cos(k) \\
+    \sin(pos+k) &amp;= \sin(pos)\cos(k) + \cos(pos)\sin(k) \\
                 &amp;= PE_{pos, 0} \sin(k) + PE_{pos, 1} \cos(k) \tag{4} \\ \\
     \cos(pos+k) &amp;= \cos(pos)\cos(k) - \sin(pos)\sin(k) \\
                 &amp;= PE_{pos, 1} \cos(k) - PE_{pos, 0} \sin(k) \tag{5} \\
@@ -282,10 +282,10 @@ p_{i,2t+1} &amp;= \cos(k/10000^{2t/d}) \\ \tag{3}
 \end{bmatrix}
 \end{align*}
 \]</span></p>
-<p>That’s a transposed rotation matrix! So, our models have been learning to attend relative positions since 2017. If that is the case, what is wrong with sinusoidal position encoding? A few things…</p>
+<p>That’s a transposed rotation matrix! So, our models <em>might</em> have been learning to attend relative positions since 2017. If that is the case, what is wrong with sinusoidal position encoding? A few things…</p>
 <p>Take a look at the visualization below. We have a two-dimensional vector <span class="math inline">\(x=[1, 1]\)</span>, and we add sinusoidal position encoding for different positions to this vector.</p>
 <p><video src="./animations/rope/SinuSoidalEncoding.mp4" class="img-fluid" autoplay="true," loop="true" controls=""><a href="./animations/rope/SinuSoidalEncoding.mp4">Video</a></video></p>
-<p>Though we assume that the model can attend to relative positions easily, the one thing that is a bit bothering, as noted in the above visualization, is the stochasticity. Our pointer is moving almost randomly. The pattern here does not look good. But this doesn’t necessarily mean it is also bad for the model to learn, especially at scale. All we can say is that with so much stochasticity across different dimensions, the model will have a hard time learning that relative positions can be attended using a rotation matrix and that the model may start memorizing.</p>
+<p>Though we assume that the model can attend to relative positions easily, the one thing that is a bit bothering, as noted in the above visualization, is the stochasticity. Our pointer is moving almost randomly. The pattern here does not look good. But this doesn’t necessarily mean it is also bad for the model to learn, especially at scale. All we can say is that with so much stochasticity across different dimensions, the model will have a hard time learning to attend to relative positions.</p>
 <p>Another thing to note from equation (2) is that sinusoidal positional encodings are additive. This means indirectly adding the “relatedness” of two tokens to the positional encoding. A side effect of this is that two highly related tokens can get high attention scores irrespective of the distance between them. This is still okay for NLP-related problems but doesn’t hold for other domains like protein sequencing.</p>
 <p>The authors of the <strong>Attention is All You Need</strong> paper also hypothesized that hard-coded sinusoidal positional encodings may help to extrapolate to longer sequences compared to the length of the sequences seen during training. The hypothesis does not hold in practice.</p>
 </section>

@@ -132,7 +132,7 @@ $$
 
 $$
 \begin{align*}
-    \sin(pos+k) &= \sin(pos)\sin(k) + \cos(pos)\cos(k) \\
+    \sin(pos+k) &= \sin(pos)\cos(k) + \cos(pos)\sin(k) \\
                 &= PE_{pos, 0} \sin(k) + PE_{pos, 1} \cos(k) \tag{4} \\ \\
     \cos(pos+k) &= \cos(pos)\cos(k) - \sin(pos)\sin(k) \\
                 &= PE_{pos, 1} \cos(k) - PE_{pos, 0} \sin(k) \tag{5} \\
@@ -159,8 +159,7 @@ $$
 \end{align*}
 $$
 
-That's a transposed rotation matrix! So, our models have been learning to attend relative positions
-since 2017. If that is the case, what is wrong with sinusoidal position encoding? A few things...
+That's a transposed rotation matrix! So, our models *might* have been learning to attend relative positions since 2017. If that is the case, what is wrong with sinusoidal position encoding? A few things...
 
 Take a look at the visualization below. We have a two-dimensional vector $x=[1, 1]$, and we add
 sinusoidal position encoding for different positions to this vector.
@@ -169,8 +168,7 @@ sinusoidal position encoding for different positions to this vector.
 
 
 Though we assume that the model can attend to relative positions easily, the one thing that is a bit
-bothering, as noted in the above visualization, is the stochasticity. Our pointer is moving almost randomly. The pattern here does not look good. But this doesn't necessarily mean it is also bad for the model to learn, especially at scale. All we can say is that with so much stochasticity across different dimensions, the model will have a hard time learning that relative positions can be attended using a rotation matrix and that the model
-may start memorizing. 
+bothering, as noted in the above visualization, is the stochasticity. Our pointer is moving almost randomly. The pattern here does not look good. But this doesn't necessarily mean it is also bad for the model to learn, especially at scale. All we can say is that with so much stochasticity across different dimensions, the model will have a hard time learning to attend to relative positions.
 
 Another thing to note from equation (2) is that sinusoidal positional encodings are additive. This means
 indirectly adding the  "relatedness" of two tokens to the positional encoding. A side effect of this
