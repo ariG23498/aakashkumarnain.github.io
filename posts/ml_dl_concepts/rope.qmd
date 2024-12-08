@@ -159,7 +159,7 @@ $$
 \end{align*}
 $$
 
-That's a transposed rotation matrix! So, our models *might* have been learning to attend relative positions since 2017. If that is the case, what is wrong with sinusoidal position encoding? A few things...
+That's a transposed rotation matrix! So, our models *might* have been learning to attend relative positions since 2017 because for any fixed offset $k, \ PE_{pos+k}$ can be represented as a linear function of $PE_{pos}$. If that is the case, what is wrong with sinusoidal position encoding? A few things...
 
 Take a look at the visualization below. We have a two-dimensional vector $x=[1, 1]$, and we add
 sinusoidal position encoding for different positions to this vector.
