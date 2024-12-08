@@ -17,3 +17,15 @@ format:
 execute: 
   echo: false
 ---
+
+[arXiv](https://arxiv.org/abs/2411.17116)<br>
+
+Nvidia presents Star Attention to improve LLM inference efficiency over long sequences. I was skeptical when I read the abstract the day it was published, but now that I have read the full paper, I think this is another good research
+
+<br>
+![](../paper_screenshots/star_attention/1.png)
+<br>
+
+Modern LMs have huge context windows that can handle up to a million tokens. The compute & memory needs are gigantic because of the quadratic cost of the global attention mechanism. Various works have tackled speed and memory aspects differently. 
+
+For example, Flash Attention introduces an efficient GPU block-wise implementation of global attention, achieving significant reductions in memory overhead and runtime. Ring Attention further extends this idea by distributing the computation of self-attention and feed-forward modules across multiple devices, cleverly overlapping communication with shard-local attention computations to enhance scalability. Distributed strategies such as tensor, pipeline, sequence, and data parallelism have been proposed to divide compute effectively across multiple machines.
