@@ -187,10 +187,7 @@ From the above discussion, two things are clear:
 are not the best way to do it.
 2. Incorporating a rotation matrix in some form is a good choice for encoding relative positions.
 
-RoPE leverages the above findings. It rotates an encoded vector by some angle $\theta$ based on its position in a sequence. Take a look at the visualization below. Here, we are using a 2D vector to demonstrate the rotation of the encoded vector for the token *Python* in a sequence. One interesting aspect is that the number of tokens occurring after the query token (*Python* in this case) does not affect the embedding. The amount of rotation is purely dependent on the token's position in the sequence. 
-
-Is it any good? Let us take an example in 2D to demonstrate this. Suppose *Python* is the query token,
-*love* is the key token, and we want to compute attention scores between them in two different sequences
+RoPE leverages the above findings. It rotates an encoded vector by some angle $\theta$ based on its position in a sequence. Is it any good? Suppose *Python* is the query token, *love* is the key token, and we want to compute attention scores between them in two different sequences
 as given below:
 
 * Python is love
@@ -200,7 +197,7 @@ This is how the tokens will be rotated in each of the two sequences:
 
 ![](./animations/rope/TextAnimation2.mp4){autoplay=true, loop=true}
 
-The relative distance between our query token *Python* and the key token *love* is $2\theta$ in both sequences. The inner product $q^Tk$ remains the same in both sequences. For a 2D case, if we generalize the rotation used in RoPE, we can rewrite our rotation matrix as follows:
+The relative distance between our query token *Python* and the key token *love* is $2\theta$ in both sequences. One interesting aspect is that the number of tokens occurring after the query token (*Python* in this case) does not affect the embedding. The amount of rotation is purely dependent on the token's position in the sequence. The inner product $q^Tk$ remains the same in both sequences. For a 2D case, if we generalize the rotation used in RoPE, we can rewrite our rotation matrix as follows:
 
 $$
 \begin{align*}

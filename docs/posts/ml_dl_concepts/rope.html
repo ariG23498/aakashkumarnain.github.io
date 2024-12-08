@@ -296,15 +296,14 @@ p_{i,2t+1} &amp;= \cos(k/10000^{2t/d}) \\ \tag{3}
 <li>Encoding relative positions is crucial for attention, but additive methods like sinusoidal encodings are not the best way to do it.</li>
 <li>Incorporating a rotation matrix in some form is a good choice for encoding relative positions.</li>
 </ol>
-<p>RoPE leverages the above findings. It rotates an encoded vector by some angle <span class="math inline">\(\theta\)</span> based on its position in a sequence. Take a look at the visualization below. Here, we are using a 2D vector to demonstrate the rotation of the encoded vector for the token <em>Python</em> in a sequence. One interesting aspect is that the number of tokens occurring after the query token (<em>Python</em> in this case) does not affect the embedding. The amount of rotation is purely dependent on the token’s position in the sequence.</p>
-<p>Is it any good? Let us take an example in 2D to demonstrate this. Suppose <em>Python</em> is the query token, <em>love</em> is the key token, and we want to compute attention scores between them in two different sequences as given below:</p>
+<p>RoPE leverages the above findings. It rotates an encoded vector by some angle <span class="math inline">\(\theta\)</span> based on its position in a sequence. Is it any good? Suppose <em>Python</em> is the query token, <em>love</em> is the key token, and we want to compute attention scores between them in two different sequences as given below:</p>
 <ul>
 <li>Python is love</li>
 <li>Coding in Python is love</li>
 </ul>
 <p>This is how the tokens will be rotated in each of the two sequences:</p>
 <p><video src="./animations/rope/TextAnimation2.mp4" class="img-fluid" autoplay="true," loop="true" controls=""><a href="./animations/rope/TextAnimation2.mp4">Video</a></video></p>
-<p>The relative distance between our query token <em>Python</em> and the key token <em>love</em> is <span class="math inline">\(2\theta\)</span> in both sequences. The inner product <span class="math inline">\(q^Tk\)</span> remains the same in both sequences. For a 2D case, if we generalize the rotation used in RoPE, we can rewrite our rotation matrix as follows:</p>
+<p>The relative distance between our query token <em>Python</em> and the key token <em>love</em> is <span class="math inline">\(2\theta\)</span> in both sequences. One interesting aspect is that the number of tokens occurring after the query token (<em>Python</em> in this case) does not affect the embedding. The amount of rotation is purely dependent on the token’s position in the sequence. The inner product <span class="math inline">\(q^Tk\)</span> remains the same in both sequences. For a 2D case, if we generalize the rotation used in RoPE, we can rewrite our rotation matrix as follows:</p>
 <p><span class="math display">\[
 \begin{align*}
     R_\Theta^p =
