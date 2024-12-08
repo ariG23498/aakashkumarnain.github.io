@@ -36,8 +36,8 @@ For example, Flash Attention introduces an efficient GPU block-wise implementati
 * Proposes novel algorithm for efficient LLM long-context inference.
 * Leverages the fact that LLM inference is usually a two-stage process. The first stage is prompt encoding, where the model processes input and stores KV vectors in the cache. The second stage is the generation stage. The tokens are generated autoregressively, and the KV cache is updated.
 * Based on the above, proposes star attention with a two-stage approach:
-  -(i )Context Encoding and
-  -(ii) Query Encoding and Token Generation.
+  - Context Encoding and
+  - Query Encoding and Token Generation.
 * Star Attention enables the context length to scale linearly with the number of hosts by distributing the context processing across multiple hosts.
 * Compatible with most Transformer based models utilizing global attention, and it is a drop-in replacement (no fine-tuning required).
 * Can be combined with additional optimizations like Flash Attention and KV compression for more gains.
