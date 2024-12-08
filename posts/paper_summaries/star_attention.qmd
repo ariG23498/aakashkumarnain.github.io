@@ -55,3 +55,13 @@ For example, Flash Attention introduces an efficient GPU block-wise implementati
 <br>
 ![](../paper_screenshots/star_attention/2.png)
 <br>
+
+# Phase 2: Query Encoding and Token Generation
+
+* The query is broadcasted to all the hosts and transformed into a sequence $Q$  of shape $(l_q \ X \ d)$, where $l_q$ is the query length, and $d$ is the head dimension in attention.
+* Each host $h$ has its local key-value pair, each of which has a shape $(l_k \ X \ d)$ where $l_k$ is the sequence length of the KV cache. Each host computes a local attention output $A_h$ for query $Q$ using these KV pairs as shown below. In addition to $A_h$, each host also stores the sum of the exponents $s_h$ from the local softmax operation (the denominator).
+* The query-host $h_q$ gathers the local attention $A_h$ and the sums of exponents $s_h$ from all hosts. To compute global attention, we need the right normalization, i.e., we should compute the global softmax denominator $s_global$ using all the $s_h$ gathered from all the hosts.
+
+<br>
+![](../paper_screenshots/star_attention/3.png)
+<br>
