@@ -29,3 +29,15 @@ Nvidia presents Star Attention to improve LLM inference efficiency over long seq
 Modern LMs have huge context windows that can handle up to a million tokens. The compute & memory needs are gigantic because of the quadratic cost of the global attention mechanism. Various works have tackled speed and memory aspects differently. 
 
 For example, Flash Attention introduces an efficient GPU block-wise implementation of global attention, achieving significant reductions in memory overhead and runtime. Ring Attention further extends this idea by distributing the computation of self-attention and feed-forward modules across multiple devices, cleverly overlapping communication with shard-local attention computations to enhance scalability. Distributed strategies such as tensor, pipeline, sequence, and data parallelism have been proposed to divide compute effectively across multiple machines.
+
+
+# Star Attention
+
+* Proposes novel algorithm for efficient LLM long-context inference.
+* Leverages the fact that LLM inference is usually a two-stage process. The first stage is prompt encoding, where the model processes input and stores KV vectors in the cache. The second stage is the generation stage. The tokens are generated autoregressively, and the KV cache is updated.
+* Based on the above, proposes star attention with a two-stage approach:
+  - (i )Context Encoding and
+  - (ii) Query Encoding and Token Generation.
+* Star Attention enables the context length to scale linearly with the number of hosts by distributing the context processing across multiple hosts.
+* Compatible with most Transformer based models utilizing global attention, and it is a drop-in replacement (no fine-tuning required).
+* Can be combined with additional optimizations like Flash Attention and KV compression for more gains.
