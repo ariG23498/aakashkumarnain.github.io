@@ -36,8 +36,22 @@ For example, Flash Attention introduces an efficient GPU block-wise implementati
 * Proposes novel algorithm for efficient LLM long-context inference.
 * Leverages the fact that LLM inference is usually a two-stage process. The first stage is prompt encoding, where the model processes input and stores KV vectors in the cache. The second stage is the generation stage. The tokens are generated autoregressively, and the KV cache is updated.
 * Based on the above, proposes star attention with a two-stage approach:
-  - (i )Context Encoding and
-  - (ii) Query Encoding and Token Generation.
+  -(i )Context Encoding and
+  -(ii) Query Encoding and Token Generation.
 * Star Attention enables the context length to scale linearly with the number of hosts by distributing the context processing across multiple hosts.
 * Compatible with most Transformer based models utilizing global attention, and it is a drop-in replacement (no fine-tuning required).
 * Can be combined with additional optimizations like Flash Attention and KV compression for more gains.
+
+
+# Phase 1: Context Encoding
+
+* Given an input sequence comprising a context $c$ followed by a query q, the context $c$ is divided into n contiguous blocks: $c = [c_1, c_2, . . . , c_n]$, where each block ci contains $b$ tokens.
+* Every block except the first block is prefixed with the first block. The authors call this the anchor block mechanism. Without anchor blocks, the model fails to generate correct outputs. The authors hypothesize that it happens due to multiple attention sinks generated in each block when processed independently. Prefixing with the first block shifts the attention sinks to the anchor tokens.
+* The augmented context looks like this: $c' = [c_1, (c_1 c_2), (c_1 c_3), . . . , (c_1 c_n)]$. Each block in the augmented context, except for the first block, contains 2b tokens (b tokens from the first block and b tokens from the current block).
+* The positional indices of c1 are preserved, ensuring that its tokens retain their original position indices $[0, 1, . . . , b−1]$
+* The augmented blocks are distributed across compute hosts, where each host computes attention over the 2b tokens from its assigned block $c'_i$ and generates the corresponding key-value (KV) vector.
+* The KV cache for the first block is discarded, but the KVs for the current block $c_i$ are retained in the cache.
+
+<br>
+![](../paper_screenshots/star_attention/2.png)
+<br>
