@@ -69,3 +69,10 @@ This process is repeated every time a new token has to be generated.
 ![](../paper_screenshots/star_attention/3.png)
 <br>
 
+# Benchmarks
+
+So, how does star attention fare compared to other techniques like ring attention? The authors evaluate Star Attention on several Llama-based models with sequence lengths ranging from 16K to 1M tokens on RULER and BABILong benchmarks. Here are some results:
+
+<br>
+![](../paper_screenshots/star_attention/4.png)
+<br>
